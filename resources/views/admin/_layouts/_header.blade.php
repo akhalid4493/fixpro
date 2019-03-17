@@ -5,7 +5,7 @@
                 {{-- <img src="{{ url(settings('logo')) }}" alt="logo" class="logo-default"/> --}}
                 <div class="caption" style="margin: 16px;">
                     <span class="caption-subject font-green bold uppercase">
-                        {{ settings('site_name_ar') }}
+                        {{ settings('app_name_ar') }}
                     </span>
                 </div>
             </a>
