@@ -166,7 +166,7 @@ class OrderRepository
                 $nestedData['total']            = Price($order->total). ' دك';
                 $nestedData['method']           = Label($order->method,'label-info');
                 $nestedData['order_status_id']  = OrderStatus($order);
-                $nestedData['full_name']        = $order->user->full_name;
+                $nestedData['full_name']        = $order->user->name;
                 $nestedData['email']            = $order->user->email;
                 $nestedData['mobile']           = $order->user->mobile;
                 $nestedData['options']          = $show;

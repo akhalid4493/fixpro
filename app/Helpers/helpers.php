@@ -37,32 +37,31 @@ if (!function_exists('PreviewStatus')) {
     /**
      * Access the PreviewStatus helper.
      */
-    function PreviewStatus($order)
+    function PreviewStatus($preview)
     {
-      if ($order->previewStatus->status_code == 'pending'){
+      if ($preview->previewStatus->status_code == 'pending'){
         return '<span class="label label-primary circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
-        
-      }elseif($order->previewStatus->status_code == 'accepted'){
+      }elseif($preview->previewStatus->status_code == 'accepted'){
         return '<span class="label label-info circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
-      }elseif($order->previewStatus->status_code == 'reached'){
+      }elseif($preview->previewStatus->status_code == 'reached'){
         return '<span class="label label-success circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
-      }elseif($order->previewStatus->status_code == 'completed'){
+      }elseif($preview->previewStatus->status_code == 'completed'){
         return '<span class="label label-success circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
-      }elseif($order->previewStatus->status_code == 'on_way'){
+      }elseif($preview->previewStatus->status_code == 'on_way'){
         return '<span class="label label-warning circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
-      }elseif($order->previewStatus->status_code == 'canceled'){
+      }elseif($preview->previewStatus->status_code == 'canceled'){
         return '<span class="label label-danger circle" style="font-size:13px">
-                  '.$order->previewStatus->name_ar.'
+                  '.$preview->previewStatus->name_ar.'
                </span>';
       }
       
@@ -75,21 +74,21 @@ if (!function_exists('OrderStatus')) {
      */
     function OrderStatus($order)
     {
-      if ($order->orderStatus->status_code == 'pend'){
+      if ($order->orderStatus->status_code == 'pending'){
         return '<span class="label label-primary circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
         
-      }elseif($order->orderStatus->status_code == 'on_way'){
+      }elseif($order->orderStatus->status_code == 'accepted_user'){
         return '<span class="label label-info circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
-      }elseif($order->orderStatus->status_code == 'success'){
+      }elseif($order->orderStatus->status_code == 'cancelled_user'){
         return '<span class="label label-success circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
-      }elseif($order->orderStatus->status_code == 'canceled'){
-        return '<span class="label label-warning circle" style="font-size:13px">
+      }elseif($order->orderStatus->status_code == 'payment_succ'){
+        return '<span class="label label-info circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
       }elseif($order->orderStatus->status_code == 'payment_failed'){
