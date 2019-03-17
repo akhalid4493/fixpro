@@ -13,20 +13,13 @@ class PreviewController extends ApiController
     function __construct(Preveiew $preview)
     {
         $this->previewModel  = $preview;
-
-        $this->middleware('apiTechAuth', [
-            'only' => [ 
-                'myPreviews',
-                'myPreview',
-            ]
-        ]);
     }
 
     public function myPreviews(Request $request)
     {
         $previews = $this->previewModel->techPreviews($request);
 
-        if ($previews->isNotEmpty())
+        if ($previews)
             return $this->responseMessages(PreviewResource::collection($previews),true,200);
 
         return $this->responseMessages([],false,405,['there is no previews for this user']);
@@ -34,7 +27,7 @@ class PreviewController extends ApiController
     
     public function myPreview(Request $request,$id)
     {
-        $preview = $this->previewModel->previewById($id);
+        $preview = $this->previewModel->techPreviewById($id);
 
         if ($preview)
             return $this->responseMessages(new PreviewResource($preview),true,200);

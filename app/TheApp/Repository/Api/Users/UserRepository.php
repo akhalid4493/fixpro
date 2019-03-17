@@ -3,6 +3,7 @@ namespace App\TheApp\Repository\Api\Users;
 
 use App\Models\User;
 use ImageTrait;
+use JWTAuth;
 use Auth;
 use Hash;
 use DB;
@@ -16,34 +17,28 @@ class UserRepository
         $this->model        = $user;
     }    
 
-    // public function techLogin($data)
-    // {
-    //     $user = Auth::attempt([
-    //                 'email'     => $data['email'],
-    //                 'password'  => $data['password'], 
-    //                 'active' => 1
-    //             ]);
-
-    //     if($user){
-    //         if (Auth::user()->can('technical_team')){
-    //             Auth::user()->update([
-    //                 'api_token' => $this->generateApiKey()
-    //             ]);
-
-    //             return true;
-    //         }
-    //     }
+    public function techLogin($data)
+    {
+        $token = JWTAuth::attempt([
+                'email'     => $data['email'],
+                'password'  => $data['password'], 
+                'active'    => 1
+            ]);
         
-    //     return false;
-    // }
+        if (auth()->user()->can('technical_team')) {
+            return $token;
+        }
+
+        return false;
+    }
 
     public function login($data)
     {
-        $token = auth('api')->attempt([
-                    'email'     => $data['email'],
-                    'password'  => $data['password'], 
-                    'active'    => 1
-                ]);
+        $token = JWTAuth::attempt([
+                'email'     => $data['email'],
+                'password'  => $data['password'], 
+                'active'    => 1
+            ]);
 
         return $token;
     }

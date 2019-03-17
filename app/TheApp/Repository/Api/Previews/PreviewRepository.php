@@ -46,7 +46,7 @@ class PreviewRepository
         try {
             
             $preview = $this->model->create([
-                'user_id'           => Auth::user()->id,
+                'user_id'           => Auth::id(),
                 'address_id'        => $request['address_id'],
                 'note'              => $request['note'],
                 'time'              => $request['time'],
@@ -77,65 +77,6 @@ class PreviewRepository
         }
     }
 
-    public function myPreviews($request)
-    {
-        $previews = $this->model->where('user_id',Auth::user()->id)->get();
-
-        return $previews;
-    }
-
-    public function previewById($id)
-    {
-        $preview = $this->model->where('id',$id)->where('user_id',Auth::user()->id)->first();
-
-        return $preview;
-    }
-
-    /*
-        TECHNICAL APP PREVIEWS METHODS
-    */
-    public function techPreviews($request)
-    {
-        return $previews = Auth::user()->previewsOfTechnical;
-
-        return $previews;
-    }
-
-    public function previewChangeStatus($request,$id)
-    {
-        $preview = $this->model->find($id);
-
-        if ($request['status'] == 'on_way') {
-            $status = 3;
-        }elseif ($request['status'] == 'reached') {
-            $status = 7;
-        }elseif ($request['status'] == 'success') {
-            $status = 4;
-        }
-
-        $preview->update([
-            'preview_status_id'  => $status,
-        ]);
-
-        $this->sendNotifiToUser($preview);
-        
-        return $preview;
-    }
-
-    public function sendNotifiToUser($preview)
-    {
-        $userToken = $preview->user->deviceToken;
-
-        if (!empty($userToken)) {
-            $data = [
-                'title' => 'حالة الطلب الخاص بك',
-                'body'  => 'تم تغير حالة الطلب الى: '.$preview->previewStatus->name_ar.''
-            ];
-
-            return $this->send($data,$userToken->device_token);
-        }
-    }
-
     public function createPreviewDetails($previewId,$request)
     {
         DB::beginTransaction();
@@ -155,6 +96,76 @@ class PreviewRepository
         }catch(\Exception $e){
             DB::rollback();
             throw $e;
+        }
+    }
+    
+    public function myPreviews($request)
+    {
+        $previews = $this->model->where('user_id',Auth::id())->get();
+
+        return $previews;
+    }
+
+    public function previewById($id)
+    {
+        $preview = $this->model->where('id',$id)->where('user_id',Auth::id())->first();
+
+        return $preview;
+    }
+
+    /*
+        TECHNICAL APP PREVIEWS METHODS
+    */
+    public function techPreviews($request)
+    {
+        $previews = Auth::user()->previewsOfTechnical;
+
+        if ($previews) {
+            return $previews;
+        }
+
+        return false;
+    }
+
+    public function techPreviewById($id)
+    {
+        $preview = $this->model
+                    ->where('id',$id)
+                    ->whereHas('technical', function($query){
+                        $query->where('user_id',Auth::id());
+                    })
+                    ->first();
+
+        return $preview;
+    }
+
+    public function previewChangeStatus($request,$id)
+    {
+        $preview = $this->techPreviewById($id);
+
+        if ($preview) {
+            $preview->update([
+                'preview_status_id'  => $request['status'],
+            ]);
+
+            
+            return $preview;
+        }
+         
+        return false;   
+    }
+
+    public function sendNotifiToUser($preview)
+    {
+        $userToken = $preview->user->deviceToken;
+
+        if (!empty($userToken)) {
+            $data = [
+                'title' => 'حالة الطلب الخاص بك',
+                'body'  => 'تم تغير حالة الطلب الى: '.$preview->previewStatus->name_ar.''
+            ];
+
+            return $this->send($data,$userToken->device_token);
         }
     }
 }

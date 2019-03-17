@@ -3,9 +3,11 @@ namespace App\TheApp\Repository\Api\Orders;
 
 use App\TheApp\Repository\Api\Transaction\TransactionRepository;
 use App\Http\Resources\Orders\OrderResource;
+use App\Models\OrderInstallation;
 use App\Models\OrderProduct;
-use App\Models\Product;
 use App\Models\Order;
+use App\Models\Installation;
+use App\Models\Product;
 use ProductsQty;
 use Auth;
 use DB;
@@ -15,10 +17,11 @@ class OrderRepository
 
     protected $model;
 
-    function __construct(Order $order ,OrderProduct $product)
+    function __construct(Order $order ,OrderProduct $product,OrderInstallation $installation)
     {
-        $this->model        = $order;
-        $this->modelProduct = $product;
+        $this->model            = $order;
+        $this->modelProduct     = $product;
+        $this->modelInstallation= $installation;
     }  
 
 
@@ -102,11 +105,20 @@ class OrderRepository
 
     public function calculateTotal($request)
     {
-        $subtotal = 0;
+        $subtotal  = 0;
 
-        foreach ($request['product_ids'] as $product) {
-            $item_ = Product::find($product['product_id']);
-            $subtotal += $item_['price'] * $product['qty'];
+        if ($request['product_id']) {
+            foreach ($request['product_id'] as $key => $product) {
+                $item_ = Product::find($product);
+                $subtotal += $item_['price'] * $request['qty_product'][$key];
+            }
+        }
+            
+        if ($request['installation_id']) {
+            foreach ($request['installation_id'] as $key => $installation) {
+                $installation_ = Installation::find($installation);
+                $subtotal += $installation_['price'] * $request['qty_installation'][$key];
+            }
         }
 
         $order = $this->createOrder($request,$subtotal);
@@ -118,7 +130,7 @@ class OrderRepository
     }
 
     public function createOrder($request,$subtotal)
-    {            
+    {
         DB::beginTransaction();
 
         try {
@@ -134,8 +146,6 @@ class OrderRepository
             if ($order)
                 $orderDetails = $this->createOrderDetails($order['id'],$request);
 
-            $this->sendNotifiToUser($order);
-
             DB::commit();
             return $order;
 
@@ -143,7 +153,6 @@ class OrderRepository
             DB::rollback();
             throw $e;
         }
-
     }
 
     public function createOrderDetails($orderId,$request)
@@ -152,13 +161,43 @@ class OrderRepository
 
         try {
 
-            foreach ($request['product_ids'] as $product) {
+            foreach ($request['product_id'] as $key => $product) {
                 
-                $item = Product::find($product['product_id']);
+                $item = Product::find($product);
                 
-                $output = $this->arrayDetails($item,$product,$orderId);
+                $warranty = $this->calculatWarranty($request,$item);
 
-                $this->modelDetails->create($output);
+                $this->modelProduct->create([
+                    'warranty'      => $warranty['months'],
+                    'warranty_start'=> $warranty['start'],
+                    'warranty_end'  => $warranty['end'],
+                    'product_id'    => $product,
+                    'qty'           => $request['qty_product'][$key],
+                    'order_id'      => $orderId,
+                    'price'         => $item->price,
+                    'total'         => $item->price * $request['qty_product'][$key],
+                ]);
+            }
+
+
+            if ($request['installation_id']) {
+                foreach ($request['installation_id'] as $key => $installation) {
+                
+                    $installation_ = Installation::find($installation);
+                    
+                    $warranty_inst = $this->calculatWarrantyInstallation();
+
+                    $this->modelInstallation->create([
+                        'warranty'          => $warranty_inst['days'],
+                        'warranty_start'    => $warranty_inst['start'],
+                        'warranty_end'      => $warranty_inst['end'],
+                        'installation_id'   => $installation_['id'],
+                        'qty'               => $request['qty_installation'][$key],
+                        'order_id'          => $orderId,
+                        'price'             => $installation_->price,
+                        'total'             => $installation_->price*$request['qty_installation'][$key],
+                    ]);
+                }
             }
 
             DB::commit();
@@ -169,6 +208,26 @@ class OrderRepository
             throw $e;
         }
 
+    }
+
+    public function calculatWarranty($request,$item)
+    {
+        $warranty['months'] =  $item['warranty'];
+
+        $warranty['start']  = date('d-m-Y');
+        $warranty['end']    = date('d-m-Y', strtotime('+'.$warranty['months'].' months'));
+
+        return $warranty;
+    }
+
+    public function calculatWarrantyInstallation()
+    {
+        $warranty['days']   =  settings('warranty');
+
+        $warranty['start']  = date('d-m-Y');
+        $warranty['end']    = date('d-m-Y', strtotime('+'.$warranty['days'].' days'));
+
+        return $warranty;
     }
 
     public function sendNotifiToUser($order)
@@ -183,34 +242,5 @@ class OrderRepository
 
             return $this->send($data,$userToken->device_token);
         }
-    }
-
-    public function arrayDetails($item,$product,$orderId)
-    {
-        $obj = array();
-
-        $array1 = [
-            'product_id'=> $product['product_id'],
-            'qty'       => $product['qty'],
-            'order_id'  => $orderId,
-            'price'     => $item->price,
-            'total'     => $item->price * $product['qty'],
-        ];
-
-         if ($item['warranty']) {
-            $array2 = [
-                'warranty'                   => $product['warranty'],
-                'warranty_start'             => $product['warranty_start'],
-                'warranty_end'               => $product['warranty_end'],
-                'warranty_installation'      => $product['warranty_installation'],
-                'warranty_installation_start'=> $product['warranty_installation_start'],
-                'warranty_installation_end'  => $product['warranty_installation_end'],
-            ];
-        }else{
-            $array2 = [];
-        }
-
-        
-        return $output = array_merge($array1, $array2);;
     }
 }

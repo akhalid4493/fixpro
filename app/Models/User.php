@@ -60,8 +60,38 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
+    public function orders()
+    {       
+        return $this->hasMany('App\Models\Order');
+    }
+
+    public function userHasSubscription()
+    {       
+        return $this->hasOne('App\Models\Subscription');
+    }
+
+    public function checkSubscription()
+    {       
+        return $this->userHasSubscription()->where('end_at','>',date('Y-m-d'));
+    }
+
     public function address()
     {
         return $this->hasMany('App\Models\Address');
+    }
+    
+    public function previewsOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\Preview', 'technical_previews');
+    }
+
+    public function deviceToken()
+    {       
+        return $this->hasOne('App\Models\DeviceToken')->latest();
+    }
+
+    public function subscription()
+    {
+        return $this->hasOne('App\Models\UserSubscription')->latest();
     }
 }

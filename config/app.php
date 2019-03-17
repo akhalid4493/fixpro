@@ -229,6 +229,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,                
         'LaravelLocalization' => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
+        'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',         
+        'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory',
         'Settings'  => App\TheApp\Traits\SettingTrait::class,
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Image'     => Intervention\Image\Facades\Image::class,

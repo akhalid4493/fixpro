@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class OrderInstallation extends Model
 {
     protected $fillable = [
-        'product_id', 
+        'installation_id', 
         'order_id',
         'price',
         'qty',
         'warranty',
         'warranty_start',
         'warranty_end',
-        'warranty_installation',
-        'warranty_installation_start',
-        'warranty_installation_end',
         'total',
     ];
 
@@ -26,8 +23,8 @@ class OrderInstallation extends Model
     }
 
 
-    public function product()
+    public function installation()
     {       
-        return $this->belongsTo('App\Models\Product' , 'product_id' , 'id' );
+        return $this->belongsTo('App\Models\Installation' , 'installation_id' , 'id' );
     }
 }

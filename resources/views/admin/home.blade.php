@@ -13,7 +13,7 @@
 
         <h4> اهلا بك ، <b style="color:red">{{ Auth::user()->name }} </b></h4>
         
-        {{-- <div class="row">
+        <div class="row">
             <div class="portlet light portlet-fit bordered">
                 <div class="portlet-title">
                     <div class="caption">
@@ -128,13 +128,13 @@
                     </div>
                 </div>
             </div>
-        </div> --}}
+        </div>
     </div>
 </div>
 @stop
 
 {{-- JQUERY++ --}}
-{{-- @section('scripts')
+@section('scripts')
 
 <script>
     // USERS COUNT BY DATE
@@ -262,4 +262,4 @@
       }
     });
 </script>
-@stop --}}
+@stop
