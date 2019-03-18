@@ -14,10 +14,6 @@ class NotificationController extends AdminController
     public function __construct(UserRepository $user)
     {
         $this->userModel = $user;
-
-        // PERMISSION OF USER FUNCTIONS
-        $this->middleware('permission:show_notifications'  ,['only' => ['notifyForm']]);
-        $this->middleware('permission:add_notifications'   ,['only' => ['push_notification']]);
     }
 
     public function notifyForm()

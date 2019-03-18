@@ -14,12 +14,6 @@ class OrderController extends AdminController
     function __construct(OrderRepository $order)
     {
         $this->orderModel = $order;
-
-        // PERMISSION OF ADMIN FUNCTIONS
-        $this->middleware('permission:show_orders'  ,['only' => ['show'   , 'index']]);
-        $this->middleware('permission:add_orders'   ,['only' => ['create' , 'store']]);
-        $this->middleware('permission:edit_orders'  ,['only' => ['edit'   , 'update']]);
-        $this->middleware('permission:delete_orders',['only' => ['destroy']]);
     }
 
 

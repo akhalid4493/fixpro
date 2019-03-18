@@ -139,6 +139,15 @@
             </li>
             @endpermission
 
+            @permission('show_subscriptions')
+            <li class="nav-item">
+                <a href="{{ url(route('subscriptions.index')) }}" class="nav-link nav-toggle">
+                    <i class="fa fa-usd"></i>
+                    <span class="title">اشتراكات الاعضاء</span>
+                </a>
+            </li>
+            @endpermission
+
             <li class="heading">
                 <h3 class="uppercase">اعدادات</h3>
             </li>

@@ -2,44 +2,42 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\TheApp\Repository\Admin\Previews\PreviewRepository;
-use App\TheApp\Repository\Admin\Users\UserRepository;
+use App\TheApp\Repository\Admin\Subscriptions\SubscriptionRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class PreviewController extends AdminController
+class SubscriptionController extends AdminController
 {
 
-    function __construct(PreviewRepository $preview,UserRepository $user)
+    function __construct(SubscriptionRepository $subscription)
     {
-        $this->previewModel = $preview;
-        $this->userModel = $user;
+        $this->subscriptionModel = $subscription;
     }
 
 
     public function index()
     {
-        return view('admin.previews.home');
+        return view('admin.subscriptions.home');
     }
 
 
     public function dataTable(Request $request)
     {
-        return $this->previewModel->dataTable($request);
+        return $this->subscriptionModel->dataTable($request);
     }
 
 
     public function create()
     {
-        return view('admin.previews.create');
+        return view('admin.subscriptions.create');
     }
 
 
     public function store(Request $request)
     {
-            $create = $this->previewModel->create($request);
+            $create = $this->subscriptionModel->create($request);
 
             if($create)
                 return Response()->json([true , 'تم الاضافة بنجاح' ]);
@@ -51,25 +49,24 @@ class PreviewController extends AdminController
 
     public function show($id)
     {
-        $preview = $this->previewModel->findById($id);
-        $statuses   = $this->previewModel->getAllStatus();
-        $users      = $this->userModel->TechnicalUsers();
+        $subscription = $this->subscriptionModel->findById($id);
+        $statuses   = $this->subscriptionModel->getAllStatus();
 
-        if (!$preview)
+        if (!$subscription)
             abort(404);
 
-        return view('admin.previews.show' , compact('preview','statuses','users'));
+        return view('admin.subscriptions.show' , compact('subscription','statuses'));
     }
 
 
     public function edit($id)
     {
-        $preview   = $this->previewModel->findById($id);
+        $subscription   = $this->subscriptionModel->findById($id);
 
-        if (!$preview)
+        if (!$subscription)
             abort(404);
 
-        return view('admin.previews.edit',compact('preview'));
+        return view('admin.subscriptions.edit',compact('subscription'));
     }
 
 
@@ -77,7 +74,7 @@ class PreviewController extends AdminController
     {
         if ($request->ajax()) {
 
-            $update = $this->previewModel->update($request , $id);
+            $update = $this->subscriptionModel->update($request , $id);
 
             if($update){
                 return Response()->json([true , 'تم التعديل بنجاح']);
@@ -92,7 +89,7 @@ class PreviewController extends AdminController
     {
         try {
 
-            $repose = $this->previewModel->delete($id);
+            $repose = $this->subscriptionModel->delete($id);
 
             if($repose){
                 return Response()->json([true, 'تم الحذف بنجاح']);
