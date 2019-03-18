@@ -10,7 +10,7 @@
 					<i class="fa fa-circle"></i>
 				</li>
 				<li>
-					<a href="{{ url(route('users.index')) }}">جميع الصلاحيات</a>
+					<a href="{{ url(route('users.index')) }}">جميع الاعضاء</a>
 					<i class="fa fa-circle"></i>
 				</li>
 				<li>

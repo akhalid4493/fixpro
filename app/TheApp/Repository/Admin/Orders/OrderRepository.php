@@ -21,13 +21,13 @@ class OrderRepository
     public function monthlyProfite()
     {
         $data["profit_dates"] = $this->model
-                                ->where('order_status_id',3)
+                                ->where('order_status_id',5)
                                 ->select(\DB::raw("DATE_FORMAT(created_at,'%Y-%m') as date"))
                                 ->groupBy('date')
                                 ->pluck('date');
 
         $profits = $this->model
-                    ->where('order_status_id',3)
+                    ->where('order_status_id',5)
                     ->select(\DB::raw("sum(total) as profit"))
                     ->groupBy(\DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                     ->get();
@@ -50,13 +50,13 @@ class OrderRepository
             if ($order->order_status_id == 1) {
                 $order->type = "قيد الانتظار";
             }elseif ($order->order_status_id == 2){
-                $order->type ="قيد التوصيل";
+                $order->type ="تم قبول الطلب";
             }elseif ($order->order_status_id == 3){
-                $order->type ="تم التوصيل";
+                $order->type ="تم رفض الطلب";
             }elseif ($order->order_status_id == 4){
-                $order->type ="تم الالغاء";
+                $order->type ="فشلت عملية الدفع";
             }elseif ($order->order_status_id == 5){
-                $order->type ="فشل ف الدفع";
+                $order->type ="تم الدفع بنجاح";
             }
 
         }

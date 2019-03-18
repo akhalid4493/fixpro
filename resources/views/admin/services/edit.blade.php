@@ -1,5 +1,5 @@
 @extends('admin._layouts.master')
-@section('title','تعديل بيانات القسم')
+@section('title','تعديل بيانات خدمة')
 @section('content')
 <div class="page-content-wrapper">
   <div class="page-content">
@@ -9,9 +9,9 @@
           <a href="{{ url(route('admin')) }}">الرئيسية</a><i class="fa fa-circle"></i>
         </li>
         <li>
-          <a href="{{ url(route('services.index')) }}">جميع الاقسام</a><i class="fa fa-circle"></i>
+          <a href="{{ url(route('services.index')) }}">جميع الخدمات</a><i class="fa fa-circle"></i>
         </li>
-        <li><span>تعديل بيانات القسم</span></li>
+        <li><span>تعديل بيانات خدمة</span></li>
       </ul>
     </div>
     <h1 class="page-title"></h1>
@@ -23,7 +23,7 @@
             <div class="caption">
               <i class="icon-equalizer font-green-haze"></i>
               <span class="caption-subject font-green-haze bold uppercase">
-                تعديل بيانات القسم : <b style="color:red">{{ $service->name_ar }}</b>
+                تعديل بيانات خدمة : <b style="color:red">{{ $service->name_ar }}</b>
               </span>
             </div>
           </div>
@@ -47,7 +47,7 @@
                         
                         <div class="form-group">
                           <label class="control-label col-md-3">
-                            عنوان القسم ar
+                            عنوان خدمة ar
                             <span class="required">*</span>
                           </label>
                           <div class="col-md-9">
@@ -57,7 +57,7 @@
 
                         <div class="form-group">
                           <label class="control-label col-md-3">
-                            عنوان القسم en
+                            عنوان خدمة en
                             <span class="required">*</span>
                           </label>
                           <div class="col-md-9">
