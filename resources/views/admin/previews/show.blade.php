@@ -40,23 +40,25 @@ display: none !important;
                         <div class="portlet">
                             <div class="portlet-body">
                                 <div class="tabbable-bordered">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#preview" data-toggle="tab">
-                                                الطلب
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#gallery" data-toggle="tab">
-                                                الصور المرفقة
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit" data-toggle="tab">
-                                                تعديل و اسناد
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <div class="no-print">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#preview" data-toggle="tab">
+                                                    الطلب
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#gallery" data-toggle="tab">
+                                                    الصور المرفقة
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#edit" data-toggle="tab">
+                                                    تعديل و اسناد
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <div class="tab-content">
                                         @include('admin.previews.tabs.preview')
                                         @include('admin.previews.tabs.gallery')

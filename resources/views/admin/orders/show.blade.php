@@ -32,31 +32,32 @@ display: none !important;
                 </li>
             </ul>
         </div>
-        
         <div class="row">
             <div class="profile-content">
                 <div class="portlet light">
                     <div class="portlet-body">
-                        <div class="portlet">
-                            <div class="portlet-body">
-                                <div class="tabbable-bordered">
-                                    <ul class="nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#order" data-toggle="tab">
-                                                الطلب
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#preview" data-toggle="tab">
-                                                بيانات طلب المعاينة
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#edit" data-toggle="tab">
-                                                تعديل الطلب
-                                            </a>
-                                        </li>
-                                    </ul>
+                        <div class="tabbable-bordered">
+                            <div class="no-print">
+                                <ul class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#order" data-toggle="tab">
+                                            الطلب
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#preview" data-toggle="tab">
+                                            بيانات طلب المعاينة
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#edit" data-toggle="tab">
+                                            تعديل الطلب
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="portlet">
+                                <div class="portlet-body">
                                     <div class="tab-content">
                                         @include('admin.orders.tabs.order')
                                         @include('admin.orders.tabs.preview')

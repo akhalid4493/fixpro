@@ -1,6 +1,5 @@
 <div class="tab-pane active" id="order">
-    <div class="invoice-content-2 bordered">
-        
+    <div class="invoice-content-2 bpreviewed">
         <div class="row invoice-head">
             <div class="col-md-7 col-xs-6">
                 <div class="invoice-logo" style="text-align: right;">
@@ -107,7 +106,6 @@
                 </table>
             </div>
         </div>
-        
         <div class="row invoice-subtotal">
             <div class="col-xs-3">
                 <h2 class="invoice-title uppercase">المجموع الكلي</h2>
