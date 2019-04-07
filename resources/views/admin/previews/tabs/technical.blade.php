@@ -100,7 +100,7 @@
                                 <span class="required">*</span>
                             </label>
                             <div class="input-group">
-                                <input autocomplete="off" type="text" class="form-control timepicker timepicker-no-seconds" name="time" value="{{Preview::hourOfPreview($preview->time)}}">
+                                <input autocomplete="off" type="text" class="form-control timepicker timepicker-24" name="time" value="{{Preview::hourOfPreview($preview->time)}}">
                                 <span class="input-group-btn">
                                     <button class="btn default"type="button">
                                     <i class="fa fa-clock-o"></i>

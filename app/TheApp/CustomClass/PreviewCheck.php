@@ -184,6 +184,7 @@ class PreviewCheck
                     })->get();
 
             $usersId = self::technicalShift($users,$date);
+
             $usersCounter = User::whereIn('id',$usersId)->get();
 
 
