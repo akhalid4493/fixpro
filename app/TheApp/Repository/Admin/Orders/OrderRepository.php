@@ -132,14 +132,7 @@ class OrderRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN ORDERS TABLE
-                            ->where('total'       , 'like' , '%'. $search .'%')
-                            ->orWhere('id'        , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -154,31 +147,50 @@ class OrderRepository
 
 
         $data = array();
+
         if(!empty($orders))
         {
             foreach ($orders as $order)
             {
                 $id = $order['id'];
 
-                $show = btn('show','show_orders'    ,url(route('orders.show',$id)));
+                $show = btn('show','show_orders' , url(route('orders.show',$id)));
 
-                $nestedData['id']               = $order->id;
-                $nestedData['total']            = Price($order->total). ' دك';
-                $nestedData['method']           = Label($order->method,'label-info');
-                $nestedData['order_status_id']  = OrderStatus($order);
-                $nestedData['full_name']        = $order->user->name;
-                $nestedData['email']            = $order->user->email;
-                $nestedData['mobile']           = $order->user->mobile;
-                $nestedData['options']          = $show;
-                $nestedData['created_at']       = transDate(date("d M-Y",strtotime($order->created_at)));
+                $obj['id']               = $order->id;
+                $obj['total']            = Price($order->total). ' دك';
+                $obj['method']           = Label($order->method,'label-info');
+                $obj['order_status_id']  = OrderStatus($order);
+                $obj['full_name']        = $order->user->name;
+                $obj['email']            = $order->user->email;
+                $obj['mobile']           = $order->user->mobile;
+                $obj['created_at']       = date("d-m-Y", strtotime($order->created_at));
+                $obj['listBox']          = checkBoxDelete($id);
+                $obj['options']          = $show;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
         
         return Response()->json($output);
+    }
+
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'          , 'like' , '%'. $search .'%')
+                          ->orWhere('total'      , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+
+
+        return $query;
     }
 
 }

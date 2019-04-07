@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\TheApp\Repository\Admin\Provinces\ProvinceRepository;
 use App\TheApp\Repository\Admin\Governorates\GovernorateRepository;
 
@@ -21,6 +20,11 @@ class ProvinceController extends AdminController
         return view('admin.provinces.home');
     }
 
+    public function getByGovernorates(Request $request)
+    {
+        $provinces = $this->provinceModel->getByGovernorates($request['governorate_id']);
+        return view('admin.nurseries.parts.provinces',compact('provinces'));
+    }
 
     public function dataTable(Request $request)
     {
@@ -100,4 +104,18 @@ class ProvinceController extends AdminController
         }
     }
 
+    public function deletes(Request $request)
+    {
+        try {
+            $repose = $this->provinceModel->deleteAll($request);
+
+            if($repose){
+                return Response()->json([true, 'تم الحذف بنجاح']);
+            }
+            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+
+        }catch (\PDOException $e){
+            return Response()->json([false, $e->errorInfo[2]]);
+        }
+    }
 }

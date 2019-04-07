@@ -2,7 +2,8 @@
 
 Route::group(['prefix' => 'previews'], function () {
 
-	Route::get('services' 	,'Api\UserApp\PreviewController@services');
+	Route::get('services' 		,'Api\UserApp\PreviewController@services');
+	Route::post('check-dates' 	,'Api\UserApp\PreviewController@checkDates');
 
 });
 

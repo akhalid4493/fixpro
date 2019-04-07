@@ -1,20 +1,13 @@
 <div class="tab-pane" id="gallery">
-	<div id="js-grid-juicy-projects" class="cbp">
-		@foreach ($preview->gallery as $img)
-		<div class="cbp-item graphic">
-			<div class="cbp-caption">
+	@foreach ($preview->gallery as $img)
+	<div class="col-md-4">
+		<div class="cbp-item identity logos">
+			<a href="{{ url($img->image) }}" class="cbp-caption cbp-lightbox" target="_blank">
 				<div class="cbp-caption-defaultWrap">
 					<img src="{{ url($img->image) }}" alt="">
 				</div>
-				<div class="cbp-caption-activeWrap">
-					<div class="cbp-l-caption-alignCenter">
-						<div class="cbp-l-caption-body">
-							<a href="{{ url($img->image) }}" class="cbp-lightbox cbp-l-caption-buttonRight btn red uppercase btn red uppercase">view</a>
-						</div>
-					</div>
-				</div>
-			</div>
+			</a>
 		</div>
-		@endforeach
 	</div>
+	@endforeach
 </div>

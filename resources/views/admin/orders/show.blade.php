@@ -56,14 +56,10 @@ display: none !important;
                                     </li>
                                 </ul>
                             </div>
-                            <div class="portlet">
-                                <div class="portlet-body">
-                                    <div class="tab-content">
-                                        @include('admin.orders.tabs.order')
-                                        @include('admin.orders.tabs.preview')
-                                        @include('admin.orders.tabs.edit')
-                                    </div>
-                                </div>
+                            <div class="tab-content">
+                                @include('admin.orders.tabs.order')
+                                @include('admin.orders.tabs.preview')
+                                @include('admin.orders.tabs.edit')
                             </div>
                         </div>
                     </div>

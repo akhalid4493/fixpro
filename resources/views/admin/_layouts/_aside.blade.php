@@ -35,7 +35,15 @@
             </li>
             @endpermission
             
-                        
+            @permission('show_technicals')
+            <li class="nav-item">
+                <a href="{{ url(route('technicals.index')) }}" class="nav-link nav-toggle">
+                    <i class="icon-users"></i>
+                    <span class="title">موعايد الموظفين</span>
+                </a>
+            </li>
+            @endpermission
+
             <li class="heading">
                 <h3 class="uppercase">التحكم</h3>
             </li>
@@ -124,7 +132,6 @@
                 </a>
             </li>
             @endpermission
-            
 
             <li class="heading">
                 <h3 class="uppercase">الاشتراكات</h3>
@@ -151,7 +158,7 @@
             <li class="heading">
                 <h3 class="uppercase">اعدادات</h3>
             </li>
-{{-- 
+            {{-- 
             @permission('show_notifications')
             <li class="nav-item">
                 <a href="{{ url(route('notifications')) }}" class="nav-link nav-toggle">
@@ -159,8 +166,8 @@
                     <span class="title">اشعارات عامة</span>
                 </a>
             </li>
-            @endpermission --}}
-
+            @endpermission 
+            --}}
             @permission('show_settings')
             <li class="nav-item">
                 <a href="{{ url(route('settings.index')) }}" class="nav-link nav-toggle">

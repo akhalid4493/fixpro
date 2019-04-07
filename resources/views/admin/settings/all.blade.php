@@ -19,13 +19,13 @@
 		
 		@include('admin._layouts._msg')
 		<div class="row">
-			<div class="profile-content">
-				<div class="portlet light ">
-					<form role="form" class="form-horizontal form-row-seperated" method="post" action="{{route('settings.store')}}" enctype="multipart/form-data">
-						{{ csrf_field() }}
-						<div class="portlet-body">
-							<div class="portlet">
-								<div class="portlet-body">
+			<div class="col-md-12">
+				<div class="profile-content">
+					<div class="portlet light ">
+						<form role="form" class="form-horizontal form-row-seperated" method="post" action="{{route('settings.store')}}" enctype="multipart/form-data">
+							{{ csrf_field() }}
+							<div class="portlet-body">
+								<div class="portlet">
 									<div class="tabbable-bordered">
 										<ul class="nav nav-tabs">
 											<li class="active">
@@ -48,6 +48,11 @@
 													التواصل الاجتماعي
 												</a>
 											</li>
+											<li>
+												<a href="#other" data-toggle="tab">
+													اخرى
+												</a>
+											</li>
 										</ul>
 										<div class="tab-content">
 											@include('admin.settings.tabs')
@@ -55,14 +60,17 @@
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="margiv-top-10">
-							<button type="submit" id="submit" class="btn green">حفظ التغيرات</button>
-						</div>
-					</form>
+							<div class="form-group">
+                                <div class="col-md-offset-2 col-md-9">
+                                    <button type="submit" id="submit" class="btn btn-lg blue">
+                                    حفظ التغيرات
+                                    </button>
+                                </div>
+                            </div>
+						</form>
+					</div>
 				</div>
-			</div>
-			
+			</div>			
 		</div>
 	</div>
 </div>

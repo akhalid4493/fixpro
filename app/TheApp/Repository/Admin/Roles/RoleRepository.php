@@ -146,10 +146,10 @@ class RoleRepository
                 });
     
         if ($request['req']['from'] != '')
-            $query->where('created_at'  , '>=' , $request['req']['from']);
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 
         if ($request['req']['to'] != '')
-            $query->where('created_at'  , '<=' , $request['req']['to']);
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
 
         return $query;
     }

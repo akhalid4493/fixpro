@@ -20,12 +20,12 @@
         <div class="row">
             <div class="profile-content">
                 {{-- Statistics --}}
-                <div class="portlet light portlet-fit bordered">
+                <div class="portlet light">
                     <div class="portlet-title tabbable-line">
                         <div class="caption caption-md">
                             <i class="icon-globe theme-font hide"></i>
                             <span class="caption-subject font-blue-madison bold uppercase">
-                                الاحصائيات
+                                احصائيات
                             </span>
                         </div>
                     </div>
@@ -47,137 +47,110 @@
                     </div>
                 </div>
                 {{-- Content --}}
-                <div class="portlet light portlet-fit bordered">
-                    <div class="portlet-title tabbable-line">
-                        <div class="caption caption-md">
-                            <i class="icon-globe theme-font hide"></i>
-                            <span class="caption-subject font-blue-madison bold uppercase">
-                                جدول الاعضاء
-                            </span>
-                        </div>
-                    </div>
+                <div class="portlet light">
                     <div class="portlet-body">
                         <div class="table-toolbar">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="btn-group">
-                                        <a href="{{ url(route('users.create')) }}" class="btn sbold green">
-                                            <i class="fa fa-plus"></i> اضافة عضو جديد
+                                        <a href="{{url(route('users.create'))}}" class="btn sbold green">
+                                            <i class="fa fa-plus"></i> اضافة
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="portlet light portlet-fit portlet-datatable bordered">
-                            {{-- Filter DataTable --}}
-                            <table class="table table-striped table-bordered table-hover table-checkable">
-                                <thead>
-                                    <tr role="row" class="heading">
-                                        <th width="15%"> بحث بتاريخ الانشاء </th>
-                                        <th width="15%"> بحث بالحالة </th>
-                                        <th width="15%"> بحث بالصلاحيات </th>
-                                    </tr>
-                                    <tr role="row" class="filter">
-                                        <form id="formFilter">
-                                            <td>
-                                                <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                                    <input type="text" class="form-control form-filter input-sm" readonly name="from" placeholder="من" id="fromDate">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-sm default" type="button">
-                                                        <i class="fa fa-calendar"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                                <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
-                                                    <input type="text" class="form-control form-filter input-sm" readonly name="to" placeholder="الى" id="toDate">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-sm default" type="button">
-                                                        <i class="fa fa-calendar"></i>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <select name="active" class="form-control">
-                                                        <option value="">اختر</option>
-                                                        <option value="1">مفعل</option>
-                                                        <option value="0">غير مفعل</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <select name="roles" class="form-control">
-                                                        <option value="">اختر</option>
-                                                        <option value="normal">Normal Users</option>
-                                                        @foreach ($roles as $role)
-                                                            <option value="{{ $role['id'] }}">
-                                                                {{ $role['display_name'] }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </td>
-
-                                        </form>
+                        {{-- Filter DataTable --}}
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="15%"> بحث بتاريخ الانشاء </th>
+                                    <th width="15%"> بحث بالحالة </th>
+                                    <th width="15%"> بحث بالصلاحيات </th>
+                                </tr>
+                                <tr role="row" class="filter">
+                                    <form id="formFilter">
                                         <td>
-                                            <div class="margin-bottom-5">
-                                                <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
-                                                <i class="fa fa-search"></i>
-                                                بحث
-                                                </button>
+                                            <div id="reportrange" class="btn default">
+                                                <i class="fa fa-calendar"></i> &nbsp;
+                                                <span> </span>
+                                                <b class="fa fa-angle-down"></b>
+                                                <input type="hidden" name="from">
+                                                <input type="hidden" name="to">
                                             </div>
-                                            
-                                            <button class="btn btn-sm red btn-outline filter-cancel">
-                                            <i class="fa fa-times"></i>
-                                            حذف البحث
-                                            </button>
                                         </td>
-                                    </tr>
-                                </thead>
-                            </table>
-                            {{-- DataTable --}}
-                            <div class="portlet-body">
-                                <div class="table-container">
-                                    <table class="table table-striped table-bordered table-hover" id="dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th width="2%" class="chkParent">
-                                                    <a href="#.">تحديد الكل</a>
-                                                </th>
-                                                <th width="2%">#</th>
-                                                <th>الصورة الشخصية</th>
-                                                <th>الاسم</th>
-                                                <th>البريد</th>
-                                                <th>رقم الهاتف</th>
-                                                <th>الحالة</th>
-                                                <th>الصلاحيات</th>
-                                                <th>تاريخ الانشاء</th>
-                                                <th>خيارات</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    @permission('delete_users')
-                                    <div class="row">
-                                        <div class="col-md-2">
+                                        <td>
                                             <div class="form-group">
-                                                <select name="xx" class="form-control">
-                                                    <option value="delete">
-                                                        حذف المحدد
-                                                    </option>
+                                                <select name="active" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    <option value="1">مفعل</option>
+                                                    <option value="0">غير مفعل</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" id="deleteChecked" class="btn red btn-sm" onclick="deleteAllChecked('{{ url(route('users.deletes')) }}')">
-                                            تطبيق
-                                            </button>
-                                        </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="roles" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    <option value="normal">Normal Users</option>
+                                                    @foreach ($roles as $role)
+                                                        <option value="{{ $role['id'] }}">
+                                                            {{ $role['display_name'] }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </td>
+
+                                    </form>
+                                    <td>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search"> 
+                                            <i class="fa fa-search"></i>بحث
+                                        </button>
+                                        
+                                        <button class="btn btn-sm red btn-outline filter-cancel">
+                                            <i class="fa fa-times"></i>حذف
+                                        </button>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        {{-- DataTable --}}
+                        <table class="table table-striped table-bordered table-hover" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th width="2%" class="chkParent">
+                                        <a href="#.">تحديد الكل</a>
+                                    </th>
+                                    <th width="2%">#</th>
+                                    <th>الصورة الشخصية</th>
+                                    <th>الاسم</th>
+                                    <th>البريد</th>
+                                    <th>رقم الهاتف</th>
+                                    <th>الحالة</th>
+                                    <th>الصلاحيات</th>
+                                    <th>تاريخ الانشاء</th>
+                                    <th>خيارات</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="row">
+                            @permission('delete_users')
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <select name="xx" class="form-control">
+                                            <option value="delete">
+                                                حذف المحدد
+                                            </option>
+                                        </select>
                                     </div>
-                                    @endpermission
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <button type="submit" id="deleteChecked" class="btn red btn-sm" onclick="deleteAllChecked('{{ url(route('users.deletes')) }}')">
+                                    تطبيق
+                                    </button>
+                                </div>
+                            @endpermission
                         </div>
                     </div>
                 </div>
@@ -203,7 +176,6 @@
         },
         "processing":true,
         "serverSide":true,
-        "scrollX"   :true,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
         },

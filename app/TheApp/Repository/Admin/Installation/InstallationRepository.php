@@ -111,6 +111,28 @@ class InstallationRepository
         }
     }
 
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $installations = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($installations as $installation) {
+                $installation->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     public function dataTable($request)
     {
         $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
@@ -118,15 +140,7 @@ class InstallationRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN installation TABLE
-                            ->where('name_en' 	  , 'like' , '%'. $search .'%')
-                            ->orWhere('name_ar'   , 'like' , '%'. $search .'%')
-                            ->orWhere('id'        , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -141,29 +155,52 @@ class InstallationRepository
 
 
         $data = array();
+
         if(!empty($installations))
         {
             foreach ($installations as $installation)
             {
                 $id = $installation['id'];
 
-                $edit = btn('edit'  ,'edit_installations'  ,url(route('installations.edit',$id)));
-                $dlt  = btn('delete','delete_installations',url(route('installations.show',$id)));
+                $edit   = btn('edit'  ,'edit_installations'  ,url(route('installations.edit',$id)));
+                $delete = btn('delete','delete_installations',url(route('installations.show',$id)));
 
-                $nestedData['id']          = $installation->id;
-                $nestedData['image']       = url($installation->image);
-                $nestedData['name_ar']     = $installation->name_ar;
-                $nestedData['price']       = Price($installation->price).' KD';
-                $nestedData['status']      = Status($installation->status);
-                $nestedData['created_at']  = transDate(date("Y-m-d", strtotime($installation->created_at)));
-                $nestedData['options']     = $edit . $dlt;
+                $obj['id']          = $id;
+                $obj['name_ar']     = $installation->name_ar;
+                $obj['price']       = Price($installation->price);
+                $obj['image']       = url($installation->image);
+                $obj['status']      = Status($installation->status);
+                $obj['created_at']  = date("d-m-Y", strtotime($installation->created_at));
+                $obj['listBox']     = checkBoxDelete($id);
+                $obj['options']     = $edit . $delete;;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
         
         return Response()->json($output);
+    }
+
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'         , 'like' , '%'. $search .'%')
+                          ->orWhere('name_ar'  , 'like' , '%'. $search .'%')
+                          ->orWhere('name_en'  , 'like' , '%'. $search .'%')
+                          ->orWhere('price'    , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+
+        if ($request['req']['active'] != '')
+            $query->where('status' , $request['req']['active']);
+
+        return $query;
     }
 }

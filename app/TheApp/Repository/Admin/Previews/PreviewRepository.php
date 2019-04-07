@@ -4,6 +4,7 @@ namespace App\TheApp\Repository\Admin\Previews;
 use App\TheApp\Libraries\ImgRepository;
 use App\Models\TechnicalPreview;
 use App\Models\PreviewStatus;
+use App\Models\PreviewDate;
 use App\Models\Preview;
 use SendNotifi;
 use Auth;
@@ -13,11 +14,17 @@ class PreviewRepository
 {
     protected $model;
 
-    function __construct(Preview $preview,PreviewStatus $status,TechnicalPreview $tech)
+    function __construct(
+        Preview $preview,
+        PreviewStatus $status,
+        TechnicalPreview $tech,
+        PreviewDate $date
+    )
     {
         $this->model        = $preview;
         $this->modelStatus  = $status;
         $this->modelTech    = $tech;
+        $this->modelDate    = $date;
     }
 
     public function countNewPreviews()
@@ -56,22 +63,42 @@ class PreviewRepository
             if ($request['preview_status_id']) {
     
                 $preview->update([
-                    'preview_status_id'      => $request['preview_status_id'],
+                    'preview_status_id' => $request['status'],
+                    'time'              => $request['date'].' '.date('H:i:s',strtotime($request->time)),
                 ]);
-    
+
+                $date = $this->modelDate->where('preview_id',$preview['id'])->first();
+
+                $date->update([
+                    'date' => $request['date'].' '.date('H:i:s',strtotime($request->time)),
+                ]);
+
                 if($request['user_notifi'] == "1")
                     $this->sendNotifiToUser($preview);
             }
                 
 
-            if ($request['techincal_user_id']) {
-                $tech = $this->modelTech->updateOrCreate([
-                    'preview_id'   => $id,
-                ],
-                [
-                    'preview_id'            => $id,
-                    'user_id'               => $request['techincal_user_id'],
-                ]);
+            if (is_array_empty($request['technical'])) {
+
+                foreach ($request['service_id'] as $key => $serviceId) {
+
+                    $technicals = $this->modelTech
+                                        ->where('service_id',$serviceId)
+                                        ->where('preview_id',$request['preview_id'])
+                                        ->first();
+                    if ($technicals) {
+                        $technicals->delete();
+                    }
+
+                    $tech = $this->modelTech->create([
+                        'preview_id'   => $request['preview_id'],
+                        'service_id'   => $serviceId,
+                        'user_id'      => $request['technical'][$key],
+                        'province_id'  => $request['province_id'],
+                        'date'         => $request['date'].' '.date('H:i:s',strtotime($request->time)),
+                    ]);
+                
+                }
 
                 if($request['tech_notifi'] == "1")
                     $this->sendNotifiToTech($tech);
@@ -120,6 +147,7 @@ class PreviewRepository
         $preview = $this->findById($id);
         return $preview->delete();
     }
+    
 
     public function dataTable($request)
     {
@@ -128,15 +156,7 @@ class PreviewRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN previews TABLE
-                            ->where('time'       , 'like' , '%'. $search .'%')
-                            ->orWhere('note'     , 'like' , '%'. $search .'%')
-                            ->orWhere('id'       , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -151,6 +171,7 @@ class PreviewRepository
 
 
         $data = array();
+
         if(!empty($previews))
         {
             foreach ($previews as $preview)
@@ -159,24 +180,42 @@ class PreviewRepository
 
                 $show = btn('show','show_previews' , url(route('previews.show',$id)));
 
-                $nestedData['id']               = $preview->id;
-                $nestedData['time']             = $preview->time;
-                $nestedData['note']             = $preview->note;
-                $nestedData['preview_status_id']= PreviewStatus($preview);
-                $nestedData['full_name']        = $preview->user->name;
-                $nestedData['email']            = $preview->user->email;
-                $nestedData['mobile']           = $preview->user->mobile;
-                $nestedData['options']          = $show;
-                $nestedData['created_at']       = date("d-m-Y", strtotime($preview->created_at));
-                $nestedData['listBox']          = checkBoxDelete($id);
+                $obj['id']               = $id;
+                $obj['time']             = $preview->time;
+                $obj['note']             = $preview->note;
+                $obj['preview_status_id']= PreviewStatus($preview);
+                $obj['full_name']        = $preview->user->name;
+                $obj['email']            = $preview->user->email;
+                $obj['mobile']           = $preview->user->mobile;
+                $obj['created_at']       = date("d-m-Y", strtotime($preview->created_at));
+                $obj['listBox']          = checkBoxDelete($id);
+                $obj['options']          = $show;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
         
         return Response()->json($output);
+    }
+
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'          , 'like' , '%'. $search .'%')
+                          ->orWhere('time'      , 'like' , '%'. $search .'%')
+                          ->orWhere('note'      , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+
+
+        return $query;
     }
 
 }

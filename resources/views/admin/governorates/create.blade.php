@@ -17,22 +17,20 @@
 		<h1 class="page-title"></h1>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="portlet light bordered form-fit">
-					<div class="portlet-title">
-						<div class="caption">
-							<i class="icon-equalizer font-green-haze"></i>
-							<span class="caption-subject font-green-haze bold uppercase">
+                <div class="portlet light ">
+					<div class="portlet-title tabbable-line">
+                        <div class="caption caption-md">
+                            <i class="icon-globe theme-font hide"></i>
+                            <span class="caption-subject font-blue-madison bold uppercase">
 								اضافة محافظة جديد
-							</span>
-						</div>
-					</div>
+                            </span>
+                        </div>
+                    </div>
+					
 					<div class="portlet-body form">
 						<form id="form" method="POST" action="{{url(route('governorates.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
-							
-							{{ csrf_field() }}
-							
+							@csrf
 							<div class="form-body">
-								
 								<div class="form-group">
 									<label class="control-label col-md-3">
 										اسم المحافظة [ar]
@@ -91,8 +89,8 @@
 										</div>
 									</div>
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>

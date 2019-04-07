@@ -1,10 +1,9 @@
 <div class="tab-pane" id="edit">
-    <div class="no-print">
-        <form method="POST" action="{{url(route('previews.update',$preview['id']))}}"
-            enctype="multipart/form-data" id="updateForm">
-            
-            {{ csrf_field() }}
-            
+    <form method="POST" action="{{url(route('previews.update',$preview['id']))}}"
+        enctype="multipart/form-data" id="updateForm" class="horizontal-form">
+        <div class="no-print">
+            @csrf
+
             <input name="_method" type="hidden" value="PUT">
             
             <div class="row">
@@ -14,7 +13,7 @@
                             تغير حالة الطلب
                             <span class="required">*</span>
                         </label>
-                        <select name="preview_status_id" id="" class="form-control">
+                        <select name="preview_status_id" id="single" class="form-control select2">
                             @foreach ($statuses as $status)
                             <option value="{{ $status['id'] }}"
                                 @if ($preview->preview_status_id == $status->id)
@@ -26,28 +25,8 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">
-                            اسناد طلب المعاينة الى
-                            <span class="required">*</span>
-                        </label>
-                        <select name="techincal_user_id" id="" class="form-control">
-                            <option value="">اختر الموظف</option>
-                            @foreach ($users as $user)
-                            <option value="{{ $user['id'] }}"
-                                @if ($preview->technical)
-                                @if ($user['id']==$preview->technical->user_id)
-                                selected=""
-                                @endif
-                                @endif
-                                >
-                                {{ $user['name'] }}
-                            </option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
                         <div class="mt-checkbox-list">
@@ -59,20 +38,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <div class="mt-checkbox-list">
-                            <label class="mt-checkbox">
-                                <input type="checkbox" name="tech_notifi" value="1">
-                                ارسال اشعار للفني
-                                <span></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <div id="result" style="display: none"></div>
+
             <div class="progress-info" style="display: none">
                 <div class="progress">
                     <span class="progress-bar progress-bar-warning"></span>
@@ -84,6 +53,6 @@
                 تعديل
                 </button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

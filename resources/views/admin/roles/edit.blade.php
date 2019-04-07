@@ -21,7 +21,7 @@
         <h1 class="page-title"></h1>
         
         <div class="row">
-            <div class="profile-content">
+            <div class="col-md-12">
                 <div class="portlet light ">
                     <div class="portlet-title tabbable-line">
                         <div class="caption caption-md">
@@ -39,86 +39,84 @@
                             @csrf
                             
                             <div class="portlet">
-                                <div class="portlet-body">
-                                    <div class="tabbable-bordered">
-                                        <ul class="nav nav-tabs">
-                                            <li class="active">
-                                                <a href="#tab_general" data-toggle="tab">
-                                                    بيانات عامة
-                                                </a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content">
-                                            <div class="tab-pane active" id="tab_general">
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2">
-                                                        اسم المجموعة
-                                                        <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-9">
-                                                        <input type="text" name="name" placeholder="الصلاحية : Data Entry" class="form-control" value="{{ $role['display_name'] }}">
-                                                    </div>
+                                <div class="tabbable-bordered">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_general" data-toggle="tab">
+                                                بيانات عامة
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="tab_general">
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">
+                                                    اسم المجموعة
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" name="name" placeholder="الصلاحية : Data Entry" class="form-control" value="{{ $role['display_name'] }}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2">
-                                                        الوصف
-                                                    </label>
-                                                    <div class="col-md-9">
-                                                        <textarea name="description" class="form-control" cols="30" rows="10">{!! $role['description'] !!}</textarea>
-                                                    </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">
+                                                    الوصف
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <textarea name="description" class="form-control" cols="30" rows="10">{!! $role['description'] !!}</textarea>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2">
-                                                        تحديد الصلاحيات
-                                                        <span class="required">*</span>
-                                                    </label>
-                                                    <div class="col-md-9">
-                                                        <div class="mt-checkbox-list">
-                                                            <ul>
-                                                                @foreach ($perms->groupBy('display_name') as $key => $perm)
-                                                                <li style="list-style-type:none">
-                                                                    <label class="mt-checkbox">
-                                                                        <input type="checkbox" class="permission-group">
-                                                                        <strong>{{title_case(str_replace('_',' ', $key))}}</strong>
-                                                                        <span></span>
-                                                                    </label>
-                                                                    <ul style="list-style-type:none">
-                                                                        @foreach($perm as $permission)
-                                                                        <li style="list-style-type:none">
-                                                                            <label class="mt-checkbox">
-                                                                                <input class="child" type="checkbox" name="permission[]" value="{{$permission->id}}" {{in_array($permission->id,$role_perms)?"checked":""}}>
-                                                                                {{title_case(str_replace('_', ' ', $permission->name))}}
-                                                                                <span></span>
-                                                                            </label>
-                                                                        </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-2">
+                                                    تحديد الصلاحيات
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <div class="mt-checkbox-list">
+                                                        <ul>
+                                                            @foreach ($perms->groupBy('display_name') as $key => $perm)
+                                                            <li style="list-style-type:none">
+                                                                <label class="mt-checkbox">
+                                                                    <input type="checkbox" class="permission-group">
+                                                                    <strong>{{title_case(str_replace('_',' ', $key))}}</strong>
+                                                                    <span></span>
+                                                                </label>
+                                                                <ul style="list-style-type:none">
+                                                                    @foreach($perm as $permission)
+                                                                    <li style="list-style-type:none">
+                                                                        <label class="mt-checkbox">
+                                                                            <input class="child" type="checkbox" name="permission[]" value="{{$permission->id}}" {{in_array($permission->id,$role_perms)?"checked":""}}>
+                                                                            {{title_case(str_replace('_', ' ', $permission->name))}}
+                                                                            <span></span>
+                                                                        </label>
+                                                                    </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </li>
+                                                            @endforeach
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-actions">
-                                                <div id="result" style="display: none"></div>
-                                                
-                                                <div class="progress-info" style="display: none">
-                                                    <div class="progress">
-                                                        <span class="progress-bar progress-bar-warning"></span>
-                                                    </div>
-                                                    <div class="status" id="progress-status"></div>
+                                        </div>
+                                        <div class="form-actions">
+                                            <div id="result" style="display: none"></div>
+                                            
+                                            <div class="progress-info" style="display: none">
+                                                <div class="progress">
+                                                    <span class="progress-bar progress-bar-warning"></span>
                                                 </div>
-                                                
-                                                <div class="form-group">
-                                                    <div class="col-md-offset-2 col-md-9">
-                                                        <button type="submit" id="submit" class="btn btn-lg blue">
-                                                        تعديل
-                                                        </button>
-                                                        <a href="{{url(route('roles.index')) }}" class="btn btn-lg red">
-                                                            الخلف
-                                                        </a>
-                                                    </div>
+                                                <div class="status" id="progress-status"></div>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <div class="col-md-offset-2 col-md-9">
+                                                    <button type="submit" id="submit" class="btn btn-lg blue">
+                                                    تعديل
+                                                    </button>
+                                                    <a href="{{url(route('roles.index')) }}" class="btn btn-lg red">
+                                                        الخلف
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,14 +131,15 @@
     </div>
 </div>
 @stop
+
 @section('scripts')
 <script>
 $(document).ready(
-function(){
-$(".permission-group").click(function () {
-$(this).parents('li').find('.child').prop('checked', this.checked);
-});
-}
+    function(){
+    $(".permission-group").click(function () {
+            $(this).parents('li').find('.child').prop('checked', this.checked);
+        });
+    }
 );
 </script>
 @stop

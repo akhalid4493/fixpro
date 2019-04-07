@@ -850,14 +850,7 @@ table.dataTable th.sorting_3 {
     padding: 0 2px; }
   .dataTables_extended_wrapper .table.dataTable {
     margin: 20px 0 !important; }
-  .dataTables_extended_wrapper div.dataTables_paginate,
-  .dataTables_extended_wrapper div.dataTables_length,
-  .dataTables_extended_wrapper div.dataTables_info {
-    display: inline-block;
-    float: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    position: static !important; }
+  
   .dataTables_extended_wrapper .table-group-actions > span {
     font-size: 13px; }
   .dataTables_extended_wrapper.DTS .paging_bootstrap_extended {
@@ -957,12 +950,8 @@ a.dt-button {
   a.dt-button:last-child {
     margin-left: 0; }
 
-.dataTables_wrapper .dt-buttons {
+.dataTables_wrapper{
   float: left; }
-  .portlet.light .dataTables_wrapper .dt-buttons {
-    margin-top: -64px; }
-  .portlet.box .dataTables_wrapper .dt-buttons {
-    margin-top: -50px; }
 .dataTable .row-details.row-details-close {
   background: url("../img/datatable-row-openclose.png") no-repeat 100% 0; }
 

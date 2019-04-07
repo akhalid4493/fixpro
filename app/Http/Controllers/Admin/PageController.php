@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\TheApp\Repository\Admin\Pages\PageRepository;
 use App\TheApp\Requests\Admin\Pages\EditPageRequest;
 use App\TheApp\Requests\Admin\Pages\PageRequest;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -104,4 +103,18 @@ class PageController extends AdminController
         }
     }
 
+    public function deletes(Request $request)
+    {
+        try {
+            $repose = $this->pageModel->deleteAll($request);
+
+            if($repose){
+                return Response()->json([true, 'تم الحذف بنجاح']);
+            }
+            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+
+        }catch (\PDOException $e){
+            return Response()->json([false, $e->errorInfo[2]]);
+        }
+    }
 }

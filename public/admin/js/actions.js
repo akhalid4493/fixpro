@@ -47,10 +47,12 @@ $('#form').on('submit',function(e) {
             if (data[0] == true){
                 toastr["success"](data[1]);
                 $('#form')[0].reset();
+                $('#dataTable').DataTable().ajax.reload();
             }
             else{
                 console.log(data);
                 toastr["error"](data[1]);
+                $('#dataTable').DataTable().ajax.reload();
             }
             
             $('.progress-info').hide();

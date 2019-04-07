@@ -147,7 +147,7 @@
                 <div class="form-group">
                   <div class="col-md-offset-3 col-md-9">
                     <button type="submit" id="submit" class="btn btn-lg blue">
-                    اضافة
+                    تعديل
                     </button>
                     <a href="{{url(route('packages.index')) }}" class="btn btn-lg red">
                       الخلف

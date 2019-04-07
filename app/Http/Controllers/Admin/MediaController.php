@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Media\MediaRepository;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -85,4 +84,18 @@ class MediaController extends AdminController
         }
     }
 
+    public function deletes(Request $request)
+    {
+        try {
+            $repose = $this->mediaModel->deleteAll($request);
+
+            if($repose){
+                return Response()->json([true, 'تم الحذف بنجاح']);
+            }
+            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+
+        }catch (\PDOException $e){
+            return Response()->json([false, $e->errorInfo[2]]);
+        }
+    }
 }

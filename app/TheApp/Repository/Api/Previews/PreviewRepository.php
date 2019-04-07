@@ -3,6 +3,7 @@ namespace App\TheApp\Repository\Api\Previews;
 
 use App\Models\PreviewGallery;
 use App\Models\PreviewDetail;
+use App\Models\PreviewDate;
 use App\Models\Preview;
 use App\Models\Service;
 use ImageTrait;
@@ -17,6 +18,7 @@ class PreviewRepository
         Service $service,
         Preview $preview,
         PreviewDetail $details,
+        PreviewDate $date,
         PreviewGallery $gallery
     )
     {
@@ -24,6 +26,7 @@ class PreviewRepository
         $this->modelDetails = $details;
         $this->modelService = $service;
         $this->modelGallery = $gallery;
+        $this->modelDate    = $date;
     }  
 
     /*
@@ -53,8 +56,10 @@ class PreviewRepository
                 'preview_status_id' => 1,
             ]);
 
-            if ($preview)
-                $this->createPreviewDetails($preview['id'],$request);
+            if ($preview){
+                $this->createPreviewDates($preview,$request);
+                $this->createPreviewDetails($preview,$request);
+            }
 
             if ($request['image']) {
                 foreach ($request['image'] as $img) {
@@ -77,7 +82,7 @@ class PreviewRepository
         }
     }
 
-    public function createPreviewDetails($previewId,$request)
+    public function createPreviewDetails($preview,$request)
     {
         DB::beginTransaction();
 
@@ -86,7 +91,31 @@ class PreviewRepository
             foreach ($request['service_id'] as $service) {
                 $this->modelDetails->create([
                     'service_id' => $service,
-                    'preview_id' => $previewId,
+                    'preview_id' => $preview['id'],
+                ]);
+            }
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function createPreviewDates($preview,$request)
+    {        
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($request['service_id'] as $service) {
+                $this->modelDate->create([
+                    'date'              => $request['time'],
+                    'service_id'        => $service,
+                    'preview_id'        => $preview['id'],
+                    'governorate_id'    => $preview->address->addressProvince->governorate_id,
                 ]);
             }
 

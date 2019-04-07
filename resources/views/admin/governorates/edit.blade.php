@@ -9,7 +9,7 @@
           <a href="{{ url(route('admin')) }}">الرئيسية</a><i class="fa fa-circle"></i>
         </li>
         <li>
-          <a href="{{ url(route('governorates.index')) }}">جميع الاقسام</a><i class="fa fa-circle"></i>
+          <a href="{{ url(route('governorates.index')) }}">جميع المحافظات</a><i class="fa fa-circle"></i>
         </li>
         <li><span>تعديل بيانات المحافظة</span></li>
       </ul>
@@ -17,20 +17,20 @@
     <h1 class="page-title"></h1>
     <div class="row">
       <div class="col-md-12">
-        <div class="portlet light bordered form-fit">
-          <div class="portlet-title">
-            <div class="caption">
-              <i class="icon-equalizer font-green-haze"></i>
-              <span class="caption-subject font-green-haze bold uppercase">
-                تعديل بيانات محافظة : <b style="color: red">{{ $governorate->name_ar }}</b>
-              </span>
-            </div>
+        <div class="portlet light">
+          <div class="portlet-title tabbable-line">
+              <div class="caption caption-md">
+                  <i class="icon-globe theme-font hide"></i>
+                  <span class="caption-subject font-blue-madison bold uppercase">
+                    تعديل بيانات محافظة : <b style="color: red">{{ $governorate->name_ar }}</b>
+                  </span>
+              </div>
           </div>
           <div class="portlet-body form">
             <form id="updateForm" method="post" action="{{url(route('governorates.update',$governorate->id))}}" class="form-horizontal form-row-seperated">
               
-              {{ csrf_field() }}
-              
+              @csrf
+
               <input name="_method" type="hidden" value="PUT">
               
               <div class="form-body">
@@ -87,7 +87,7 @@
                 <div class="form-group">
                   <div class="col-md-offset-3 col-md-9">
                     <button type="submit" id="submit" class="btn btn-lg blue">
-                    اضافة
+                    تعديل
                     </button>
                     <a href="{{url(route('governorates.index')) }}" class="btn btn-lg red">
                       الخلف

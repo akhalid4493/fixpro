@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\TheApp\Libraries\SettingRepository;
 use App\TheApp\Requests\Admin\Settings\SettingRequest;
 use Settings;

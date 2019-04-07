@@ -18,13 +18,13 @@
     <div class="row">
       <div class="col-md-12">
         <div class="portlet light bordered form-fit">
-          <div class="portlet-title">
-            <div class="caption">
-              <i class="icon-equalizer font-green-haze"></i>
-              <span class="caption-subject font-green-haze bold uppercase">
-                تعديل بيانات منطقة : <b style="color: red">{{ $province->name_ar }}</b>
-              </span>
-            </div>
+          <div class="portlet-title tabbable-line">
+              <div class="caption caption-md">
+                  <i class="icon-globe theme-font hide"></i>
+                  <span class="caption-subject font-blue-madison bold uppercase">
+                    تعديل بيانات منطقة : <b style="color: red">{{ $province->name_ar }}</b>
+                  </span>
+              </div>
           </div>
           <div class="portlet-body form">
             <form id="updateForm" method="post" action="{{url(route('provinces.update',$province->id))}}" class="form-horizontal form-row-seperated">
@@ -106,7 +106,7 @@
                 <div class="form-group">
                   <div class="col-md-offset-3 col-md-9">
                     <button type="submit" id="submit" class="btn btn-lg blue">
-                    اضافة
+                    تعديل
                     </button>
                     <a href="{{url(route('provinces.index')) }}" class="btn btn-lg red">
                       الخلف

@@ -1,10 +1,7 @@
 <?php
 namespace App\TheApp\Repository\Admin\Governorates;
 
-use App\TheApp\Libraries\ImgRepository;
-use Illuminate\Http\Request;
 use App\Models\Governorate;
-use Auth;
 use DB;
 
 class GovernorateRepository
@@ -70,11 +67,45 @@ class GovernorateRepository
         }
     }
 
-
     public function delete($id)
     {
-        $governorate = $this->findById($id);
-        return $governorate->delete();
+        DB::beginTransaction();
+        
+        try {
+            
+            $governorate = $this->findById($id);
+
+            $governorate->delete();
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $governorates = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($governorates as $governorate) {
+                $governorate->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
     }
 
     public function dataTable($request)
@@ -84,15 +115,7 @@ class GovernorateRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN governorate TABLE
-                            ->where('name_en' 	  , 'like' , '%'. $search .'%')
-                            ->orWhere('name_ar'   , 'like' , '%'. $search .'%')
-                            ->orWhere('id'        , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -107,23 +130,25 @@ class GovernorateRepository
 
 
         $data = array();
+
         if(!empty($governorates))
         {
             foreach ($governorates as $governorate)
             {
                 $id = $governorate['id'];
 
-                $edit = btn('edit'  ,'edit_governorates'  ,url(route('governorates.edit',$id)));
-                $dlt  = btn('delete','delete_governorates',url(route('governorates.show',$id)));
+                $edit   = btn('edit'  ,'edit_governorates'  ,url(route('governorates.edit',$id)));
+                $delete = btn('delete','delete_governorates',url(route('governorates.show',$id)));
 
-                $nestedData['id']          = $governorate->id;
-                $nestedData['name_en']     = $governorate->name_en;
-                $nestedData['name_ar']     = $governorate->name_ar;
-                $nestedData['status']      = Status($governorate->status);
-                $nestedData['created_at']  = transDate(date("d M-Y", strtotime($governorate->created_at)));
-                $nestedData['options']     = $edit . $dlt;
+                $obj['id']          = $id;
+                $obj['name_ar']     = $governorate->name_ar;
+                $obj['name_en']     = $governorate->name_en;
+                $obj['status']      = Status($governorate->status);
+                $obj['created_at']  = date("d-m-Y", strtotime($governorate->created_at));
+                $obj['listBox']     = checkBoxDelete($id);
+                $obj['options']     = $edit . $delete;;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
@@ -132,4 +157,23 @@ class GovernorateRepository
         return Response()->json($output);
     }
 
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'         , 'like' , '%'. $search .'%')
+                          ->orWhere('name_en'  , 'like' , '%'. $search .'%')
+                          ->orWhere('name_ar'  , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+
+        if ($request['req']['active'] != '')
+            $query->where('status' , $request['req']['active']);
+
+        return $query;
+    }
 }

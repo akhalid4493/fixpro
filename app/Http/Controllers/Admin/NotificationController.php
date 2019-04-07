@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\TheApp\Libraries\SendNotification;
 use App\TheApp\Repository\Admin\Users\UserRepository;
 

@@ -6,6 +6,7 @@ use App\TheApp\Repository\Api\Previews\PreviewRepository as Preveiew;
 use App\Http\Resources\Previews\PreviewResource;
 use App\Http\Resources\Services\ServiceResource;
 use App\Http\Controllers\Api\ApiController;
+use App\TheApp\CustomClass\PreviewCheck;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -14,6 +15,16 @@ class PreviewController extends ApiController
     function __construct(Preveiew $preview)
     {
         $this->previewModel  = $preview;
+    }
+    
+    public function checkDates(Request $request)
+    {
+        $dates = PreviewCheck::getPreviews($request['service_id'],$request['governorate_id']);
+
+        if ($dates)
+            return $this->responseMessages($dates,true,200);
+
+        return $this->responseMessages([],false,405,['there is no of dates']);
     }
 
     public function services()

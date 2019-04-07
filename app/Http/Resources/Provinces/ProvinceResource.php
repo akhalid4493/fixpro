@@ -15,8 +15,9 @@ class ProvinceResource extends Resource
     public function toArray($request)
     {
          return [
-            'id'            => $this->id,
-            'name'          => transText($this,'name'),
+            'id'                => $this->id,
+            'name'              => transText($this,'name'),
+            'governorate_id'    => $this->governorate_id,
         ];
     }
 }

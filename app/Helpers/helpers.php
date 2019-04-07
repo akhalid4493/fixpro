@@ -425,3 +425,24 @@ if (!function_exists('ArabicDate')) {
 
     }
 }
+
+if (!function_exists('is_array_empty')) {
+
+    function is_array_empty($arr){
+      if(is_array($arr)){
+          foreach ($arr as $key => $value) {
+              if(!empty($value) || $value != NULL || $value != ""){
+                  return true;
+              }
+          }
+          return false;
+      }
+    }
+}
+
+if (!function_exists('dayName')) {
+
+    function dayName($dayNumb){
+        return Carbon::now()->subDays($dayNumb)->format('l');
+    }
+}

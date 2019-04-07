@@ -80,6 +80,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Address');
     }
     
+    public function workDays()
+    {
+        return $this->hasMany('App\Models\TechnicalDay');
+    }
+
     public function previewsOfTechnical()
     {
         return $this->belongsToMany('App\Models\Preview', 'technical_previews');
@@ -90,8 +95,23 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\Models\DeviceToken')->latest();
     }
 
+    public function shift()
+    {       
+        return $this->hasOne('App\Models\TechnicalShift')->latest();
+    }
+
     public function subscription()
     {
         return $this->hasOne('App\Models\UserSubscription')->latest();
+    }
+
+    public function servicesOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\Service', 'technical_services');
+    }
+
+    public function locationsOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\Governorate', 'technical_locations');
     }
 }

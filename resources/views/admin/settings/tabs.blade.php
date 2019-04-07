@@ -57,17 +57,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-group">
-                <label class="col-md-2 control-label">
-                    عدد ايام كفالة التركيب
-                </label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="warranty"
-                    value="{{settings('warranty')}}"/>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <div class="tab-pane" id="contact_info">
@@ -96,6 +85,24 @@
         <div class="col-md-10">
             <input type="text" class="form-control" name="company_email"
             value="{{settings('company_email')}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            Ios App Link
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="ios_app"
+            value="{{settings('ios_app')}}"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            Android App Link
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="android_app"
+            value="{{settings('android_app')}}"/>
         </div>
     </div>
 </div>
@@ -182,6 +189,42 @@
         <div class="col-md-10">
             <input type="text" class="form-control" name="instagram"
             value="{{settings('instagram')}}"/>
+        </div>
+    </div>
+</div>
+<div class="tab-pane" id="other">
+    <div class="form-body">
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                الشروط و الاحكام [ar]
+            </label>
+            <div class="col-md-10">
+                <textarea class="form-control ckeditor" name="terms_ar" cols="30" rows="10">{!!settings('terms_ar')!!}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                الشروط و الاحكام [en]
+            </label>
+            <div class="col-md-10">
+                <textarea class="form-control ckeditor" name="terms_en" cols="30" rows="10">{!!settings('terms_en')!!}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                سياسة الخصوصية [ar]
+            </label>
+            <div class="col-md-10">
+                <textarea class="form-control ckeditor" name="policy_ar" cols="30" rows="10">{!!settings('policy_ar')!!}</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">
+                سياسة الخصوصية [en]
+            </label>
+            <div class="col-md-10">
+                <textarea class="form-control ckeditor" name="policy_en" cols="30" rows="10">{!!settings('policy_en')!!}</textarea>
+            </div>
         </div>
     </div>
 </div>

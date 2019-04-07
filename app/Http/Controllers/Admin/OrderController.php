@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Orders\OrderRepository;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 use DB;

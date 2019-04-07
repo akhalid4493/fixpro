@@ -43,3 +43,53 @@ function getFormData($form){
 
     return indexed_array;
 }
+
+
+$(function() {
+
+    var start = moment().subtract(29, 'days');
+    var end = moment();
+
+    function cb(start, end) {
+        if (start.isValid()&& end.isValid()) {
+            $('#reportrange span').html(start.format('YYYY-MM-DD') + ' - ' + end.format('YYYY-MM-DD'));
+            $('input[name="from"]').val(start.format('YYYY-MM-DD'));
+            $('input[name="to"]').val(end.format('YYYY-MM-DD'));
+        }else{
+            $('#reportrange span').html('الغاء التاريخ');
+            $('input[name="from"]').val('');
+            $('input[name="to"]').val('');
+        }
+    }
+
+    $('#reportrange').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+           'الغاء التاريخ' : [null],
+           'اليوم'         : [moment(), moment()],
+           'الآمس'         : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'اخر ٧ ايام'    : [moment().subtract(6, 'days'), moment()],
+           'اخر ٣٠ يوم'    : [moment().subtract(29, 'days'), moment()],
+           'هذا الشهر'     : [moment().startOf('month'), moment().endOf('month')],
+           'الشهر السابق'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+        },
+        opens: 'left',
+          buttonClasses: ['btn btn-default'],
+          applyClass: 'btn-small btn btn-primary',
+          cancelClass: 'btn-small btn btn-danger',
+          format: 'YYYY-MM-DD',
+          separator: 'to',
+          locale: {
+              applyLabel: 'حفظ',
+              cancelLabel: 'الغاء',
+              fromLabel: 'من',
+              toLabel: 'الى',
+              customRangeLabel: 'ترتيب خاص',
+              firstDay: 1
+          }
+    }, cb);
+
+    cb(start, end);
+
+});

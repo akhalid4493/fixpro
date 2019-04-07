@@ -1,140 +1,97 @@
 <div class="tab-pane active" id="preview">
-    <div class="invoice-content-2 bpreviewed">
-        
-        <div class="row invoice-head">
-            <div class="col-md-7 col-xs-6">
-                <div class="invoice-logo" style="text-align: right;">
-                    <h3 class="blod uppercase">{{ settings(makeTrans('app_name')) }}</h3>
-                </div>
+    <div class="invoice">
+        <div class="row invoice-logo">
+            <div class="col-xs-6 invoice-logo-space">
+                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;"/>
             </div>
-            <div class="col-md-5 col-xs-6">
-                <div class="company-address">
-                    <h3 class="bold uppercase">#{{ $preview['id'] }}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="row invoice-cust-add">
-            <div class="col-xs-3">
-                <h2 class="invoice-title uppercase">العميل</h2>
-                <p class="invoice-desc">{{ $preview->user->name }}</p>
-            </div>
-            <div class="col-xs-3">
-                <h2 class="invoice-title uppercase">البريد</h2>
-                <p class="invoice-desc">{{ $preview->user->email }}</p>
-            </div>
-            <div class="col-xs-3">
-                <h2 class="invoice-title uppercase">الهاتف</h2>
-                <p class="invoice-desc">
-                    {{ $preview->user->mobile }}
+            <div class="col-xs-6">
+                <p> #{{ $preview['id'] }} /
+                    {{ date('Y-m-d',strtotime($preview->created_at)) }}
                 </p>
             </div>
-            <div class="col-xs-3">
-                <h2 class="invoice-title uppercase">التاريخ</h2>
-                <p class="invoice-desc">{{ dateFormat($preview->created_at) }}</p>
-            </div>
         </div>
-        <div class="row invoice-body">
-            <h2>تفاصيل الطلب</h2>
+        <hr/>
+        <div class="row">
+            <h3>بيانات العميل</h3>
             <div class="col-xs-12 table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="invoice-title uppercase text-center">الخدمة</th>
+                            <th class="invoice-title uppercase text-center"> الاسم</th>
+                            <th class="invoice-title uppercase text-center"> البريد الالكتروني </th>
+                            <th class="invoice-title uppercase text-center"> الهاتف </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($preview->details as $service)
                         <tr>
-                            <td class="text-center sbold">
-                                <span>{{ $service->service->name_ar }}</span>
-                            </td>
+                            <td class="text-center sbold"> {{ $preview->user->name }}</td>
+                            <td class="text-center sbold"> {{ $preview->user->email }}</td>
+                            <td class="text-center sbold"> {{ $preview->user->mobile }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <h3>تفاصيل الطلب</h3>
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="invoice-title uppercase text-center"> # </th>
+                            <th class="invoice-title uppercase text-center"> الخدمة المطلوبة </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($preview->details as $key => $service)
+                        <tr>
+                            <td class="text-center sbold"> {{ ++$key }} </td>
+                            <td class="text-center sbold"> {{ $service->service->name_ar }} </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="row invoice-body">
-            <h2>العنوان</h2>
-            <div class="col-xs-12 table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th class="invoice-title uppercase text-center">المحافظة</th>
-                            <th class="invoice-title uppercase text-center">المنطقة</th>
-                            <th class="invoice-title uppercase text-center">القطعة</th>
-                            <th class="invoice-title uppercase text-center">الشارع</th>
-                            <th class="invoice-title uppercase text-center">المبنى</th>
-                            <th class="invoice-title uppercase text-center">العنوان</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center sbold">
-                                {{ $preview->address->addressProvince->governorate->name_ar }} <br>
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->address->addressProvince->name_ar }} <br>
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->address->block }}
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->address->street }}
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->address->building }}
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->address->address }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row invoice-body">
-            <h2>المواعيد</h2>
-            <div class="col-xs-12 table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th class="invoice-title uppercase text-center">موعد طلب المعاينة</th>
-                            <th class="invoice-title uppercase text-center">ملاحظات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center sbold">
-                                {{ $preview->time }}
-                            </td>
-                            <td class="text-center sbold">
-                                {{ $preview->note }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        @if (!empty($preview->image))
-        <div class="row invoice-body">
-            <h2>صورة طلب المعاينة</h2>
-            <div class="col-xs-12">
-                <td class="text-center sbold">
-                    <img src="{{ url($preview->image) }}" style="max-width: 100%">
-                </td>
-            </div>
-        </div>
-        <br>
-        @endif
-        
+        <hr/>
         <div class="row">
-            <div class="col-xs-12">
-                <a class="btn btn-lg green-haze hidden-print uppercase print-btn"
-                onclick="javascript:window.print();">طباعة</a>
-                <a class="btn btn-lg red-haze hidden-print uppercase"
-                href="{{ url(route('previews.index')) }}">للخلف</a>
+            <h3>بيانات اضافية</h3>
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="invoice-title uppercase text-center"> موعد المعاينة المطلوب</th>
+                            <th class="invoice-title uppercase text-center"> ملاحظات </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-center sbold"> {{ $preview->time }} </td>
+                            <td class="text-center sbold"> {{ $preview->note }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-4">
+                <div class="well">
+                    <address>
+                        المحافظة : {{ $preview->address->addressProvince->governorate->name_ar }}
+                        <br/> المنطقة : {{ $preview->address->addressProvince->name_ar }}
+                        <br/> قطعة : {{ $preview->address->block }}
+                        <br/> شارع : {{ $preview->address->street }}
+                        <br/> مبنى : {{ $preview->address->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $preview->address->address }}
+                    </address>
+                </div>
+                <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
+                    <i class="fa fa-print"></i>
+                </a>
             </div>
         </div>
     </div>

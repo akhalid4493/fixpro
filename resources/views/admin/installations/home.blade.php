@@ -20,39 +20,96 @@
 		<h1 class="page-title"></h1>
 		
 		<div class="row">
-			<div class="col-md-12">
-				<div class="portlet box blue-hoki">
-					<div class="portlet-title">
-						<div class="caption font-light">
-							<i class="icon-settings font-light"></i>
-							<span class="caption-subject bold uppercase"> جدول قيمة التركيب</span>
-						</div>
-					</div>
+            <div class="profile-content">
+                <div class="portlet light">
 					<div class="portlet-body">
 						<div class="table-toolbar">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="btn-group">
 										<a href="{{ url(route('installations.create')) }}" class="btn sbold green">
-											<i class="fa fa-plus"></i> اضافة قيمة تركيب جديدة
+											<i class="fa fa-plus"></i> اضافة
 										</a>
 									</div>
 								</div>
 							</div>
 						</div>
-						<table class="table table-striped table-bordered table-hover" id="dataTable">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>الصورة</th>
-									<th>العنوان بالعربي</th>
-									<th>الحالة</th>
-									<th>السعر</th>
-									<th>تاريخ الانشاء</th>
-									<th>العمليات</th>
-								</tr>
-							</thead>
-						</table>
+
+						{{-- Filter DataTable --}}
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr role="row" class="heading">
+                                    <th width="15%"> بحث بتاريخ الانشاء </th>
+                                    <th width="15%"> بحث بالحالة </th>
+                                </tr>
+                                <tr role="row" class="filter">
+                                    <form id="formFilter">
+                                        <td>
+                                            <div id="reportrange" class="btn default">
+                                                <i class="fa fa-calendar"></i> &nbsp;
+                                                <span> </span>
+                                                <b class="fa fa-angle-down"></b>
+                                                <input type="hidden" name="from">
+                                                <input type="hidden" name="to">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="active" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    <option value="1">مفعل</option>
+                                                    <option value="0">غير مفعل</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    </form>
+                                    <td>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search"> 
+                                            <i class="fa fa-search"></i>بحث
+                                        </button>
+                                        
+                                        <button class="btn btn-sm red btn-outline filter-cancel">
+                                            <i class="fa fa-times"></i>حذف
+                                        </button>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                        {{-- DataTable --}}
+                        <table class="table table-striped table-bordered table-hover" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th width="2%" class="chkParent">
+                                        <a href="#.">تحديد الكل</a>
+                                    </th>
+                                    <th width="2%">#</th>
+                                    <th>الصورة</th>
+                                    <th>العنوان بالعربي</th>
+                                    <th>السعر (KWD)</th>
+                                    <th>الحالة</th>
+                                    <th>تاريخ الانشاء</th>
+                                    <th>العمليات</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="row">
+                        @permission('delete_installations')
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <select name="xx" class="form-control">
+                                        <option value="delete">
+                                            حذف المحدد
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" id="deleteChecked" class="btn red btn-sm" onclick="deleteAllChecked('{{ url(route('installations.deletes')) }}')">
+                                تطبيق
+                                </button>
+                            </div>
+                        @endpermission
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -62,55 +119,63 @@
 
 @stop
 
-{{-- JQUERY+ --}}
 @section('scripts')
-<script>
-	var dataTable =
-	$('#dataTable').DataTable({
-		"ajax": "{{ route('installations.dataTable') }}",
-		"processing":true,
-		"serverSide":true,
-		"language": {
-			"url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
-		},
-		"order": [[ 0 , "desc" ]],
-		"columns":[
-		
-		{ "data": "id"    },
-		{ "data": "image" , "orderable": false , "width": "10%" ,
-       	  "render": 
-       	  function(data, type, row){ 
-			return '<img src="'+data+'" width="50px"/>'
-       	  },
-    	},
-		{ "data": "name_ar" },
-		{ "data": "status" },
-		{ "data": "price" },
-		{ "data": "created_at" },
-		{ "data": "options"  , "orderable": false ,"width": "25%"},
-		],
-		dom: 'Bfrtip',
-		lengthMenu: [
-			[ 10, 25, 50 , 100 , 500 , -1 ],
-			[ '10 rows', '25 rows', '50 rows', '100 rows' , '500 rows' ,'Show all' ]
-		],
-		buttons: [
-		'pageLength',
-		'colvis',
-			{
-				extend: 'csv',
-			exportOptions: {
-				columns: ':visible'
-			}
-			},
-			{
-			extend: 'print',
-			exportOptions: {
-				stripHtml: true,
-				columns: ':visible'
-			}
-			},
-		]
-	});
+<script> 
+ function tableGenerate(data='') {
+    var dataTable =
+    $('#dataTable').DataTable({
+        "ajax" : {
+            url:"{{ route('installations.dataTable') }}",
+            type:"GET",
+            data : { 
+                req : data, 
+            },
+        },
+        "processing":true,
+        "serverSide":true,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
+        },
+        "order": [[ 1 , "desc" ]],
+        "columns":[
+            { "data": "listBox"   , "orderable": false  },
+            { "data": "id"    },
+			{ "data": "image" , "orderable": false , "width": "10%" ,
+	       	  "render": 
+	       	  function(data, type, row){ 
+				return '<img src="'+data+'" width="50px"/>'
+	       	  },
+	    	},
+			{ "data": "name_ar" 	},
+			{ "data": "price" },
+			{ "data": "status" 		},
+			{ "data": "created_at" 	},
+            { "data": "options"   , "orderable": false  },
+        ],
+        dom: 'Bfrtip',
+        lengthMenu: [
+            [ 10, 25, 50 , 100 , 500 , -1 ],
+            [ '10 rows', '25 rows', '50 rows', '100 rows' , '500 rows' ,'Show all' ]
+        ],
+        buttons: [
+        'pageLength',
+        'colvis',{
+                extend: 'csv',
+                exportOptions: {
+                    columns: ':visible'
+                }
+            },
+            {
+            extend: 'print',
+            exportOptions: {
+                stripHtml: true,
+                columns: ':visible'
+                }
+            },
+        ]
+    });
+}
 </script>
-@endsection
+
+<script src="{{ url('admin/js/custom-datatable.js') }}"></script>
+@stop

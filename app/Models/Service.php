@@ -19,4 +19,10 @@ class Service extends Model
         'seo_keywords_en',
         'seo_keywords_ar',
     ];
+
+
+    public function servicesOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\User', 'technical_services');
+    }
 }

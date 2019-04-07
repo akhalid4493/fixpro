@@ -3,16 +3,20 @@
 @section('content')
 <style type="text/css" media="print">
 @page {
-size  : auto;/* auto is the initial value */
-margin: 0;   /* this affects the margin in the printer settings */
+    size  : auto;
+    margin: 0;
 }
+
 @media print {
-a[href]:after {
-content: none !important;
-}
-.no-print, .no-print *{
-display: none !important;
-}
+    a[href]:after {
+        content: none !important;
+    }
+    .contentPrint{
+        width: 100%;
+    }
+    .no-print, .no-print *{
+        display: none !important;
+    }
 }
 </style>
 <div class="page-content-wrapper">
@@ -32,38 +36,46 @@ display: none !important;
                 </li>
             </ul>
         </div>
-        
+        <h1 class="page-title"></h1>
         <div class="row">
-            <div class="profile-content">
+            <div class="col-md-12">
                 <div class="portlet light">
                     <div class="portlet-body">
-                        <div class="portlet">
-                            <div class="portlet-body">
-                                <div class="tabbable-bordered">
-                                    <div class="no-print">
-                                        <ul class="nav nav-tabs">
-                                            <li class="active">
-                                                <a href="#preview" data-toggle="tab">
-                                                    الطلب
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#gallery" data-toggle="tab">
-                                                    الصور المرفقة
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#edit" data-toggle="tab">
-                                                    تعديل و اسناد
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="tab-content">
-                                        @include('admin.previews.tabs.preview')
-                                        @include('admin.previews.tabs.gallery')
-                                        @include('admin.previews.tabs.edit')
-                                    </div>
+                        <div class="row">
+                            <div class="no-print">
+                                <div class="col-md-3">
+                                    <ul class="ver-inline-menu tabbable margin-bottom-10">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#preview">
+                                                <i class="fa fa-cog"></i> فاتورة طلب المعاينة
+                                            </a>
+                                            <span class="after">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <a data-toggle="tab" href="#gallery">
+                                                <i class="fa fa-picture-o"></i> الصور المرفقة
+                                            </a>
+                                        </li>
+                                        {{-- <li>
+                                            <a data-toggle="tab" href="#edit">
+                                                <i class="fa fa-lock"></i> تعديل حالة الطلب
+                                            </a>
+                                        </li> --}}
+                                        <li>
+                                            <a data-toggle="tab" href="#technical">
+                                                <i class="fa fa-eye"></i> تعديل و اسناد للفنين
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-9 contentPrint">
+                                <div class="tab-content">
+                                    @include('admin.previews.tabs.preview')
+                                    @include('admin.previews.tabs.gallery')
+{{--                                     @include('admin.previews.tabs.edit')
+ --}}                                    @include('admin.previews.tabs.technical')
                                 </div>
                             </div>
                         </div>

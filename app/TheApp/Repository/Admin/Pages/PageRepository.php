@@ -97,6 +97,28 @@ class PageRepository
         return $page->delete();
     }
 
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $governorates = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($governorates as $governorate) {
+                $governorate->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     public function dataTable($request)
     {
         $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
@@ -104,17 +126,7 @@ class PageRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN PAGE TABLE
-                            ->where('name_en' 	        , 'like' , '%'. $search .'%')
-                            ->orWhere('name_en'         , 'like' , '%'. $search .'%')
-                            ->orWhere('description_en'  , 'like' , '%'. $search .'%')
-                            ->orWhere('description_ar'  , 'like' , '%'. $search .'%')
-                            ->orWhere('id'              , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -129,22 +141,25 @@ class PageRepository
 
 
         $data = array();
+
         if(!empty($pages))
         {
             foreach ($pages as $page)
             {
-                $showBtn   = btn('show','show_pages'  ,url(route('pages.show',$page->id)));
-                $editBtn   = btn('edit','edit_pages'  ,url(route('pages.edit',$page->id)));
-                $deleteBtn = btn('delete','delete_pages',url(route('pages.show',$page->id)));
+                $id = $page['id'];
 
-                $nestedData['id']        = $page->id;
-                $nestedData['name_ar']   = $page->name_ar;
-                $nestedData['status']    = Status($page->status);
-                $nestedData['page_id']   = $page->parent ? '-> '.$page->parent->name_ar : 'صفحة رئيسية';
-                $nestedData['created_at']= transDate(date("d-m-Y", strtotime($page->created_at)));
-                $nestedData['options']   = $editBtn . $deleteBtn;
+                $edit   = btn('edit'  ,'edit_pages'  ,url(route('pages.edit',$id)));
+                $delete = btn('delete','delete_pages',url(route('pages.show',$id)));
+
+                $obj['id']          = $id;
+                $obj['name_ar']     = $page->name_ar;
+                $obj['name_en']     = $page->name_en;
+                $obj['status']      = Status($page->status);
+                $obj['created_at']  = date("d-m-Y", strtotime($page->created_at));
+                $obj['listBox']     = checkBoxDelete($id);
+                $obj['options']     = $edit . $delete;;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
@@ -153,4 +168,25 @@ class PageRepository
         return Response()->json($output);
     }
 
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'                 , 'like' , '%'. $search .'%')
+                           ->orWhere('name_en'         , 'like' , '%'. $search .'%')
+                           ->orWhere('name_en'         , 'like' , '%'. $search .'%')
+                           ->orWhere('description_en'  , 'like' , '%'. $search .'%')
+                           ->orWhere('description_ar'  , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+        
+        if ($request['req']['active'] != '')
+            $query->where('status' , $request['req']['active']);
+
+        return $query;
+    }
 }

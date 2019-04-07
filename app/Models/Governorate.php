@@ -16,4 +16,9 @@ class Governorate extends Model
     {       
         return $this->hasMany('App\Models\Province');
     }
+
+    public function locationsOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\User', 'technical_locations');
+    }
 }

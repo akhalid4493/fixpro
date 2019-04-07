@@ -17,4 +17,9 @@ class Province extends Model
     {       
         return $this->belongsTo('App\Models\Governorate' , 'governorate_id' ,'id');
     }
+
+    public function locationsOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\User', 'technical_locations');
+    }
 }
