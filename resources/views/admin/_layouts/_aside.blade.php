@@ -39,7 +39,7 @@
             <li class="nav-item">
                 <a href="{{ url(route('technicals.index')) }}" class="nav-link nav-toggle">
                     <i class="icon-users"></i>
-                    <span class="title">موعايد الموظفين</span>
+                    <span class="title">مواعايد الموظفين</span>
                 </a>
             </li>
             @endpermission
