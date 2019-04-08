@@ -24,7 +24,7 @@ class SubscriptionRepository
                                 ->pluck('date');
 
         $profits = $this->model
-                    ->select(\DB::raw("sum(price) as profit"))
+                    ->select(\DB::raw("sum(total) as profit"))
                     ->groupBy(\DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
                     ->get();
 
@@ -54,7 +54,7 @@ class SubscriptionRepository
                         ->where(function($query) use($search) {
                             $query
                             // SEARCH IN ORDERS TABLE
-                            ->where('price'       , 'like' , '%'. $search .'%')
+                            ->where('total'       , 'like' , '%'. $search .'%')
                             ->orWhere('id'        , 'like' , '%'. $search .'%');
                         });
 
@@ -80,7 +80,7 @@ class SubscriptionRepository
                 $nestedData['id']               = $subscription->id;
                 $nestedData['start_at']         = $subscription->start_at;
                 $nestedData['end_at']           = $subscription->end_at;
-                $nestedData['price']            = Price($subscription->price). ' دك';
+                $nestedData['total']            = Price($subscription->total). ' دك';
                 $nestedData['name']             = $subscription->user->name;
                 $nestedData['email']            = $subscription->user->email;
                 $nestedData['mobile']           = $subscription->user->mobile;

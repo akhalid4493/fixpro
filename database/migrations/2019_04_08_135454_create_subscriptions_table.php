@@ -15,9 +15,10 @@ class CreateSubscriptionsTable extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->increments('id');
+            
             $table->string('start_at');
             $table->string('end_at');
-            $table->double('price', 8, 3);
+            $table->double('total', 8, 3);
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\UserApp;
 
-use App\Http\Controllers\Payment\SubscriptionPaymentController as Payment;
 use App\TheApp\Repository\Api\Packages\PackageRepository as Package;
 use App\Http\Resources\Packges\PackageResource;
 use App\Http\Controllers\Api\ApiController;
@@ -11,9 +10,8 @@ use Auth;
 
 class PackageController extends ApiController
 {
-   	function __construct(Package $package,Payment $payment)
+   	function __construct(Package $package)
     {
-        $this->payment 		 = $payment;
         $this->packageModel  = $package;
     }
 
@@ -25,17 +23,17 @@ class PackageController extends ApiController
   	
   	public function myPackages()
 	{
-		$packages = $this->packageModel->myPackages();
+		$packages = $this->packageModel->getAll();
 
 		if ($packages->isNotEmpty())
 			return $this->responseMessages(PackageResource::collection($packages),true,200);
 
-		return $this->responseMessages([],false,405,['there is no packages for this user']);
+		return $this->responseMessages([],false,405,['there is no packages']);
 	}
 
 	public function getPackage($id)
 	{
-		$package = $this->packageModel->myPackageById($id);
+		$package = $this->packageModel->packageById($id);
 
 		if ($package)
 			return $this->responseMessages(new PackageResource($package),true,200);

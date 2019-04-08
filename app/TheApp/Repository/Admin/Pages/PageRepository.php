@@ -103,10 +103,10 @@ class PageRepository
         
         try {
             
-            $governorates = $this->model->whereIn('id',$request['ids'])->get();
+            $pages = $this->model->whereIn('id',$request['ids'])->get();
 
-            foreach ($governorates as $governorate) {
-                $governorate->delete();
+            foreach ($pages as $page) {
+                $page->delete();
             }
 
 

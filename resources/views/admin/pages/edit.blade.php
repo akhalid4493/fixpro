@@ -74,7 +74,7 @@
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <textarea name="description_ar" class="form-control" cols="30" rows="10">{!! $page->description_ar !!}</textarea>
+                          <textarea name="description_ar" class="form-control ckeditor" cols="30" rows="10">{!! $page->description_ar !!}</textarea>
                         </div>
                       </div>
 
@@ -84,7 +84,7 @@
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <textarea name="description_en" class="form-control" cols="30" rows="10">{!! $page->description_en !!}</textarea>
+                          <textarea name="description_en" class="form-control ckeditor" cols="30" rows="10">{!! $page->description_en !!}</textarea>
                         </div>
                       </div>
                       

@@ -40,12 +40,11 @@ class PackageRepository
             $package = $this->model->create([
                     'name_ar'               => $request['name_ar'],
                     'name_en'               => $request['name_en'],
+                    'price'                 => $request['price'],
                     'months'                => $request['months'],
                     'description_ar'        => $request['description_ar'],
                     'description_en'        => $request['description_en'],
                     'status'                => $request['status'],
-                    'price'                 => $request['price'],
-                    'user_id'               => $request['user_id'],
                 ]);
 
             DB::commit();
@@ -68,12 +67,11 @@ class PackageRepository
             $package->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
+                'price'                 => $request['price'],
                 'months'                => $request['months'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
                 'status'                => $request['status'],
-                'price'                 => $request['price'],
-                'user_id'               => $request['user_id'],
             ]);
 
             DB::commit();
@@ -92,6 +90,28 @@ class PackageRepository
         return $package->delete();
     }
 
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $packages = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($packages as $package) {
+                $package->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+    
     public function dataTable($request)
     {
         $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
@@ -99,15 +119,7 @@ class PackageRepository
         $search      = $request->input('search.value');
 
         // Search Query
-        $query = $this->model
-                        ->where(function($query) use($search) {
-                            $query
-                            // SEARCH IN package TABLE
-                            ->where('name_en' 	  , 'like' , '%'. $search .'%')
-                            ->orWhere('name_ar'   , 'like' , '%'. $search .'%')
-                            ->orWhere('id'        , 'like' , '%'. $search .'%');
-                        });
-
+        $query = $this->filter($request,$search);
 
         $output['recordsTotal']    = $query->count();
         $output['recordsFiltered'] = $query->count();
@@ -122,30 +134,55 @@ class PackageRepository
 
 
         $data = array();
+
         if(!empty($packages))
         {
             foreach ($packages as $package)
             {
                 $id = $package['id'];
 
-                $edit = btn('edit'  ,'edit_packages'  ,url(route('packages.edit',$id)));
-                $dlt  = btn('delete','delete_packages',url(route('packages.show',$id)));
+                $edit   = btn('edit'  ,'edit_packages'  ,url(route('packages.edit',$id)));
+                $delete = btn('delete','delete_packages',url(route('packages.show',$id)));
 
-                $nestedData['id']          = $package->id;
-                $nestedData['name_ar']     = $package->name_ar;
-                $nestedData['months']      = $package->months;
-                $nestedData['user_id']     = $package->user->name;
-                $nestedData['status']      = Status($package->status);
-                $nestedData['price']       = Price($package->price) . ' KWD';
-                $nestedData['created_at']  = transDate(date("d M-Y", strtotime($package->created_at)));
-                $nestedData['options']     = $edit . $dlt;
+                $obj['id']          = $id;
+                $obj['name_ar']     = $package->name_ar;
+                $obj['months']      = $package->months;
+                $obj['price']       = Price($package->price);
+                $obj['status']      = Status($package->status);
+                $obj['created_at']  = date("d-m-Y", strtotime($package->created_at));
+                $obj['listBox']     = checkBoxDelete($id);
+                $obj['options']     = $edit . $delete;;
                 
-                $data[] = $nestedData;
+                $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
         
         return Response()->json($output);
+    }
+
+    public function filter($request,$search)
+    {
+        $query = $this->model->where(function($query) use($search) {
+                    $query->where('id'                 , 'like' , '%'. $search .'%')
+                           ->orWhere('name_en'         , 'like' , '%'. $search .'%')
+                           ->orWhere('name_en'         , 'like' , '%'. $search .'%')
+                           ->orWhere('months'          , 'like' , '%'. $search .'%')
+                           ->orWhere('price'           , 'like' , '%'. $search .'%')
+                           ->orWhere('description_en'  , 'like' , '%'. $search .'%')
+                           ->orWhere('description_ar'  , 'like' , '%'. $search .'%');
+                });
+    
+        if ($request['req']['from'] != '')
+            $query->whereDate('created_at'  , '>=' , $request['req']['from']);
+
+        if ($request['req']['to'] != '')
+            $query->whereDate('created_at'  , '<=' , $request['req']['to']);
+        
+        if ($request['req']['active'] != '')
+            $query->where('status' , $request['req']['active']);
+
+        return $query;
     }
 }

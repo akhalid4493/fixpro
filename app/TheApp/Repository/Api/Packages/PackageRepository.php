@@ -18,9 +18,9 @@ class PackageRepository
         $this->subscription = $subscription;
     }  
 
-    public function myPackages()
+    public function getAll()
     {
-        $packages = $this->model->where('user_id',Auth::user()->id)->get();
+        $packages = $this->model->get();
 
         return $packages;
     }
@@ -30,41 +30,6 @@ class PackageRepository
         $package = $this->model->find($id);
 
         return $package;
-    }
-
-    public function myPackageById($id)
-    {
-        $package = $this->packageById($id)
-                        ->where('id',$id)
-                        ->where('user_id',Auth::user()->id)
-                        ->first();
-        return $package;
-    }
-
-    public function finalStep($data)
-    {
-        $package = $this->packageById($data['udf1']);
-
-        DB::beginTransaction();
-
-        try {
-            
-            $subscription = $this->subscription->create([
-                'user_id'      => $package['user_id'],
-                'package_id'   => $package['id'],
-                'start_at'     => date('Y-m-d'),
-                'end_at'       => date('Y-m-d', strtotime('+'.$package['months'].'months')),
-                'price'        => $package['price'],
-            ]);
-
-            DB::commit();
-            
-            return true;
-
-        }catch(\Exception $e){
-            DB::rollback();
-            throw $e;
-        }
     }
 
 }

@@ -15,6 +15,7 @@ class CreatePackagesTable extends Migration
     {
         Schema::create('packages', function (Blueprint $table) {
             $table->increments('id');
+
             $table->string('name_en')->nullable();
             $table->string('name_ar')->nullable();
             $table->string('months')->nullable();
@@ -23,11 +24,6 @@ class CreatePackagesTable extends Migration
             $table->double('price', 8, 3);
             $table->integer('status')->default(1);
             
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')
-                                         ->on('users')
-                                         ->onUpdate('cascade')
-                                         ->onDelete('cascade');
             $table->timestamps();
         });
     }

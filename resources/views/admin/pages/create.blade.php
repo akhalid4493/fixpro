@@ -19,16 +19,16 @@
 			<div class="col-md-12">
 				<div class="portlet light">
 					<div class="portlet-title tabbable-line">
-                        <div class="caption caption-md">
-                            <i class="icon-globe theme-font hide"></i>
-                            <span class="caption-subject font-blue-madison bold uppercase">
-                                اضافة صفحة جديدة
-                            </span>
-                        </div>
-                    </div>
+						<div class="caption caption-md">
+							<i class="icon-globe theme-font hide"></i>
+							<span class="caption-subject font-blue-madison bold uppercase">
+								اضافة صفحة جديدة
+							</span>
+						</div>
+					</div>
 					<div class="portlet-body form">
 						<form id="form" method="POST" action="{{url(route('pages.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
-                            @csrf
+							@csrf
 							<div class="tabbable-bordered">
 								<ul class="nav nav-tabs">
 									<li class="active">
@@ -60,28 +60,26 @@
 													<input type="text" name="name_en" placeholder="About Us" class="form-control">
 												</div>
 											</div>
-	
-
+											
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													وصف الصفحة [ar]
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<textarea name="description_ar" class="form-control" cols="30" rows="10"></textarea>
+													<textarea name="description_ar" class="form-control ckeditor" cols="30" rows="10"></textarea>
 												</div>
 											</div>
-												
+											
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													وصف الصفحة [en]
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<textarea name="description_en" class="form-control" cols="30" rows="10"></textarea>
+													<textarea name="description_en" class="form-control ckeditor" cols="30" rows="10"></textarea>
 												</div>
 											</div>
-
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													الحالة
@@ -103,7 +101,6 @@
 											</div>
 										</div>
 									</div>
-
 									<div class="form-actions">
 										<div id="result" style="display: none"></div>
 										
@@ -125,7 +122,6 @@
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</form>
@@ -136,15 +132,14 @@
 	</div>
 </div>
 @stop
-
 @section('scripts')
 <script>
 function disableMyText(){
-    if(document.getElementById("main_page").checked == true){
-        document.getElementById("single").disabled = true;
-    }else{
-        document.getElementById("single").disabled = false;
-    }
+if(document.getElementById("main_page").checked == true){
+document.getElementById("single").disabled = true;
+}else{
+document.getElementById("single").disabled = false;
+}
 }
 </script>
 @stop

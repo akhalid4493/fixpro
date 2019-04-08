@@ -14,7 +14,6 @@ class Package extends Model
         'status',
         'price',
         'months',
-        'user_id',
     ];
 
     public function user()

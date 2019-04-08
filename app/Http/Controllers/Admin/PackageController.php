@@ -102,4 +102,19 @@ class PackageController extends AdminController
         }
     }
 
+    public function deletes(Request $request)
+    {
+        try {
+            $repose = $this->packageModel->deleteAll($request);
+
+            if($repose){
+                return Response()->json([true, 'تم الحذف بنجاح']);
+            }
+            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+
+        }catch (\PDOException $e){
+            return Response()->json([false, $e->errorInfo[2]]);
+        }
+    }
+
 }

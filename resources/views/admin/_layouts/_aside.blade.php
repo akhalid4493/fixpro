@@ -141,7 +141,7 @@
             <li class="nav-item">
                 <a href="{{ url(route('packages.index')) }}" class="nav-link nav-toggle">
                     <i class="fa fa-usd"></i>
-                    <span class="title">باقات الاعضاء</span>
+                    <span class="title">باقات الشركة</span>
                 </a>
             </li>
             @endpermission
