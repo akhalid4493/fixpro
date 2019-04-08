@@ -26,9 +26,9 @@ class StatisticsComposer
         $this->ordersProfit     = $order->totalProfit();
         $this->newOrders        = $order->countNewOrders();
         $this->orderChart       = $order->monthlyProfite();
-        $this->subscriptionChart= $subscription->monthlyProfite();
         $this->orderStatus      = $order->ordersType();
         $this->newPreviews      = $preview->countNewPreviews();
+        $this->subscriptionChart= $subscription->monthlyProfite();
     }
 
     /**
