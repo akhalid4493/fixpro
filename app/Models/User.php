@@ -65,14 +65,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Models\Order');
     }
 
-    public function userHasSubscription()
+    public function hasSubscription()
     {       
         return $this->hasOne('App\Models\Subscription');
     }
 
     public function checkSubscription()
     {       
-        return $this->userHasSubscription()->where('end_at','>',date('Y-m-d'));
+        return $this->hasSubscription()->where('end_at','>',date('Y-m-d'));
     }
 
     public function address()

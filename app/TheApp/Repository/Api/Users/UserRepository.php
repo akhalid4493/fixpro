@@ -24,10 +24,15 @@ class UserRepository
                 'password'  => $data['password'], 
                 'active'    => 1
             ]);
-        
-        if (auth()->user()->can('technical_team')) {
-            return $token;
+
+        if ($token) {
+
+            if (auth()->user()->can('technical_team')) {
+                return $token;
+            }
+            
         }
+            
 
         return false;
     }

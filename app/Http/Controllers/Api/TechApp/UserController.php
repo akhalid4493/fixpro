@@ -33,7 +33,7 @@ class UserController extends ApiController
 		$token = $this->userModel->techLogin($request);
 
 		if ($token)
-			return $this->respondWithToken($token);
+			return $this->responseMessages($this->tokenRespons($token),true,200);
 
 		return $this->responseMessages([],false,401,['Unauthenticated']);
 	}
@@ -120,12 +120,12 @@ class UserController extends ApiController
     /**
      * JWT Method.
      */
-    protected function respondWithToken($token)
+    protected function tokenRespons($token)
     {
-        return response()->json([
+        return [
             'access_token' 	=> $token,
             'token_type' 	=> 'bearer',
             'expires_in' 	=> 1 .' Month.',
-        ]);
+        ];
     }
 }

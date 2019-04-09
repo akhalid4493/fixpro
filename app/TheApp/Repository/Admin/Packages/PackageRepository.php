@@ -38,14 +38,14 @@ class PackageRepository
         try {
             
             $package = $this->model->create([
-                    'name_ar'               => $request['name_ar'],
-                    'name_en'               => $request['name_en'],
-                    'price'                 => $request['price'],
-                    'months'                => $request['months'],
-                    'description_ar'        => $request['description_ar'],
-                    'description_en'        => $request['description_en'],
-                    'status'                => $request['status'],
-                ]);
+                'name_ar'               => $request['name_ar'],
+                'name_en'               => $request['name_en'],
+                'price'                 => $request['price'],
+                'months'                => $request['months'],
+                'description_ar'        => $request['description_ar'],
+                'description_en'        => $request['description_en'],
+                'status'                => $request['status'],
+            ]);
 
             DB::commit();
             return true;

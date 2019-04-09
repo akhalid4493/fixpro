@@ -24,7 +24,7 @@ class PreviewController extends ApiController
         if ($dates)
             return $this->responseMessages($dates,true,200);
 
-        return $this->responseMessages([],false,405,['there is no of dates']);
+        return $this->responseMessages($dates,true,200);
     }
 
     public function services()

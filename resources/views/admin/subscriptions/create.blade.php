@@ -1,5 +1,5 @@
 @extends('admin._layouts.master')
-@section('title','اضافة قسم جديدة')
+@section('title','اضافة اشتراك جديدة')
 @section('content')
 <div class="page-content-wrapper">
 	<div class="page-content">
@@ -9,118 +9,177 @@
 					<a href="{{ url(route('admin')) }}">الرئيسية</a><i class="fa fa-circle"></i>
 				</li>
 				<li>
-					<a href="{{ url(route('categories.index')) }}">جميع الصفحات</a><i class="fa fa-circle"></i>
+					<a href="{{ url(route('subscriptions.index')) }}">جميع الباقات</a><i class="fa fa-circle"></i>
 				</li>
-				<li><span>اضافج قسم جديدة</span></li>
+				<li><span>اضافة اشتراك جديدة</span></li>
 			</ul>
 		</div>
 		<h1 class="page-title"></h1>
 		<div class="row">
 			<div class="col-md-12">
-				<div class="profile-content">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="portlet light ">
-								<div class="portlet-title tabbable-line">
-									<div class="caption caption-md">
-										<i class="icon-globe theme-font hide"></i>
-										<span class="caption-subject font-blue-madison bold uppercase">
-											اضافة قسم جديدة
-										</span>
-									</div>
-									<ul class="nav nav-tabs">
-										<li class="active">
-											<a href="#tab_1_1" data-toggle="tab" aria-expanded="true">
-												محتوى القسم
-											</a>
-										</li>
-									</ul>
-								</div>
-								<div class="portlet-body form">
-									<form id="form" method="POST" action="{{url(route('categories.store'))}}" enctype="multipart/form-data">
-										
-										{{ csrf_field() }}
-										<div class="tab-content">
+				<div class="portlet light">
+					<div class="portlet-title tabbable-line">
+						<div class="caption caption-md">
+							<i class="icon-globe theme-font hide"></i>
+							<span class="caption-subject font-blue-madison bold uppercase">
+								اضافة اشتراك جديدة
+							</span>
+						</div>
+					</div>
+					<div class="portlet-body form">
+						<form id="form" method="POST" action="{{url(route('subscriptions.store'))}}" enctype="multipart/form-data" class="form-row-seperated">
+							@csrf
+							<div class="tabbable-bordered">
+								<ul class="nav nav-tabs">
+									<li class="active">
+										<a href="#general" data-toggle="tab"> بيانات عامة </a>
+									</li>
+								</ul>
+								<div class="tab-content">
+									
+									{{-- GENERAL CONTENT --}}
+									<div class="tab-pane active" id="general">
+										<div class="form-body">
 											
-											<div class="tab-pane active" id="tab_1_1">
-												<div class="form-group">
-													<label class="control-label">
-														عنوان القسم بالعربي
-														<span class="required">*</span>
-													</label>
-													<input type="text" name="name_ar" placeholder="مثال : الشروط و الاحكام" class="form-control">
-												</div>
-												<div class="form-group">
-													<label class="control-label">
-														عنوان القسم بالانجليزي
-														<span class="required">*</span>
-													</label>
-													<input type="text" name="name_en" placeholder="مثال : Terms and Conditions" class="form-control">
-												</div>
-												<div class="form-group form-md-radios">
-													<label>مستوى القسم</label>
-													<div class="md-radio-list">
-														<div class="md-radio">
-															<input type="radio" id="radio0" name="category_id" class="md-radiobtn" value="">
-															<label for="radio0">
-																<span class="inc"></span>
-																<span class="check"></span>
-																<span class="box"></span> مستوى رئيسي
-															</label>
-														</div>
-														@if (count($categories) > 0)
-														<label style="font-size: 14px;color: #888;opacity: 1;">قسم فرعي من :</label>
-														<div class="form-group">
-															<select name="category_id" id="single" class="form-control select2" >
-																<option></option>
-																@foreach ($categories as$category)
-																<option value="{{$category->id}}">
-																	{{transText($category,'name')}}
-																</option>
-																@endforeach
-															</select>
-														</div>
-														@endif
-													</div>
-												</div>
-												<div class="form-body">
+											<div class="row">
+												<div class="col-md-6">
 													<div class="form-group">
-														<label>
-															صورة القسم
+														<label class="control-label">
+															باقات الاشتراك
 															<span class="required">*</span>
 														</label>
-														<input class="form-control" type="file" name="image">
+														<select name="package_id" id="single" class="form-control select2" >
+															<option></option>
+															@foreach ($packages as $package)
+															<option value="{{$package->id}}">
+																{{transText($package,'name')}}
+															</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">
+															اختر العضو
+															<span class="required">*</span>
+														</label>
+														<select name="user_id" id="single" class="form-control select2" >
+															<option></option>
+															@foreach ($users as $user)
+															<option value="{{$user->id}}">
+																{{$user->name}}
+															</option>
+															@endforeach
+														</select>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">
+															السعر الكلي للاشتراك
+															<span class="required">*</span>
+														</label>
+														<input type="text" class="form-control" name="total">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label class="control-label">
+															التفعيل
+															<span class="required">*</span>
+														</label><br>
+														<label class="mt-radio mt-radio-outline"> مفعل
+															<input type="radio" name="status" value="1">
+															<span></span>
+														</label>
+														<label class="mt-radio mt-radio-outline">
+															غير مفعل
+															<input type="radio" name="status" value="0">
+															<span></span>
+														</label>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">
+															يبدا الاشتراك
+															<span class="required">*</span>
+														</label>
+														<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
+															<input type="text" class="form-control" name="start_at">
+															<span class="input-group-btn">
+																<button class="btn default" type="button">
+																<i class="fa fa-calendar"></i>
+																</button>
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">
+															ينتهي الاشتراك
+															<span class="required">*</span>
+														</label>
+														<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
+															<input type="text" class="form-control" name="end_at">
+															<span class="input-group-btn">
+																<button class="btn default" type="button">
+																<i class="fa fa-calendar"></i>
+																</button>
+															</span>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label class="control-label">
+															الدفعة القادمة
+														</label>
+														<div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
+															<input type="text" class="form-control" name="next_billing">
+															<span class="input-group-btn">
+																<button class="btn default" type="button">
+																<i class="fa fa-calendar"></i>
+																</button>
+															</span>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									
-									<div id="result" style="display: none"></div>
-									
-									<div class="progress-info" style="display: none">
-										<div class="progress">
-											<span class="progress-bar progress-bar-warning"></span>
+									<div class="form-actions">
+										<div id="result" style="display: none"></div>
+										
+										<div class="progress-info" style="display: none">
+											<div class="progress">
+												<span class="progress-bar progress-bar-warning"></span>
+											</div>
+											<div class="status" id="progress-status"></div>
 										</div>
-										<div class="status" id="progress-status"></div>
-									</div>
-									<div class="form-group">
-										<button type="submit" id="submit" class="btn-lg btn blue">
-										اضافة
-										</button>
-										<a href="{{url(route('categories.index'))}}" class="btn-lg btn red">
-											للخلف
-										</a>
+										
+										<div class="form-group">
+											<button type="submit" id="submit" class="btn btn-lg blue">
+											اضافة
+											</button>
+											<a href="{{url(route('subscriptions.index')) }}" class="btn btn-lg red">
+												الخلف
+											</a>
+										</div>
 									</div>
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-</div>
 </div>
 @stop

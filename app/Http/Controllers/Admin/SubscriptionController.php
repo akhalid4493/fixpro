@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\TheApp\Repository\Admin\Subscriptions\SubscriptionRepository;
+use App\TheApp\Repository\Admin\Subscriptions\SubscriptionRepository as Subscription;
+use App\TheApp\Repository\Admin\Packages\PackageRepository as Package;
+use App\TheApp\Repository\Admin\Users\UserRepository as User;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -10,9 +12,11 @@ use DB;
 class SubscriptionController extends AdminController
 {
 
-    function __construct(SubscriptionRepository $subscription)
+    function __construct(Subscription $subscription,Package $package ,User $user )
     {
         $this->subscriptionModel = $subscription;
+        $this->packageModel      = $package;
+        $this->userModel         = $user;
     }
 
 
@@ -30,18 +34,21 @@ class SubscriptionController extends AdminController
 
     public function create()
     {
-        return view('admin.subscriptions.create');
+        $packages   = $this->packageModel->getAll();
+        $users      = $this->userModel->UsersOnly();
+
+        return view('admin.subscriptions.create',compact('users','packages'));
     }
 
 
     public function store(Request $request)
     {
-            $create = $this->subscriptionModel->create($request);
+        $create = $this->subscriptionModel->create($request);
 
-            if($create)
-                return Response()->json([true , 'تم الاضافة بنجاح' ]);
-            
-            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+        if($create)
+            return Response()->json([true , 'تم الاضافة بنجاح' ]);
+        
+        return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
 
@@ -49,23 +56,24 @@ class SubscriptionController extends AdminController
     public function show($id)
     {
         $subscription = $this->subscriptionModel->findById($id);
-        $statuses   = $this->subscriptionModel->getAllStatus();
 
         if (!$subscription)
             abort(404);
 
-        return view('admin.subscriptions.show' , compact('subscription','statuses'));
+        return view('admin.subscriptions.show' , compact('subscription'));
     }
 
 
     public function edit($id)
     {
         $subscription   = $this->subscriptionModel->findById($id);
+        $packages       = $this->packageModel->getAll();
+        $users          = $this->userModel->UsersOnly();
 
         if (!$subscription)
             abort(404);
 
-        return view('admin.subscriptions.edit',compact('subscription'));
+        return view('admin.subscriptions.edit',compact('subscription','packages','users'));
     }
 
 
