@@ -1,6 +1,7 @@
 <?php
 namespace App\TheApp\Repository\Api\Previews;
 
+use App\Notifications\PreviewMail;
 use App\Models\PreviewGallery;
 use App\Models\PreviewDetail;
 use App\Models\PreviewDate;
@@ -60,6 +61,7 @@ class PreviewRepository
             if ($preview){
                 $this->createPreviewDates($preview,$request);
                 $this->createPreviewDetails($preview,$request);
+                $this->sendNotificationMail($preview);
             }
 
             if ($request['image']) {
@@ -73,7 +75,6 @@ class PreviewRepository
                 }
             }
 
-            
             DB::commit();
             return $preview;
 
@@ -199,5 +200,12 @@ class PreviewRepository
 
             return $this->send($data,$userToken->device_token);
         }
+    }
+
+    public function sendNotificationMail($preview)
+    {
+        $user           = $preview->user;
+        $user->email    = $user->email;
+        $user->notify(new PreviewMail());
     }
 }
