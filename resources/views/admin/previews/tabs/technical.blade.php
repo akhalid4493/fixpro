@@ -162,7 +162,7 @@
                         <div class="form-group">
                             <div class="mt-checkbox-list">
                                 <label class="mt-checkbox">
-                                    <input type="checkbox" name="technical_notifi" value="1">
+                                    <input type="checkbox" name="tech_notifi" value="1">
                                     ارسال اشعار للفني
                                     <span></span>
                                 </label>

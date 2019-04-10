@@ -9,13 +9,14 @@ use App\Models\Order;
 use App\Models\Installation;
 use App\Models\Product;
 use ProductsQty;
+use SendNotifi;
 use Auth;
 use DB;
 
 class OrderRepository
 {
 
-    protected $model;
+    use SendNotifi;
 
     function __construct(Order $order ,OrderProduct $product,OrderInstallation $installation)
     {
@@ -163,6 +164,8 @@ class OrderRepository
             if ($order)
                 $orderDetails = $this->createOrderDetails($order['id'],$request);
 
+            $this->sendNotifiToUser($order);
+
             DB::commit();
             return $order;
 
@@ -252,9 +255,10 @@ class OrderRepository
         $userToken = $order->user->deviceToken;
 
         if (!empty($userToken)) {
+            
             $data = [
-                'title' => 'طلب جديد',
-                'body'  => 'تم ارسال لك الطلب الخاص بك'
+                'title' => 'لديك طلب جديد',
+                'body'  => 'تم ارسال لك طلب جديد خاص  بالمعانية'
             ];
 
             return $this->send($data,$userToken->device_token);

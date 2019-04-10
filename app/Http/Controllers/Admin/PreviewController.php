@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Previews\PreviewRepository;
 use App\TheApp\Repository\Admin\Users\UserRepository;
-use App\TheApp\CustomClass\PreviewCheck;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -52,9 +51,6 @@ class PreviewController extends AdminController
     public function show($id)
     {
         $preview    = $this->previewModel->findById($id);
-
-        //return PreviewCheck::technicalOfService($preview);
-
         $statuses   = $this->previewModel->getAllStatus();
         $users      = $this->userModel->TechnicalUsers();
 

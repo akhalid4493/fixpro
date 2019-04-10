@@ -7,12 +7,13 @@ use App\Models\PreviewDate;
 use App\Models\Preview;
 use App\Models\Service;
 use ImageTrait;
+use SendNotifi;
 use Auth;
 use DB;
 
 class PreviewRepository
 {
-    protected $model;
+    use SendNotifi;
 
     function __construct(
         Service $service,
@@ -173,10 +174,12 @@ class PreviewRepository
         $preview = $this->techPreviewById($id);
 
         if ($preview) {
+
             $preview->update([
                 'preview_status_id'  => $request['status'],
             ]);
 
+            $this->sendNotifiToUser($preview);
             
             return $preview;
         }

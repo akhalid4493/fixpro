@@ -74,12 +74,12 @@ class OrderRepository
 
     public function countDone()
     {
-        return $this->model->where('order_status_id',3)->count();
+        return $this->model->where('order_status_id',5)->count();
     }
 
     public function totalProfit()
     {
-        return $this->model->where('order_status_id',3)->sum('total');
+        return $this->model->where('order_status_id',5)->sum('total');
     }
 
     public function getAll($order = 'id', $sort = 'desc')

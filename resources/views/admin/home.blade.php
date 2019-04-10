@@ -61,9 +61,9 @@
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup" data-value="{{$allOrders}}">0</span>
+                                            <span data-counter="counterup" data-value="{{$donePreviews}}">0</span>
                                         </div>
-                                        <div class="desc">الطلبات المكتملة</div>
+                                        <div class="desc">طلبات المعاينة المكتملة</div>
                                     </div>
                                 </a>
                             </div>

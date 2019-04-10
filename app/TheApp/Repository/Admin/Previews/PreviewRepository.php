@@ -12,7 +12,7 @@ use DB;
 
 class PreviewRepository
 {
-    protected $model;
+    use SendNotifi;
 
     function __construct(
         Preview $preview,
@@ -34,7 +34,7 @@ class PreviewRepository
 
     public function countDone()
     {
-        return $this->model->where('preview_status_id',3)->count();
+        return $this->model->where('preview_status_id',5)->count();
     }
 
     public function getAll($order = 'id', $sort = 'desc')
@@ -63,7 +63,7 @@ class PreviewRepository
             if ($request['preview_status_id']) {
     
                 $preview->update([
-                    'preview_status_id' => $request['status'],
+                    'preview_status_id' => $request['preview_status_id'],
                     'time'              => $request['date'].' '.date('H:i:s',strtotime($request->time)),
                 ]);
 
