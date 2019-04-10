@@ -153,17 +153,17 @@ class SubscriptionRepository
                 $show   = btn('show','show_subscriptions' ,url(route('subscriptions.show',$id)));
 
                 $obj['id']               = $subscription->id;
+                $obj['remnder']          = billingRemender($subscription);
                 $obj['start_at']         = $subscription->start_at;
                 $obj['end_at']           = $subscription->end_at;
                 $obj['next_billing']     = $subscription->next_billing;
                 $obj['total']            = Price($subscription->total);
                 $obj['status']           = Status($subscription->status);
                 $obj['name']             = $subscription->user->name;
-                $obj['email']            = $subscription->user->email;
                 $obj['mobile']           = $subscription->user->mobile;
                 $obj['created_at']       = date("d-m-Y", strtotime($subscription->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
-                $obj['options']          = $edit . $show;;
+                $obj['options']          = $edit . $show;
                 
                 $data[] = $obj;
             }

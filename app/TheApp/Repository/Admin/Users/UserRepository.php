@@ -2,6 +2,7 @@
 namespace App\TheApp\Repository\Admin\Users;
 
 use Illuminate\Http\Request;
+use App\Models\DeviceToken;
 use App\Models\User;
 use ImageTrait;
 use Auth;
@@ -11,9 +12,10 @@ class UserRepository
 {
     protected $model;
 
-    function __construct(User $user)
+    function __construct(User $user,DeviceToken $token)
     {
-        $this->model = $user;
+        $this->model      = $user;
+        $this->tokenModel = $token;
     }  
 
     public function userCreatedStatistics()
@@ -58,7 +60,7 @@ class UserRepository
 
     public function getAllTokens()
     {
-        return $this->model->where('device_id','!=',"")->pluck('device_id')->toArray();
+        return $this->tokenModel->pluck('device_token')->toArray();
     }
 
     public function count()

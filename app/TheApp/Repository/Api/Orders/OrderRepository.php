@@ -32,7 +32,7 @@ class OrderRepository
     */
     public function myOrders()
     {
-        $orders = $this->model->where('user_id',Auth::user()->id)->get();
+        $orders = $this->model->where('user_id',Auth::id())->get();
 
         return $orders;
     }
@@ -40,7 +40,7 @@ class OrderRepository
 
     public function orderById($id)
     {
-        $order = $this->model->find($id);
+        $order = $this->model->where('id',$id)->where('user_id',Auth::id())->first();
 
         return $order;
     }
@@ -96,6 +96,22 @@ class OrderRepository
             TECHNICAL APP API ORDER METHODS
     =============================================== 
     */
+   
+    public function technicalOrders()
+    {
+        $orders = $this->model->where('technical_id',Auth::id())->get();
+
+        return $orders;
+    }
+
+
+    public function technicalOrderById($id)
+    {
+        $order = $this->model->where('id',$id)->where('technical_id',Auth::id())->first();
+
+        return $order;
+    }
+
     public function addNewOrder($request)
     {
         $order  = $this->calculateTotal($request);
@@ -141,6 +157,7 @@ class OrderRepository
                 'preview_id'        => $request['preview_id'],
                 'user_id'           => $request['client_user_id'],
                 'order_status_id'   => 1,
+                'technical_id'      => Auth::id(),
             ]);
 
             if ($order)

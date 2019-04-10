@@ -40,8 +40,8 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th class="invoice-title uppercase text-center"> يبدا الاتشراك في</th>
-                            <th class="invoice-title uppercase text-center"> ينتهي الاتشراك في</th>
+                            <th class="invoice-title uppercase text-center"> يبدا الاشتراك في</th>
+                            <th class="invoice-title uppercase text-center"> ينتهي الاشتراك في</th>
                             <th class="invoice-title uppercase text-center"> تاريخ دفع هذة الدفعة في</th>
                         </tr>
                     </thead>
@@ -65,7 +65,7 @@
                         قيمة هذه الدفعة : {{ number_format($billing->price,3) }} KWD
                     </address>
                     <address>
-                        المتبقي : {{ number_format($subscription->pirice,3) }} KWD
+                        المتبقي : {{ billingRemender($subscription) }} KWD
                     </address>
                 </div>
                 <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة

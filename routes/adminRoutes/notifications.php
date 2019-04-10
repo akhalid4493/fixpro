@@ -2,39 +2,30 @@
 
 Route::group(['prefix' => 'notification'], function () {
 
-	Route::get('/' ,'Admin\NotificationController@index')
-	->name('notification.index')
-    ->middleware(['permission:show_notification']);
+	Route::get('/' ,'Admin\NotificationController@notifyForm')
+	->name('notification.index');
 
 	Route::get('datatable'	,'Admin\NotificationController@dataTable')
-	->name('notification.dataTable')
-    ->middleware(['permission:show_notification']);
+	->name('notification.dataTable');
 
 	Route::get('create'		,'Admin\NotificationController@create')
-	->name('notification.create')
-    ->middleware(['permission:add_notification']);
+	->name('notification.create');
 
-	Route::post('/'			,'Admin\NotificationController@store')
-	->name('notification.store')
-    ->middleware(['permission:add_notification']);
+	Route::post('/'			,'Admin\NotificationController@push_notification')
+	->name('notification.store');
 
 	Route::get('{id}/edit'	,'Admin\NotificationController@edit')
-	->name('notification.edit')
-    ->middleware(['permission:edit_notification']);
+	->name('notification.edit');
 
 	Route::put('{id}'		,'Admin\NotificationController@update')
-	->name('notification.update')
-    ->middleware(['permission:edit_notification']);
+	->name('notification.update');
 
 	Route::delete('{id}'	,'Admin\NotificationController@destroy')
-	->name('notification.destroy')
-    ->middleware(['permission:delete_notification']);
+	->name('notification.destroy');
 
 	Route::get('deletes'	,'Admin\NotificationController@deletes')
-	->name('notification.deletes')
-    ->middleware(['permission:delete_notification']);
+	->name('notification.deletes');
 
 	Route::get('{id}','Admin\NotificationController@show')
-	->name('notification.show')
-    ->middleware(['permission:show_notification']);
+	->name('notification.show');
 });

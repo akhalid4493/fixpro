@@ -83,9 +83,9 @@
                                     </th>
                                     <th width="2%">#</th>
                                     <th>اسم العميل</th>
-                                    <th>البريد</th>
                                     <th>الهاتف</th>
                                     <th>المبلغ الكلي</th>
+                                    <th>المبلغ المتبقي</th>
                                     <th>يبدا الاشتراك</th>
                                     <th>ينتهي الاشتراك</th>
                                     <th>الدفعة القادمة</th>
@@ -143,10 +143,10 @@
         "columns":[
             { "data": "listBox"   , "orderable": false  },
             { "data": "id"    			},
-            { "data": "name"    		},
-            { "data": "email"    		},
-            { "data": "mobile"    		},
+            { "data": "name"    		, "orderable": false },
+            { "data": "mobile"    		, "orderable": false },
             { "data": "total"    		},
+            { "data": "remnder"         , "orderable": false },
             { "data": "start_at"    	},
             { "data": "end_at"    		},
             { "data": "next_billing"    },

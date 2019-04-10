@@ -11,6 +11,7 @@ class Order extends Model
         'total',
         'method',
         'user_id',
+        'technical_id',
         'preview_id',
         'order_status_id',
     ];
@@ -33,6 +34,11 @@ class Order extends Model
     public function user()
     {
         return $this->belongsTo('App\Models\User','user_id','id');
+    }
+
+    public function technical()
+    {
+        return $this->belongsTo('App\Models\User','technical_id','id');
     }
 
     public function productsOfOrder()

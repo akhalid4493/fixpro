@@ -1,9 +1,11 @@
 <?php
 namespace App\TheApp\Traits;
 
+use App\Models\User;
+
 trait SendNotification
 {
-    status public  function send($data , $devices_id = null) 
+    public  function send($data , $devices_id = null) 
     {
 
       if (is_array($devices_id)) {
@@ -27,7 +29,7 @@ trait SendNotification
       return $this->Push($fields);
     }
 
-    status public function Push($fields)
+    public function Push($fields)
     {
       $url = 'https://fcm.googleapis.com/fcm/send';
 

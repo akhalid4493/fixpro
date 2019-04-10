@@ -446,3 +446,20 @@ if (!function_exists('dayName')) {
         return Carbon::now()->subDays($dayNumb)->format('l');
     }
 }
+
+if (!function_exists('billingRemender')) {
+
+    function billingRemender($subscription){
+      
+      $totalBilling = 0;
+
+      foreach ($subscription->monthlyBilling as $billing) {
+        $totalBilling += $billing->price;
+      }
+
+      $remnder = $subscription->total - $totalBilling;
+
+      return number_format($remnder,3);        
+
+    }
+}

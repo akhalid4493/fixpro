@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\TheApp\Libraries\SendNotification;
+use App\TheApp\Traits\SendNotification;
 use App\TheApp\Repository\Admin\Users\UserRepository;
 
 class NotificationController extends AdminController

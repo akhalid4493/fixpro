@@ -60,7 +60,27 @@ class StoreController extends ApiController
   				ORDER METHODS
     =============================================== 
     */
-   
+	
+	public function myOrders(Request $request)
+	{
+		$orders = $this->orderModel->technicalOrders($request);
+
+		if ($orders->isNotEmpty())
+			return $this->responseMessages(OrderResource::collection($orders),true,200);
+
+		return $this->responseMessages([],false,405,[ 'there is no orders for this technical']);
+	}
+	
+	public function getOrder(Request $request,$id)
+	{
+		$order = $this->orderModel->technicalOrderById($id);
+
+		if ($order)
+			return $this->responseMessages(new OrderResource($order),true,200);
+
+		return $this->responseMessages([],false,405,['no order with this id']);
+	}
+
     // Make New Order
 	public function createOrder(Request $request)
 	{

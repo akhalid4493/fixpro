@@ -63,7 +63,7 @@
                         اجمالي سعر الاشتراك : {{ number_format($subscription->total,3) }} KWD
                     </address>
                     <address>
-                        <br/> المتبقي : {{ number_format($subscription->pirice,3) }} KWD
+                        المتبقي : {{ billingRemender($subscription) }} KWD
                     </address>
                 </div>
                 <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة

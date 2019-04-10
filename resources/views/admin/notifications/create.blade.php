@@ -12,7 +12,7 @@
 			</ul>
 		</div>
 
-		@include('admin._includes.msg')
+		@include('admin._layouts._msg')
 
 		<h1 class="page-title"></h1>
 		<div class="row">
@@ -37,7 +37,7 @@
 									</ul>
 								</div>
 								<div class="portlet-body">
-									<form method="POST" action="{{url(route('notify'))}}" enctype="multipart/form-data">
+									<form method="POST" action="{{url(route('notification.store'))}}" enctype="multipart/form-data">
 										
 										{{ csrf_field() }}
 										<div class="tab-content">

@@ -36,6 +36,13 @@ class CreateOrdersTable extends Migration
                                          ->on('previews')
                                          ->onUpdate('cascade')
                                          ->onDelete('cascade');
+
+
+            $table->integer('technical_id')->unsigned();
+            $table->foreign('technical_id')->references('id')->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

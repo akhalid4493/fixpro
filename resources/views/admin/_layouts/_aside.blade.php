@@ -39,7 +39,7 @@
             <li class="nav-item">
                 <a href="{{ url(route('technicals.index')) }}" class="nav-link nav-toggle">
                     <i class="icon-users"></i>
-                    <span class="title">مواعايد الموظفين</span>
+                    <span class="title">مواعيد الموظفين</span>
                 </a>
             </li>
             @endpermission
@@ -158,16 +158,16 @@
             <li class="heading">
                 <h3 class="uppercase">اعدادات</h3>
             </li>
-            {{-- 
+            
             @permission('show_notifications')
             <li class="nav-item">
-                <a href="{{ url(route('notifications')) }}" class="nav-link nav-toggle">
+                <a href="{{ url(route('notification.index')) }}" class="nav-link nav-toggle">
                     <i class="fa fa-bell"></i>
                     <span class="title">اشعارات عامة</span>
                 </a>
             </li>
             @endpermission 
-            --}}
+           
             @permission('show_settings')
             <li class="nav-item">
                 <a href="{{ url(route('settings.index')) }}" class="nav-link nav-toggle">
