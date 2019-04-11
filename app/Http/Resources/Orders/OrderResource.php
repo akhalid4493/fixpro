@@ -2,8 +2,9 @@
 
 namespace App\Http\Resources\Orders;
 
-use Illuminate\Http\Resources\Json\Resource;
+use App\Http\Resources\Previews\PreviewResource;
 use App\Http\Resources\User\AddressResource;
+use Illuminate\Http\Resources\Json\Resource;
 use App\Http\Resources\User\UserResource;
 
 class OrderResource extends Resource
@@ -24,6 +25,7 @@ class OrderResource extends Resource
             'status'        => transText($this->orderStatus,'name'),
             'order_products'=> OrderDetailsResource::collection($this->productsOfOrder),
             'order_installations'=> OrderDetailsResource::collection($this->installationsOfOrder),
+            'preview'       => new PreviewResource($this->preview),
             'address'       => new AddressResource($this->preview->address),
             'user'          => new UserResource($this->user),
         ];

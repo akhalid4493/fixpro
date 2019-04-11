@@ -40,8 +40,8 @@ class PackageRepository
             $package = $this->model->create([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
-                'price'                 => $request['price'],
-                'months'                => $request['months'],
+                //'price'                 => $request['price'],
+                //'months'                => $request['months'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
                 'status'                => $request['status'],
@@ -67,8 +67,8 @@ class PackageRepository
             $package->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
-                'price'                 => $request['price'],
-                'months'                => $request['months'],
+                //'price'                 => $request['price'],
+                //'months'                => $request['months'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
                 'status'                => $request['status'],

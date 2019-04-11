@@ -63,7 +63,7 @@
                           <input type="text" name="name_en" placeholder="Gold Package" class="form-control" value="{{ $package->name_en }}">
                         </div>
                       </div>
-                      <div class="form-group">
+                      {{-- <div class="form-group">
                         <label class="control-label col-md-3">
                           سعر الباقة
                           <span class="required">*</span>
@@ -71,8 +71,8 @@
                         <div class="col-md-9">
                           <input type="text" name="price" placeholder="باقة ذهبية" class="form-control" value="{{ $package->price }}">
                         </div>
-                      </div>
-                      <div class="form-group">
+                      </div> --}}
+                      {{-- <div class="form-group">
                         <label class="control-label col-md-3">
                           عدد شهور اشتراك الباقة
                           <span class="required">*</span>
@@ -80,7 +80,7 @@
                         <div class="col-md-9">
                           <input type="text" name="months" placeholder="Gold Package" class="form-control" value="{{ $package->months }}">
                         </div>
-                      </div>
+                      </div> --}}
                       <div class="form-group">
                         <label class="control-label col-md-3">
                           وصف الباقة [ar]

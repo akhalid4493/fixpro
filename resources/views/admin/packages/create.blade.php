@@ -61,7 +61,7 @@
 												</div>
 											</div>
 
-											<div class="form-group">
+											{{-- <div class="form-group">
 												<label class="control-label col-md-3">
 													سعر الباقة
 													<span class="required">*</span>
@@ -69,9 +69,9 @@
 												<div class="col-md-9">
 													<input type="text" name="price" placeholder="125.000" class="form-control">
 												</div>
-											</div>
+											</div> --}}
 											
-											<div class="form-group">
+											{{-- <div class="form-group">
 												<label class="control-label col-md-3">
 													عدد شهور الاشتراك
 													<span class="required">*</span>
@@ -79,7 +79,7 @@
 												<div class="col-md-9">
 													<input type="text" name="months" placeholder="12" class="form-control">
 												</div>
-											</div>
+											</div> --}}
 	
 
 											<div class="form-group">

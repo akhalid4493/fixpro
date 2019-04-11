@@ -16,8 +16,8 @@ class PackageResource extends Resource
     {
          return [
             'id'            => $this->id,
-            'months'        => $this->months,
-            'price'         => Price($this->price),
+//            'months'        => $this->months,
+//            'price'         => Price($this->price),
             'name'          => transText($this,'name'),
             'description'   => transText($this,'description'),
         ];

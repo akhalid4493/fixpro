@@ -83,8 +83,6 @@
                                     </th>
                                     <th width="2%">#</th>
                                     <th>عنوان بالعربي</th>
-                                    <th>السعر</th>
-                                    <th>عدد الاشهر</th>
                                     <th>الحالة</th>
                                     <th>تاريخ الانشاء</th>
                                     <th>خيارات</th>
@@ -140,8 +138,6 @@
             { "data": "listBox"   , "orderable": false  },
             { "data": "id"    },
             { "data": "name_ar"    },
-            { "data": "price"    },
-            { "data": "months"    },
             { "data": "status"    },
             { "data": "created_at" },
             { "data": "options"   , "orderable": false  },
