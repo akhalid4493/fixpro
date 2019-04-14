@@ -24,7 +24,7 @@ class OrderResource extends Resource
             'status_code'   => $this->orderStatus->id,
             'status'        => transText($this->orderStatus,'name'),
             'order_products'=> OrderDetailsResource::collection($this->productsOfOrder),
-            'order_installations'=> OrderDetailsResource::collection($this->installationsOfOrder),
+            'order_installations'=> OrderInstallationsResource::collection($this->installationsOfOrder),
             'preview'       => new PreviewResource($this->preview),
             'address'       => new AddressResource($this->preview->address),
             'user'          => new UserResource($this->user),

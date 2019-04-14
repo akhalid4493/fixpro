@@ -255,10 +255,12 @@ class OrderRepository
         $userToken = $order->user->deviceToken;
 
         if (!empty($userToken)) {
-            
+
             $data = [
                 'title' => 'لديك طلب جديد',
-                'body'  => 'تم ارسال لك طلب جديد خاص  بالمعانية'
+                'body'  => 'تم ارسال لك طلب جديد خاص  بالمعانية',
+                'type'  => 'orders',
+                'id'    => $order->id,
             ];
 
             return $this->send($data,$userToken->device_token);

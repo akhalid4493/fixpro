@@ -1,11 +1,9 @@
 <?php
 namespace App\TheApp\Traits;
 
-use App\Models\User;
-
 trait SendNotification
 {
-    public  function send($data , $devices_id = null) 
+    public  function send($data ,$devices_id = null) 
     {
 
       if (is_array($devices_id)) {
@@ -14,17 +12,23 @@ trait SendNotification
           $tokens = array($devices_id);
       }
 
-      $notification = array(
-          'title'    => $data['title'],
-          'body'     => $data['body'],
-          'sound'    => 'default',
-          'priority' => 'high',
-      );
+      $notification = [
+        'title'    => $data['title'],
+        'body'     => $data['body'],
+        'sound'    => 'default',
+        'priority' => 'high',
+      ];
 
-      $fields = array(
-         'registration_ids' => $tokens,
-         'notification'     => $notification
-      );
+      $data = [
+          "type" => $data['type'],
+          "id"   => $data['id'],
+      ];
+
+      $fields = [
+        'registration_ids' => $tokens,
+        'notification'     => $notification,
+        'data'             => $data,
+      ];
 
       return $this->Push($fields);
     }

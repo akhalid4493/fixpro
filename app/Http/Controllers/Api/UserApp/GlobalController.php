@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\UserApp;
 
+use App\TheApp\Repository\Api\Tokens\DeviceTokensRepository;
 use App\TheApp\Repository\Api\General\GeneralRepository;
 use App\Http\Resources\Settings\SettingResource;
 use App\Http\Controllers\Api\ApiController;
@@ -10,14 +11,15 @@ use Illuminate\Http\Request;
 
 class GlobalController extends ApiController
 {
-    function __construct(GeneralRepository $general)
+    function __construct(GeneralRepository $general,DeviceTokensRepository $token)
     {
-        $this->generalRepo = $general;
+        $this->generalModel = $general;
+        $this->tokenModel   = $token;
     }
 
     public function settings()
     {
-        $settings = $this->generalRepo->getAllSettings();
+        $settings = $this->generalModel->getAllSettings();
         $data = SettingResource::collection($settings);
 
         return $this->responseMessages($data,true,200);
@@ -25,7 +27,7 @@ class GlobalController extends ApiController
 
     public function setting(Request $request)
     {
-        $value = $this->generalRepo->getSettingByKey($request['key']);
+        $value = $this->generalModel->getSettingByKey($request['key']);
 
         if ($value != null)
             return $this->responseMessages(new SettingResource($value),true,200);
@@ -35,13 +37,13 @@ class GlobalController extends ApiController
 
     public function pages()
     {
-        $pages = $this->generalRepo->getAllPages();
+        $pages = $this->generalModel->getAllPages();
         return $this->responseMessages(PageResource::collection($pages),true,200);
     }
 
     public function page($id)
     {
-        $page = $this->generalRepo->getPageById($id);
+        $page = $this->generalModel->getPageById($id);
 
         if ($page != null)
             return $this->responseMessages(new PageResource($page),true,200);
@@ -51,7 +53,7 @@ class GlobalController extends ApiController
 
     public function deviceToken(Request $request)
     {
-        $update  = $this->generalRepo->deviceToken($request);
+        $update  = $this->tokenModel->deviceToken($request);
 
         if ($update == true)        
             return $this->responseMessages('device token updated' ,true,200,[]);

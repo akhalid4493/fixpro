@@ -7,7 +7,7 @@ Route::group(['prefix' => 'previews'], function () {
 
 });
 
-Route::group(['prefix' => 'previews','middleware' => ['auth:api']], function () {
+Route::group(['prefix' => 'previews','middleware' =>['auth:api']], function () {
 
 	Route::get('/' 			,'Api\UserApp\PreviewController@myPreviews');
 	Route::get('/{id}' 		,'Api\UserApp\PreviewController@myPreview');

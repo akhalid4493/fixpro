@@ -138,7 +138,7 @@ class UserController extends ApiController
         return [
             'access_token' 	=> $token,
             'token_type' 	=> 'bearer',
-            'expires_in' 	=> 1 .' Month.',
+            'expires_in' 	=> auth('api')->factory()->getTTL() * 60
         ];
     }
 }

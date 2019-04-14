@@ -121,7 +121,9 @@ class PreviewRepository
         if (!empty($userToken)) {
             $data = [
                 'title' => 'حالة الطلب الخاص بك',
-                'body'  => 'تم تغير حالة الطلب الى: '.$preview->previewStatus->name_ar.''
+                'body'  => 'تم تغير حالة الطلب الى: '.$preview->previewStatus->name_ar.'',
+                'type'  => 'previews',
+                'id'    => $preview->id,
             ];
 
             return $this->send($data,$userToken->device_token);
@@ -133,11 +135,14 @@ class PreviewRepository
         $userToken = $tech->user->deviceToken;
 
         if (!empty($userToken)) {
+
             $data = [
                 'title' => 'New Preview',
-                'body'  => 'You Have new preview request'
+                'body'  => 'You Have new preview request',
+                'type'  => 'previews',
+                'id'    => $preview->id,
             ];
-
+            
             return $this->send($data,$userToken->device_token);
         }
     }
