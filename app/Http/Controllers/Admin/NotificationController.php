@@ -31,7 +31,7 @@ class NotificationController extends AdminController
             'id'    => null,
         ];
 
-      	return $this->send($data,$tokens);
+      	$this->send($data,$tokens);
      
         return back()->with(['msg'=>'Notification Send Successfully','alert'=>'success']);
     }
