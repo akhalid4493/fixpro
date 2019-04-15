@@ -6,6 +6,7 @@ use App\TheApp\Repository\Admin\Previews\PreviewRepository;
 use App\TheApp\Repository\Admin\Users\UserRepository;
 use Illuminate\Http\Request;
 use Response;
+use Preview;
 use DB;
 
 class PreviewController extends AdminController
@@ -51,6 +52,7 @@ class PreviewController extends AdminController
     public function show($id)
     {
         $preview    = $this->previewModel->findById($id);
+        // return Preview::technicalOfService($preview);
         $statuses   = $this->previewModel->getAllStatus();
         $users      = $this->userModel->TechnicalUsers();
 

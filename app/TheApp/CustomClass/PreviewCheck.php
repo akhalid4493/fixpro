@@ -97,9 +97,9 @@ class PreviewCheck
 
         if ($shift->from > $shift->to){
 
-            $startShift = date(self::dateOfPreview($preview->time).' '.$shift->from);
-            $dateOfEnd  = date(self::dateOfPreview($preview->time).' '.$shift->to);
-            $endShift   = date('Y-m-d H:i:s',strtotime($dateOfEnd . ' +1 day'));
+            $startDate   = date(self::dateOfPreview($preview->time).' '.$shift->from);
+            $startShift  = date('Y-m-d H:i:s',strtotime($startDate . ' -1 day'));
+            $endShift    = date(self::dateOfPreview($preview->time).' '.$shift->to);
 
             $data['startShift'] = $startShift;
             $data['endShift']   = $endShift;
