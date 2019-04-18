@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'previews','middleware' => ['auth:api','technical','jwt.refresh']],function() {
+Route::group(['prefix' => 'previews','middleware' => ['auth:api','technical']],function() {
 
 	Route::get('/' 				,'Api\TechApp\PreviewController@myPreviews');
 	Route::get('/{id}' 			,'Api\TechApp\PreviewController@myPreview');

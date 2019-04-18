@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'orders','middleware' => ['auth:api','technical','jwt.refresh']], function () {
+Route::group(['prefix' => 'orders','middleware' => ['auth:api','technical']], function () {
 
 	Route::get('products' 			,'Api\TechApp\StoreController@products');
 	Route::get('product/{id}' 		,'Api\TechApp\StoreController@product');

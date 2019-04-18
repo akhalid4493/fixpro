@@ -7,7 +7,7 @@ Route::group(['prefix' => 'auth'], function () {
 
 });
 
-Route::group(['prefix' => 'user','middleware' => ['auth:api','technical','jwt.refresh']], function () {
+Route::group(['prefix' => 'user','middleware' => ['auth:api','technical']], function () {
 
 	Route::get('profile' 			,'Api\TechApp\UserController@profile');
 	Route::post('profile' 			,'Api\TechApp\UserController@updateProfile');
