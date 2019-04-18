@@ -59,6 +59,17 @@
         </div>
     </div>
 </div>
+<div class="tab-pane" id="emails">
+    <div class="form-group">
+        <label class="col-md-2 control-label">
+            استقبال الرسائل على
+        </label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" name="receive_mail"
+            value="{{settings('receive_mail')}}"/>
+        </div>
+    </div>
+</div>
 <div class="tab-pane" id="contact_info">
     <div class="form-group">
         <label class="col-md-2 control-label">

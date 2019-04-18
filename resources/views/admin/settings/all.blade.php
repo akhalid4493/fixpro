@@ -34,6 +34,11 @@
 												</a>
 											</li>
 											<li>
+												<a href="#emails" data-toggle="tab">
+													اعدادات البريد
+												</a>
+											</li>
+											<li>
 												<a href="#contact_info" data-toggle="tab">
 													تواصل معنا
 												</a>
