@@ -65,12 +65,10 @@
                                         </td>
                                     </form>
                                     <td>
-                                        <div class="margin-bottom-5">
-                                            <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
-                                            <i class="fa fa-search"></i>
-                                            بحث
-                                            </button>
-                                        </div>
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
+                                        <i class="fa fa-search"></i>
+                                        بحث
+                                        </button>
                                         
                                         <button class="btn btn-sm red btn-outline filter-cancel">
                                         <i class="fa fa-times"></i>

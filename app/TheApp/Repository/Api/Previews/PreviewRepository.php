@@ -1,12 +1,14 @@
 <?php
 namespace App\TheApp\Repository\Api\Previews;
 
+use App\Notifications\PreviewToAdmin;
 use App\Notifications\PreviewMail;
 use App\Models\PreviewGallery;
 use App\Models\PreviewDetail;
 use App\Models\PreviewDate;
 use App\Models\Preview;
 use App\Models\Service;
+use Notification;
 use ImageTrait;
 use SendNotifi;
 use Auth;
@@ -59,9 +61,10 @@ class PreviewRepository
             ]);
 
             if ($preview){
-                $this->createPreviewDates($preview,$request);
                 $this->createPreviewDetails($preview,$request);
+                $this->createPreviewDates($preview,$request);
                 $this->sendNotificationMail($preview);
+                $this->fireLog($preview);
             }
 
             if ($request['image']) {
@@ -207,5 +210,19 @@ class PreviewRepository
         $user           = $preview->user;
         $user->email    = $user->email;
         $user->notify(new PreviewMail());
+        Notification::route('mail', settings('receive_mail'))->notify(new PreviewToAdmin($preview));
+    }
+
+    public function fireLog($preview)
+    {
+        activity('previews')
+        ->performedOn($preview)
+        ->withProperties([
+            'preview_id'        => $preview->id,
+            'description_en'    => 'New Preview from : '.$preview->user->name.' ',
+            'description_ar'    => 'لديك طلب معاينة جديد من :  '.$preview->user->name.' ',
+        ])
+        ->causedBy($preview->user)
+        ->log('create');
     }
 }

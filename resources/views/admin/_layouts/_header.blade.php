@@ -18,10 +18,11 @@
         </a>
         <div class="top-menu">
             <ul class="nav navbar-nav pull-right">
+                <li class="dropdown dropdown-extended dropdown-notification" id="header_notification_bar"></li>
                 <li class="dropdown dropdown-user">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                         <img alt="" class="img-circle" src="{{ url(Auth::user()->image) }}" />
-                        <span class="username username-hide-on-mobile"> 
+                        <span class="username username-hide-on-mobile">
                             {{ Auth::user()->name }}
                         </span>
                         <i class="fa fa-angle-down"></i>

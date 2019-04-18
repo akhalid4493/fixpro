@@ -70,5 +70,65 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+function load_unseen_notification()
+{
+	$.ajax({
+  	url:"{{ url(route('activities.index')) }}",
+      type: "GET",
+      success:function(res){
+	      $('.dropdown-notification').html(res.view);
+      },
+  });
+}
+
+function load_alert_notification()
+{
+  $.ajax({
+    url:"{{ url(route('activities.index')) }}",
+      type: "GET",
+      success:function(res){
+        if(res.unseen_notification > 0)
+        {
+          playSound();
+          swal("Previews", "You have new preview request", "success").
+          then((value) => {
+            updateSeen();
+          });
+        }
+      },
+  });
+}
+
+function playSound(){
+  var audio = new Audio('{{ url('uploads/media/doorbell-5.mp3') }}');
+  audio.play();
+}
+
+function updateSeen()
+{
+	$.ajax({
+  	url:"{{ url(route('activities.update')) }}",
+      type: "GET",
+      success:function(res){
+        window.location.href = "{{ url(route('previews.index')) }}";
+      },
+  });
+}
+ 
+load_unseen_notification();
+
+setInterval(function(){ 
+  load_alert_notification();
+  load_unseen_notification(); 
+}, 5000);
+
+$(document).on('click', '.notifications', function(e) {
+  updateSeen();
+});
+
+</script>
 
 @yield('scripts')

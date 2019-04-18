@@ -95,7 +95,9 @@
                 <a href="{{ url(route('previews.index')) }}" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i>
                     <span class="title">طلبات المعاينة</span>
-                    <span class="badge badge-danger">قيد الانتظار {{ $newPreviews}}</span>
+                    @if ($newPreviews > 0)
+                        <span class="badge badge-danger">قيد الانتظار {{$newPreviews}}</span>
+                    @endif
                 </a>
             </li>
             @endpermission
@@ -128,7 +130,6 @@
                 <a href="{{ url(route('orders.index')) }}" class="nav-link nav-toggle">
                     <i class="fa fa-usd"></i>
                     <span class="title">الطلبات</span>
-                    <span class="badge badge-danger">قيد الانتظار {{ $newOrders }}</span>
                 </a>
             </li>
             @endpermission

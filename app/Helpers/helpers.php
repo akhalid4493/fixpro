@@ -315,6 +315,12 @@ function addToJson($ar , $en)
   return $json;
 }
 
+function getFromJson($dataField , $col)
+{
+  $json = json_decode($dataField);
+
+  return $json->$col;
+}
 
 function shortDescrip($descrip , $numb)
 {
