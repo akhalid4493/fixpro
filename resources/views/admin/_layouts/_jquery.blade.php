@@ -93,7 +93,12 @@ function load_alert_notification()
         if(res.unseen_notification > 0)
         {
           playSound();
-          swal("Previews", "You have new preview request", "success").
+          swal({
+            title: "طلب معاينة",
+            text: "لديك طلب معاينة جديد",
+            icon: "success",
+            button: "شاهد الطلب",
+          }).
           then((value) => {
             updateSeen();
           });
