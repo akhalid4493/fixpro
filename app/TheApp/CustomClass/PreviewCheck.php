@@ -111,6 +111,13 @@ class PreviewCheck
 
             $data['startShift'] = $startShift;
             $data['endShift']   = $endShift;
+            
+        }elseif($shift->from == $shift->to){
+            $startShift = date(self::dateOfPreview($preview->time).' '.$shift->from);
+            $endShift   = date(self::dateOfPreview($preview->time).' '.$shift->to);
+
+            $data['startShift'] = $startShift;
+            $data['endShift']   = $endShift;
         }
 
         return $data;
