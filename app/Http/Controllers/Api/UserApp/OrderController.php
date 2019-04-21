@@ -21,10 +21,7 @@ class OrderController extends ApiController
 	{
 		$orders = $this->orderModel->myOrders();
 
-		if ($orders->isNotEmpty())
-			return $this->responseMessages(OrderResource::collection($orders),true,200);
-
-		return $this->responseMessages([],false,405,[ 'there is no orders for this user']);
+		return $this->responseMessages(OrderResource::collection($orders),true,200);
 	}
 
 	public function getOrder($id)

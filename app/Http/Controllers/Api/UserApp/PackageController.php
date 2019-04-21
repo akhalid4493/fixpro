@@ -25,10 +25,7 @@ class PackageController extends ApiController
 	{
 		$packages = $this->packageModel->getAll();
 
-		if ($packages->isNotEmpty())
-			return $this->responseMessages(PackageResource::collection($packages),true,200);
-
-		return $this->responseMessages([],false,405,['there is no packages']);
+		return $this->responseMessages(PackageResource::collection($packages),true,200);
 	}
 
 	public function getPackage($id)

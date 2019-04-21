@@ -32,12 +32,13 @@ class GlobalController extends ApiController
         if ($value != null)
             return $this->responseMessages(new SettingResource($value),true,200);
 
-        return $this->responseMessages([],false,404,[ 'the key not found']);
+        return $this->responseMessages([],false,404,['the key not found']);
     }
 
     public function pages()
     {
         $pages = $this->generalModel->getAllPages();
+        
         return $this->responseMessages(PageResource::collection($pages),true,200);
     }
 

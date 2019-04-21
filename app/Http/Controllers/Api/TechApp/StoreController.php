@@ -65,10 +65,7 @@ class StoreController extends ApiController
 	{
 		$orders = $this->orderModel->technicalOrders($request);
 
-		if ($orders->isNotEmpty())
-			return $this->responseMessages(OrderResource::collection($orders),true,200);
-
-		return $this->responseMessages([],false,405,[ 'there is no orders for this technical']);
+		return $this->responseMessages(OrderResource::collection($orders),true,200);
 	}
 	
 	public function getOrder(Request $request,$id)

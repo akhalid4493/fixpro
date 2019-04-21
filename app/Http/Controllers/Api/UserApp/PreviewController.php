@@ -20,10 +20,6 @@ class PreviewController extends ApiController
     public function checkDates(Request $request)
     {
         $dates = PreviewCheck::getPreviews($request['service_id'],$request['governorate_id']);
-
-        if ($dates)
-            return $this->responseMessages($dates,true,200);
-
         return $this->responseMessages($dates,true,200);
     }
 
@@ -48,10 +44,7 @@ class PreviewController extends ApiController
     {
         $previews = $this->previewModel->myPreviews($request);
 
-        if ($previews->isNotEmpty())
-            return $this->responseMessages(PreviewResource::collection($previews),true,200);
-
-        return $this->responseMessages([],false,405,['there is no previews for this user']);
+        return $this->responseMessages(PreviewResource::collection($previews),true,200);
     }
     
     public function myPreview(Request $request,$id)
