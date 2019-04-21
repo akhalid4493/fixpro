@@ -14,16 +14,52 @@ trait SendNotification
             $tokens = array($tokens);
         }
 
-        $ios = DeviceToken::whereIn('device_token', $tokens)
+        $ios = DeviceToken::
+        whereIn('device_token', $tokens)
         ->where('platform', 'IOS')
         ->groupBy('device_token')
         ->pluck('device_token');
 
-        $android = DeviceToken::whereIn('device_token', $tokens)
-        ->where('platform', 'Android')
+        $android = DeviceToken::
+        whereIn('device_token', $tokens)
+        ->where('platform', 'ANDROID')
         ->groupBy('device_token')
         ->pluck('device_token');
 
+        if ($ios) {
+            $this->PushIOS($data,$ios);
+        }
+
+        if ($android) {
+            $this->PushANDROID($data,$android);
+        }
+    }
+
+    public function PushIOS($data,$tokens)
+    {
+        $notification = [
+          'title'    => $data['title'],
+          'body'     => $data['body'],
+          'sound'    => 'default',
+          'priority' => 'high',
+        ];
+
+        $data = [
+          "type"     => $data['type'],
+          "id"       => $data['id'],
+        ];
+
+        $fields_ios = [
+            'registration_ids' => $tokens,
+            'notification'     => $notification,
+            'data'             => $data,
+        ];
+    
+        return $this->Push($fields_ios);
+    }
+
+    public function PushANDROID($data,$tokens)
+    {
         $notification = [
           'title'    => $data['title'],
           'body'     => $data['body'],
@@ -33,23 +69,12 @@ trait SendNotification
           "id"       => $data['id'],
         ];
 
-        $fields_ios = [
-            'registration_ids' => $ios,
-            'notification'     => $notification
-        ];
-
         $fields_android = [
-            'registration_ids' => $android,
+            'registration_ids' => $tokens,
             'data'             => $notification
         ];
-
-        if (count($fields_ios) > 0) {
-            $this->Push($fields_ios);
-        }
-        if (count($fields_android) > 0) {
-            $this->Push($fields_android);
-        }
-
+    
+        return $this->Push($fields_android);
     }
 
     public function Push($fields)
