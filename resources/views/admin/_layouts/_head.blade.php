@@ -4,10 +4,14 @@
 	<title>@yield('title', 'الرئيسية') || {{settings('app_name_ar')}}</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
-	
+
+	{{-- CDN --}}
     <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="{{url('https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css')}}">
-	<link rel="stylesheet" href="{{url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	{{-- CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/simple-line-icons/simple-line-icons.min.css')}}">
 	{{-- BOOTSTRAP CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css')}}">

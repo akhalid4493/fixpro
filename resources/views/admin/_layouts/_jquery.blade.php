@@ -71,7 +71,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.js"></script>
 
+{{-- JQUERY --}}
 <script>
 function load_unseen_notification()
 {
@@ -134,6 +136,12 @@ $(document).on('click', '.notifications', function(e) {
   updateSeen();
 });
 
+</script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".emojioneArea").emojioneArea();
+  });
 </script>
 
 @yield('scripts')
