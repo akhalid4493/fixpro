@@ -16,7 +16,6 @@
             <li class="heading">
                 <h3 class="uppercase">الاعضاء و الصلاحيات</h3>
             </li>
-
             @permission('show_roles')
             <li class="nav-item">
                 <a href="{{ url(route('roles.index')) }}" class="nav-link nav-toggle">
@@ -43,11 +42,9 @@
                 </a>
             </li>
             @endpermission
-
             <li class="heading">
                 <h3 class="uppercase">التحكم</h3>
             </li>
-
             @permission('show_governorates')
             <li class="nav-item">
                 <a href="{{ url(route('governorates.index')) }}" class="nav-link nav-toggle">
@@ -56,8 +53,6 @@
                 </a>
             </li>
             @endpermission
-
-
             @permission('show_provinces')
             <li class="nav-item">
                 <a href="{{ url(route('provinces.index')) }}" class="nav-link nav-toggle">
@@ -66,8 +61,7 @@
                 </a>
             </li>
             @endpermission
-        
-
+            
             @permission('show_pages')
             <li class="nav-item">
                 <a href="{{ url(route('pages.index')) }}" class="nav-link nav-toggle">
@@ -76,11 +70,9 @@
                 </a>
             </li>
             @endpermission
-
             <li class="heading">
                 <h3 class="uppercase">المعاينة</h3>
             </li>
-
             @permission('show_services')
             <li class="nav-item">
                 <a href="{{ url(route('services.index')) }}" class="nav-link nav-toggle">
@@ -96,12 +88,11 @@
                     <i class="icon-bar-chart"></i>
                     <span class="title">طلبات المعاينة</span>
                     @if ($newPreviews > 0)
-                        <span class="badge badge-danger">قيد الانتظار {{$newPreviews}}</span>
+                    <span class="badge badge-danger">قيد الانتظار {{$newPreviews}}</span>
                     @endif
                 </a>
             </li>
             @endpermission
-
             
             <li class="heading">
                 <h3 class="uppercase">الطلبات</h3>
@@ -115,7 +106,6 @@
                 </a>
             </li>
             @endpermission
-
             @permission('show_installations')
             <li class="nav-item">
                 <a href="{{ url(route('installations.index'))}}" class="nav-link nav-toggle">
@@ -124,7 +114,6 @@
                 </a>
             </li>
             @endpermission
-
             @permission('show_orders')
             <li class="nav-item">
                 <a href="{{ url(route('orders.index')) }}" class="nav-link nav-toggle">
@@ -133,11 +122,9 @@
                 </a>
             </li>
             @endpermission
-
             <li class="heading">
                 <h3 class="uppercase">الاشتراكات</h3>
             </li>
-
             @permission('show_packages')
             <li class="nav-item">
                 <a href="{{ url(route('packages.index')) }}" class="nav-link nav-toggle">
@@ -147,14 +134,32 @@
             </li>
             @endpermission
 
-            @permission('show_subscriptions')
             <li class="nav-item">
-                <a href="{{ url(route('subscriptions.index')) }}" class="nav-link nav-toggle">
-                    <i class="fa fa-usd"></i>
-                    <span class="title">اشتراكات الاعضاء</span>
+                <a href="javascript:;" class="nav-link nav-toggle">
+                    <i class="icon-puzzle"></i>
+                    <span class="title">اشتراكات و فواتير</span>
+                    <span class="arrow"></span>
                 </a>
+                <ul class="sub-menu">
+                    @permission('show_subscriptions')
+                    <li class="nav-item  ">
+                        <a href="{{ url(route('subscriptions.index')) }}" class="nav-link nav-toggle">
+                            <i class="fa fa-usd"></i>
+                            <span class="title">اشتراكات الاعضاء</span>
+                        </a>
+                    </li>
+                    @endpermission
+                    
+                    @permission('show_invoices')
+                    <li class="nav-item  ">
+                        <a href="{{ url(route('invoices.index')) }}" class="nav-link nav-toggle">
+                            <i class="fa fa-usd"></i>
+                            <span class="title">الفواتير الشهرية</span>
+                        </a>
+                    </li>
+                    @endpermission
+                </ul>
             </li>
-            @endpermission
 
             <li class="heading">
                 <h3 class="uppercase">اعدادات</h3>
@@ -167,8 +172,8 @@
                     <span class="title">اشعارات عامة</span>
                 </a>
             </li>
-            @endpermission 
-           
+            @endpermission
+            
             @permission('show_settings')
             <li class="nav-item">
                 <a href="{{ url(route('settings.index')) }}" class="nav-link nav-toggle">
