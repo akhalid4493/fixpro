@@ -81,7 +81,7 @@ class PreviewCheck
 
             $workShift = self::shifts($shift,$preview);
 
-            if ($workShift['startShift'] < $preview->time && $preview->time < $workShift['endShift']) {
+            if ($workShift['startShift'] <= $preview->time && $preview->time < $workShift['endShift']) {
 
                 $userId[] = $shift['user_id'];
 
