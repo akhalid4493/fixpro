@@ -19,6 +19,8 @@ class OrderResource extends Resource
     {
          return [
             'id'            => $this->id,
+            'subtotal'      => number_format($this->subtotal,3),
+            'service'       => number_format($this->service,3),
             'total'         => number_format($this->total,3),
             'payment_method'=> $this->method,
             'status_code'   => $this->orderStatus->id,

@@ -22,8 +22,11 @@ class InstallationRepository
                ->where('status',1)
                ->orderBy('id','desc');
         
-        if ($request['type'])
-            $product = $installation->where('type', $request['type']);
+        if ($request['category_id']){
+            $installation->whereHas('categories', function($query) use($request){
+                $query->where('category_id',$request['category_id']);
+            });
+        }
 
 
         $installations = $installation->get();

@@ -22,10 +22,12 @@ class ProductRepository
                ->where('status',1)
                ->orderBy('id','desc');
         
-        if ($request['type'])
-            $product = $prdouct->where('type', $request['type']);
-
-
+        if ($request['category_id']){
+            $prdouct->whereHas('categories', function($query) use($request){
+                $query->where('category_id',$request['category_id']);
+            });
+        }
+    
         $prdoucts = $prdouct->get();
 
         return $prdoucts;

@@ -98,6 +98,15 @@
                 <h3 class="uppercase">الطلبات</h3>
             </li>
             
+            @permission('show_categories')
+            <li class="nav-item">
+                <a href="{{ url(route('categories.index')) }}" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title">الاقسام</span>
+                </a>
+            </li>
+            @endpermission
+
             @permission('show_products')
             <li class="nav-item">
                 <a href="{{ url(route('products.index')) }}" class="nav-link nav-toggle">
@@ -106,6 +115,7 @@
                 </a>
             </li>
             @endpermission
+
             @permission('show_installations')
             <li class="nav-item">
                 <a href="{{ url(route('installations.index'))}}" class="nav-link nav-toggle">

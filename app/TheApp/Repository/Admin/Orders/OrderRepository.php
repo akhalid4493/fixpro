@@ -157,7 +157,9 @@ class OrderRepository
                 $show = btn('show','show_orders' , url(route('orders.show',$id)));
 
                 $obj['id']               = $order->id;
-                $obj['total']            = Price($order->total). ' دك';
+                $obj['total']            = Price($order->total);
+                $obj['subtotal']         = Price($order->subtotal);
+                $obj['service']          = Price($order->service);
                 $obj['method']           = Label($order->method,'label-info');
                 $obj['order_status_id']  = OrderStatus($order);
                 $obj['full_name']        = $order->user->name;

@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Api\TechApp;
 
 use App\TheApp\Repository\Api\Installations\InstallationRepository as Installation;
+use App\TheApp\Repository\Api\Categories\CategoryRepository as Category;
 use App\TheApp\Repository\Api\Products\ProductRepository as Product;
+use App\Http\Controllers\Payment\OrderPaymentController as Payment;
 use App\TheApp\Repository\Api\Orders\OrderRepository as Order;
 use App\Http\Resources\Installations\InstallationResource;
+use App\Http\Resources\Categories\CategoryResource;
 use App\Http\Resources\Products\ProductResource;
 use App\Http\Resources\Orders\OrderResource;
 use App\Http\Controllers\Api\ApiController;
@@ -14,12 +17,26 @@ use Auth;
 
 class StoreController extends ApiController
 {
-   	function __construct(Product $product,Installation $installation,Order $order)
+   	function __construct(
+	   	Product $product,
+	   	Installation $installation,
+	   	Order $order,
+	   	Payment $payment,
+	   	Category $category
+   	)
     {
         $this->installationModel= $installation;
         $this->productModel  	= $product;
+        $this->categoryModel 	= $category;
         $this->orderModel    	= $order;
+        $this->payment 		 	= $payment;
     }
+
+	// GetAll Categories
+	public function categories(Request $request)
+	{
+		return $data = CategoryResource::collection($this->categoryModel->getAll($request));
+	}
 
 	// GetAll Products
 	public function products(Request $request)
@@ -81,11 +98,28 @@ class StoreController extends ApiController
     // Make New Order
 	public function createOrder(Request $request)
 	{
-	 	$newOrder = $this->orderModel->addNewOrder($request);
+		if ($request['method'] == 'Knet') {
+	
+		 	$newOrder = $this->orderModel->addNewOrder($request);
 
-	 	if ($newOrder)
-            return $this->responseMessages(new OrderResource($newOrder),true,200);
+		 	if ($newOrder){
+	            $payment = $this->payment->send($newOrder,$request);
 
-		return $this->responseMessages([],false,405,[ 'please try again ']);
+				return response()->json([
+		            'message' => 'The Payment Url',
+		            'data'    => $payment['paymentURL'],
+		        ],200);
+		 	}
+
+			return $this->responseMessages([],false,405,['please try again']);
+
+		}else{
+		 	$newOrder = $this->orderModel->addNewOrder($request);
+
+		 	if ($newOrder)
+	            return $this->responseMessages(new OrderResource($newOrder),true,200);
+
+			return $this->responseMessages([],false,405,['please try again']);
+		}
 	}
 }

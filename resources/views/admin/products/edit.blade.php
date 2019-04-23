@@ -20,12 +20,12 @@
       <div class="col-md-12">
         <div class="portlet light">
           <div class="portlet-title tabbable-line">
-              <div class="caption caption-md">
-                  <i class="icon-globe theme-font hide"></i>
-                  <span class="caption-subject font-blue-madison bold uppercase">
-                    تعديل بيانات القطعة : <b style="color:red">{{ $product->name_ar }}</b>
-                  </span>
-              </div>
+            <div class="caption caption-md">
+              <i class="icon-globe theme-font hide"></i>
+              <span class="caption-subject font-blue-madison bold uppercase">
+                تعديل بيانات القطعة : <b style="color:red">{{ $product->name_ar }}</b>
+              </span>
+            </div>
           </div>
           <div class="portlet-body form">
             <form id="updateForm" method="POST" action="{{url(route('products.update',$product->id))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
@@ -77,6 +77,24 @@
                         </label>
                         <div class="col-md-9">
                           <input type="text" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">
+                          الاقسام
+                          <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9">
+                          <select name="categories[]" id="single" class="form-control select2" multiple="">
+                            @foreach ($categories as $category)
+                            <option value="{{ $category['id'] }}"
+                              @if ($product->categories->contains($category->id))
+                              selected
+                              @endif>
+                              {{ $category['name_ar'] }}
+                            </option>
+                            @endforeach
+                          </select>
                         </div>
                       </div>
                       <div class="form-group">

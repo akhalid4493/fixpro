@@ -1,5 +1,5 @@
 @extends('admin._layouts.master')
-@section('title','تعديل بيانات قيمة التركيب')
+@section('title','تعديل القسم')
 @section('content')
 <div class="page-content-wrapper">
   <div class="page-content">
@@ -9,10 +9,10 @@
           <a href="{{ url(route('admin')) }}">الرئيسية</a><i class="fa fa-circle"></i>
         </li>
         <li>
-          <a href="{{ url(route('installations.index')) }}">جميع قيمة التركيب</a>
+          <a href="{{ url(route('categories.index')) }}">جميع الاقسام</a>
           <i class="fa fa-circle"></i>
         </li>
-        <li><span>تعديل بيانات قيمة التركيب</span></li>
+        <li><span>تعديل القسم</span></li>
       </ul>
     </div>
     <h1 class="page-title"></h1>
@@ -23,12 +23,12 @@
               <div class="caption caption-md">
                   <i class="icon-globe theme-font hide"></i>
                   <span class="caption-subject font-blue-madison bold uppercase">
-                تعديل بيانات قيمة التركيب : <b style="color:red">{{ $installation->name_ar }}</b>
+                تعديل القسم : <b style="color:red">{{ $category->name_ar }}</b>
                   </span>
               </div>
           </div>
           <div class="portlet-body form">
-            <form id="updateForm" method="POST" action="{{url(route('installations.update',$installation->id))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
+            <form id="updateForm" method="POST" action="{{url(route('categories.update',$category->id))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
               @csrf
               <input name="_method" type="hidden" value="PUT">
               <div class="tabbable-bordered">
@@ -42,53 +42,24 @@
                   {{-- GENERAL CONTENT --}}
                   <div class="tab-pane active" id="general">
                     <div class="form-body">
-                    <input name="type" type="hidden" value="{{ $installation->type }}">
+                    <input name="type" type="hidden" value="{{ $category->type }}">
                       <div class="form-group">
                         <label class="control-label col-md-3">
-                          عنوان قيمة التركيب ar
+                          عنوان القسم ar
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <input type="text" name="name_ar" placeholder="كرسي" class="form-control" value="{{ $installation->name_ar }}">
+                          <input type="text" name="name_ar" placeholder="كرسي" class="form-control" value="{{ $category->name_ar }}">
                         </div>
                       </div>
 
                       <div class="form-group">
                         <label class="control-label col-md-3">
-                          عنوان قيمة التركيب en
+                          عنوان القسم en
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <input type="text" name="name_en" placeholder="Chair" class="form-control" value="{{ $installation->name_en }}">
-                        </div>
-                      </div>
-
-                      <div class="form-group">
-                        <label class="control-label col-md-3">
-                          سعر قيمة التركيب
-                          <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9">
-                          <input type="text" name="price" placeholder="25.000" class="form-control" value="{{ number_format($installation->price,3)}}">
-                        </div>
-                      </div>
-                      
-                      <div class="form-group">
-                        <label class="control-label col-md-3">
-                          الاقسام
-                          <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9">
-                          <select name="categories[]" id="single" class="form-control select2" multiple="">
-                            @foreach ($categories as $category)
-                            <option value="{{ $category['id'] }}"
-                              @if ($installation->categories->contains($category->id))
-                              selected
-                              @endif>
-                              {{ $category['name_ar'] }}
-                            </option>
-                            @endforeach
-                          </select>
+                          <input type="text" name="name_en" placeholder="Chair" class="form-control" value="{{ $category->name_en }}">
                         </div>
                       </div>
 
@@ -101,7 +72,7 @@
                           <div class="mt-radio-inline">
                             <label class="mt-radio mt-radio-outline"> مفعل
                               <input type="radio" name="status" value="1"
-                              @if ($installation['status'] == 1)
+                              @if ($category['status'] == 1)
                               checked=""
                               @endif>
                               <span></span>
@@ -109,7 +80,7 @@
                             <label class="mt-radio mt-radio-outline">
                               غير مفعل
                               <input type="radio" name="status" value="0"
-                              @if ($installation['status'] == 0)
+                              @if ($category['status'] == 0)
                               checked=""
                               @endif>
                               <span></span>
@@ -125,7 +96,7 @@
                           <div class="col-md-9">
                             <input class="form-control" type="file" name="image">
                             <div class="form-group">
-                              <img src="{{url($installation->image)}}" class="img-thumbnail" style="width:15%">
+                              <img src="{{url($category->image)}}" class="img-thumbnail" style="width:15%">
                             </div>
                           </div>
                         </div>
@@ -141,7 +112,7 @@
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <input type="text" name="seo_keywords_ar" placeholder="دكتور سالمين ، دكتور،سالمين" class="form-control" value="{{$installation->seo_keywords_ar}}">
+                          <input type="text" name="seo_keywords_ar" placeholder="دكتور سالمين ، دكتور،سالمين" class="form-control" value="{{$category->seo_keywords_ar}}">
                         </div>
                       </div>
                       <div class="form-group">
@@ -150,7 +121,7 @@
                           <span class="required">*</span>
                         </label>
                         <div class="col-md-9">
-                          <textarea type="text" name="seo_description_ar" rows="10" cols="10" class="form-control">{!!$installation->seo_description_ar!!}</textarea>
+                          <textarea type="text" name="seo_description_ar" rows="10" cols="10" class="form-control">{!!$category->seo_description_ar!!}</textarea>
                         </div>
                       </div>
                     </div>
@@ -170,7 +141,7 @@
                         <button type="submit" id="submit" class="btn btn-lg blue">
                         تعديل
                         </button>
-                        <a href="{{url(route('installations.index')) }}" class="btn btn-lg red">
+                        <a href="{{url(route('categories.index')) }}" class="btn btn-lg red">
                           الخلف
                         </a>
                       </div>

@@ -20,6 +20,7 @@
                             <th class="invoice-title uppercase text-center"> الاسم</th>
                             <th class="invoice-title uppercase text-center"> البريد الالكتروني </th>
                             <th class="invoice-title uppercase text-center"> الهاتف </th>
+                            <th class="invoice-title uppercase text-center"> حالة العميل </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,19 @@
                             <td class="text-center sbold"> {{ $order->user->name }}</td>
                             <td class="text-center sbold"> {{ $order->user->email }}</td>
                             <td class="text-center sbold"> {{ $order->user->mobile }}</td>
+                            @if ($order->user->checkSubscription == true)
+                            <td class="text-center sbold">
+                                <span class="label label-success circle" style="font-size:13px">
+                                    مشترك
+                                </span>
+                            </td>
+                            @else
+                            <td class="text-center sbold">
+                                <span class="label label-danger circle" style="font-size:13px">
+                                    غير مشترك
+                                </span>
+                            </td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>
@@ -132,14 +146,21 @@
             <div class="col-xs-8 invoice-block">
                 <ul class="list-unstyled amounts">
                     <li>
-                    <strong>المحموع :</strong> {{ Price($order->total) }} KWD </li>
+                        <strong>المجموع :</strong> {{ Price($order->subtotal) }} KWD
+                    </li>
                     <li>
-                    </ul>
-                    <br/>
-                    <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
-                        <i class="fa fa-print"></i>
-                    </a>
-                </div>
+                        <strong>الخدمة :</strong> {{ Price($order->service) }} KWD
+                    </li>
+                    <hr>
+                    <li>
+                        <strong>المجموع الكلي :</strong> {{ Price($order->total) }} KWD
+                    </li>
+                </ul>
+                <br/>
+                <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
+                    <i class="fa fa-print"></i>
+                </a>
             </div>
         </div>
     </div>
+</div>

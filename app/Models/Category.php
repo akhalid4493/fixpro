@@ -4,16 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Installation extends Model
+class Category extends Model
 {
     protected $fillable = [
         'name_en', 
         'name_ar', 
         'description_en',
         'description_ar',
-        'slug',
         'status',
-        'price',
+        'slug',
         'image',
         'seo_description_en',
         'seo_description_ar',
@@ -21,8 +20,13 @@ class Installation extends Model
         'seo_keywords_ar',
     ];
 
-    public function categories()
+    public function products()
     {
-        return $this->belongsToMany('App\Models\Category', 'installation_categories');
+        return $this->belongsToMany('App\Models\Product', 'product_categories');
+    }
+
+    public function installations()
+    {
+        return $this->belongsToMany('App\Models\Installation', 'installation_categories');
     }
 }

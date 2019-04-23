@@ -21,4 +21,9 @@ class Product extends Model
         'seo_keywords_en',
         'seo_keywords_ar',
     ];
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category', 'product_categories');
+    }
 }

@@ -1,5 +1,5 @@
 @extends('admin._layouts.master')
-@section('title','اضافة قيمة تركيب جديدة')
+@section('title','اضافة قسم جديد')
 @section('content')
 <div class="page-content-wrapper">
 	<div class="page-content">
@@ -9,29 +9,30 @@
 					<a href="{{ url(route('admin')) }}">الرئيسية</a><i class="fa fa-circle"></i>
 				</li>
 				<li>
-					<a href="{{ url(route('installations.index')) }}">
-						جميع قيمة التركيب
+					<a href="{{ url(route('categories.index')) }}">
+						جميع الاقسام
 					</a>
 					<i class="fa fa-circle"></i>
 				</li>
-				<li><span>اضافة قيمة تركيب جديدة</span></li>
+				<li><span>اضافة قسم جديد</span></li>
 			</ul>
 		</div>
 		
 		<h1 class="page-title"></h1>
+
 		<div class="row">
 			<div class="col-md-12">
-				<div class="portlet light">
+                <div class="portlet light">
 					<div class="portlet-title tabbable-line">
-						<div class="caption caption-md">
-							<i class="icon-globe theme-font hide"></i>
-							<span class="caption-subject font-blue-madison bold uppercase">
-								اضافة قيمة تركيب جديدة
-							</span>
-						</div>
-					</div>
+                        <div class="caption caption-md">
+                            <i class="icon-globe theme-font hide"></i>
+                            <span class="caption-subject font-blue-madison bold uppercase">
+								اضافة قسم جديد
+                            </span>
+                        </div>
+                    </div>
 					<div class="portlet-body form">
-						<form id="form" method="POST" action="{{url(route('installations.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
+						<form id="form" method="POST" action="{{url(route('categories.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
 							@csrf
 							<div class="tabbable-bordered">
 								<ul class="nav nav-tabs">
@@ -47,46 +48,24 @@
 											
 											<div class="form-group">
 												<label class="control-label col-md-3">
-													عنوان قيمة التركيب ar
+													عنوان القسم ar
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
 													<input type="text" name="name_ar" placeholder="تركيب باب خشب" class="form-control">
 												</div>
 											</div>
+
 											<div class="form-group">
 												<label class="control-label col-md-3">
-													عنوان قيمة التركيب en
+													عنوان القسم en
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
 													<input type="text" name="name_en" placeholder="Installation Wood Door" class="form-control">
 												</div>
 											</div>
-											<div class="form-group">
-												<label class="control-label col-md-3">
-													سعر قيمة التركيب
-													<span class="required">*</span>
-												</label>
-												<div class="col-md-9">
-													<input type="text" name="price" placeholder="25.000" class="form-control">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label col-md-3">
-													الاقسام
-													<span class="required">*</span>
-												</label>
-												<div class="col-md-9">
-													<select name="categories[]" id="single" class="form-control select2" multiple="">
-														@foreach ($categories as $category)
-														<option value="{{ $category['id'] }}">
-															{{ $category['name_ar'] }}
-														</option>
-														@endforeach
-													</select>
-												</div>
-											</div>
+
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													الحالة
@@ -106,18 +85,21 @@
 													</div>
 												</div>
 											</div>
+
 											<div class="form-body">
 												<div class="form-group">
 													<label class="control-label col-md-3">
-														صورة قيمة التركيب
+														صورة القسم
 													</label>
 													<div class="col-md-9">
 														<input class="form-control" type="file" name="image">
 													</div>
 												</div>
 											</div>
+
 										</div>
 									</div>
+
 									<div class="form-actions">
 										<div id="result" style="display: none"></div>
 										
@@ -133,7 +115,7 @@
 												<button type="submit" id="submit" class="btn btn-lg blue">
 												اضافة
 												</button>
-												<a href="{{url(route('installations.index')) }}" class="btn btn-lg red">
+												<a href="{{url(route('categories.index')) }}" class="btn btn-lg red">
 													الخلف
 												</a>
 											</div>

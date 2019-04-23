@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Installation\InstallationRepository;
+use App\TheApp\Repository\Admin\Categories\CategoryRepository;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -10,9 +11,10 @@ use DB;
 class InstallationController extends AdminController
 {
 
-    function __construct(InstallationRepository $installation)
+    function __construct(InstallationRepository $installation,CategoryRepository $category)
     {
         $this->installationModel  = $installation;
+        $this->categoryModel = $category;
     }
 
 
@@ -30,7 +32,8 @@ class InstallationController extends AdminController
 
     public function create()
     {
-        return view('admin.installations.create');
+        $categories = $this->categoryModel->getAll();
+        return view('admin.installations.create',compact('categories'));
     }
 
 
@@ -59,12 +62,13 @@ class InstallationController extends AdminController
 
     public function edit($id)
     {
-        $installation    = $this->installationModel->findById($id);
+        $categories = $this->categoryModel->getAll();
 
+        $installation    = $this->installationModel->findById($id);
         if (!$installation)
             abort(404);
 
-        return view('admin.installations.edit',compact('installation'));
+        return view('admin.installations.edit',compact('installation','categories'));
     }
 
 

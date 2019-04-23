@@ -3,43 +3,40 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Categories\CategoryRepository;
-use App\TheApp\Repository\Admin\Product\ProductRepository;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 
-class ProductController extends AdminController
+class CategoryController extends AdminController
 {
 
-    function __construct(ProductRepository $product,CategoryRepository $category)
+    function __construct(CategoryRepository $category)
     {
-        $this->productModel  = $product;
-        $this->categoryModel = $category;
+        $this->categoryModel  = $category;
     }
 
 
     public function index()
     {
-        return view('admin.products.home');
+        return view('admin.categories.home');
     }
 
 
     public function dataTable(Request $request)
     {
-        return $this->productModel->dataTable($request);
+        return $this->categoryModel->dataTable($request);
     }
 
 
     public function create()
     {
-        $categories = $this->categoryModel->getAll();
-        return view('admin.products.create',compact('categories'));
+        return view('admin.categories.create');
     }
 
 
     public function store(Request $request)
     {
-        $create = $this->productModel->create($request);
+        $create = $this->categoryModel->create($request);
 
         if($create)
             return Response()->json([true , 'تم الاضافة بنجاح' ]);
@@ -51,24 +48,23 @@ class ProductController extends AdminController
 
     public function show($id)
     {
-        $product = $this->productModel->findById($id);
+        $category = $this->categoryModel->findById($id);
         
-        if (!$product)
+        if (!$category)
             abort(404);
 
-        return view('admin.products.show' , compact('product'));
+        return view('admin.categories.show' , compact('category'));
     }
 
 
     public function edit($id)
     {
-        $categories = $this->categoryModel->getAll();
-        $product    = $this->productModel->findById($id);
+        $category    = $this->categoryModel->findById($id);
 
-        if (!$product)
+        if (!$category)
             abort(404);
 
-        return view('admin.products.edit',compact('categories','product'));
+        return view('admin.categories.edit',compact('category'));
     }
 
 
@@ -76,7 +72,7 @@ class ProductController extends AdminController
     {
         if ($request->ajax()) {
 
-            $update = $this->productModel->update($request , $id);
+            $update = $this->categoryModel->update($request , $id);
 
             if($update){
                 return Response()->json([true , 'تم التعديل بنجاح']);
@@ -91,7 +87,7 @@ class ProductController extends AdminController
     {
         try {
 
-            $repose = $this->productModel->delete($id);
+            $repose = $this->categoryModel->delete($id);
 
             if($repose){
                 return Response()->json([true, 'تم الحذف بنجاح']);
@@ -106,7 +102,7 @@ class ProductController extends AdminController
     public function deletes(Request $request)
     {
         try {
-            $repose = $this->productModel->deleteAll($request);
+            $repose = $this->categoryModel->deleteAll($request);
 
             if($repose){
                 return Response()->json([true, 'تم الحذف بنجاح']);

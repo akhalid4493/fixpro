@@ -21,42 +21,23 @@
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">
-                الوصف لمحركات البحث [en]
+                كفالة التركيب بالايام
             </label>
             <div class="col-md-10">
-                <textarea class="form-control" name="meta_description_en" cols="30" rows="10">{!!settings('meta_description_en')!!}</textarea>
+                <input type="text" class="form-control" name="warranty"
+                value="{{settings('warranty')}}"/>
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label">
-                الوصف لمحركات البحث [ar]
+                سعر الخدمة KWD
             </label>
             <div class="col-md-10">
-                <textarea class="form-control" name="meta_description_ar" cols="30" rows="10">{!!settings('meta_description_ar')!!}</textarea>
+                <input type="text" class="form-control" name="service"
+                value="{{settings('service')}}"/>
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-group">
-                <label class="col-md-2 control-label">
-                    كلمات دالة لمحركات البحث [en]
-                </label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="meta_keywords_en"
-                    value="{{settings('meta_keywords_en')}}"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="form-group">
-                <label class="col-md-2 control-label">
-                    كلمات دالة لمحركات البحث [ar]
-                </label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" name="meta_keywords_ar"
-                    value="{{settings('meta_keywords_ar')}}"/>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 <div class="tab-pane" id="emails">

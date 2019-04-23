@@ -47,6 +47,8 @@ class ProductRepository
                     'description_en'        => $request['description_en'],
                     'image'                 => $img,
                 ]);
+            
+            $product->categories()->sync($request['categories']);
 
             DB::commit();
             return true;
@@ -81,6 +83,8 @@ class ProductRepository
                 'description_en'        => $request['description_en'],
                 'image'                 => $img,
             ]);
+
+            $product->categories()->sync($request['categories']);
 
             DB::commit();
             return true;

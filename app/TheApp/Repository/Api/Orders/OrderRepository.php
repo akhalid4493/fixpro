@@ -150,14 +150,22 @@ class OrderRepository
     {
         DB::beginTransaction();
 
+        if ($request['method'] == 'Knet') {
+            $status = 4;
+        }else{
+            $status = 5;
+        }
+
         try {
             
             $order = $this->model->create([
-                'total'             => $subtotal,
-                'method'            => null,
+                'subtotal'          => $subtotal,
+                'service'           => settings('service'),
+                'total'             => $subtotal + settings('service'),
+                'method'            => $request['method'],
                 'preview_id'        => $request['preview_id'],
                 'user_id'           => $request['client_user_id'],
-                'order_status_id'   => 1,
+                'order_status_id'   => $status,
                 'technical_id'      => Auth::id(),
             ]);
 

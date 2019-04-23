@@ -82,6 +82,21 @@
 											</div>
 											<div class="form-group">
 												<label class="control-label col-md-3">
+													الاقسام
+													<span class="required">*</span>
+												</label>
+												<div class="col-md-9">
+													<select name="categories[]" id="single" class="form-control select2" multiple="">
+														@foreach ($categories as $category)
+														<option value="{{ $category['id'] }}">
+															{{ $category['name_ar'] }}
+														</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label col-md-3">
 													الحالة
 													<span class="required">*</span>
 												</label>

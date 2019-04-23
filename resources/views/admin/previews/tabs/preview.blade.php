@@ -20,6 +20,7 @@
                             <th class="invoice-title uppercase text-center"> الاسم</th>
                             <th class="invoice-title uppercase text-center"> البريد الالكتروني </th>
                             <th class="invoice-title uppercase text-center"> الهاتف </th>
+                            <th class="invoice-title uppercase text-center"> حالة العميل </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -27,6 +28,19 @@
                             <td class="text-center sbold"> {{ $preview->user->name }}</td>
                             <td class="text-center sbold"> {{ $preview->user->email }}</td>
                             <td class="text-center sbold"> {{ $preview->user->mobile }}</td>
+                            @if ($preview->user->checkSubscription == true)
+                            <td class="text-center sbold">
+                                <span class="label label-success circle" style="font-size:13px">
+                                مشترك
+                               </span>
+                            </td>
+                            @else
+                            <td class="text-center sbold">
+                                <span class="label label-danger circle" style="font-size:13px">
+                                غير مشترك
+                               </span>
+                            </td>
+                            @endif
                         </tr>
                     </tbody>
                 </table>

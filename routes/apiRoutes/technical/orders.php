@@ -2,6 +2,7 @@
 
 Route::group(['prefix' => 'orders','middleware' => ['auth:api','technical']], function () {
 
+	Route::get('categories' 		,'Api\TechApp\StoreController@categories');
 	Route::get('products' 			,'Api\TechApp\StoreController@products');
 	Route::get('product/{id}' 		,'Api\TechApp\StoreController@product');
 	Route::get('installations' 		,'Api\TechApp\StoreController@installations');

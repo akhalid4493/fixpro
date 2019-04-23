@@ -1,18 +1,18 @@
 <?php
-namespace App\TheApp\Repository\Admin\Installation;
+namespace App\TheApp\Repository\Admin\Categories;
 
-use App\Models\Installation;
+use App\Models\Category;
 use ImageTrait;
 use Auth;
 use DB;
 
-class InstallationRepository
+class CategoryRepository
 {
     protected $model;
 
-    function __construct(Installation $installation)
+    function __construct(Category $category)
     {
-        $this->model = $installation;
+        $this->model        = $category;
     }  
 
     public function getAll($order = 'id', $sort = 'desc')
@@ -30,24 +30,21 @@ class InstallationRepository
         DB::beginTransaction();
         
         if ($request->hasFile('image'))
-            $img = ImageTrait::uploadImage($request->image,'installations/'.ar_slug($request->name_en));
+            $img = ImageTrait::uploadImage($request->image,'categories/'.ar_slug($request->name_en));
         else
-            $img=ImageTrait::copyImage('default.png','installations/'.ar_slug($request->name_en),'default.png');
+            $img = ImageTrait::copyImage('default.png','categories/'.ar_slug($request->name_en),'default.png');
 
         try {
             
-            $installation = $this->model->create([
+            $category = $this->model->create([
                     'name_ar'               => $request['name_ar'],
                     'name_en'               => $request['name_en'],
                     'slug'                  => ar_slug($request['name_en']),
                     'status'                => $request['status'],
-                    'price'                 => $request['price'],
                     'description_ar'        => $request['description_ar'],
                     'description_en'        => $request['description_en'],
                     'image'                 => $img,
                 ]);
-
-            $installation->categories()->sync($request['categories']);
 
             DB::commit();
             return true;
@@ -62,27 +59,24 @@ class InstallationRepository
     {
         DB::beginTransaction();
 
-        $installation = $this->findById($id);
+        $category = $this->findById($id);
 
         if ($request->hasFile('image'))
-            $img=ImageTrait::uploadImage($request->image,'installations/'.ar_slug($request->name_en),$installation->image);
+            $img=ImageTrait::uploadImage($request->image,'categories/'.ar_slug($request->name_en),$category->image);
         else
-            $img  = $installation->image;
+            $img  = $category->image;
 
         try {
             
-            $installation->update([
+            $category->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
                 'slug'                  => ar_slug($request['name_en']),
                 'status'                => $request['status'],
-                'price'                 => $request['price'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
                 'image'                 => $img,
             ]);
-
-            $installation->categories()->sync($request['categories']);
 
             DB::commit();
             return true;
@@ -100,11 +94,11 @@ class InstallationRepository
         
         try {
             
-            $installation = $this->findById($id);
+            $category = $this->findById($id);
 
-            ImageTrait::deleteDirectory('uploads/installations/'.ar_slug($installation->name_en));
+            ImageTrait::deleteDirectory('uploads/categories/'.ar_slug($category->name_en));
 
-            $installation->delete();
+            $category->delete();
 
             DB::commit();
             return true;
@@ -121,10 +115,10 @@ class InstallationRepository
         
         try {
             
-            $installations = $this->model->whereIn('id',$request['ids'])->get();
+            $categories = $this->model->whereIn('id',$request['ids'])->get();
 
-            foreach ($installations as $installation) {
-                $installation->delete();
+            foreach ($categories as $category) {
+                $category->delete();
             }
 
 
@@ -151,7 +145,7 @@ class InstallationRepository
         $output['draw']            = intval($request->input('draw'));
 
         // Get Data
-        $installations = $query
+        $categories = $query
                 ->orderBy($sort['col'], $sort['dir'])
                 ->skip($request->input('start'))
                 ->take($request->input('length',10))
@@ -160,21 +154,20 @@ class InstallationRepository
 
         $data = array();
 
-        if(!empty($installations))
+        if(!empty($categories))
         {
-            foreach ($installations as $installation)
+            foreach ($categories as $category)
             {
-                $id = $installation['id'];
+                $id = $category['id'];
 
-                $edit   = btn('edit'  ,'edit_installations'  ,url(route('installations.edit',$id)));
-                $delete = btn('delete','delete_installations',url(route('installations.show',$id)));
+                $edit   = btn('edit'  ,'edit_categories'  ,url(route('categories.edit',$id)));
+                $delete = btn('delete','delete_categories',url(route('categories.show',$id)));
 
                 $obj['id']          = $id;
-                $obj['name_ar']     = $installation->name_ar;
-                $obj['price']       = Price($installation->price);
-                $obj['image']       = url($installation->image);
-                $obj['status']      = Status($installation->status);
-                $obj['created_at']  = date("d-m-Y", strtotime($installation->created_at));
+                $obj['name_ar']     = $category->name_ar;
+                $obj['image']       = url($category->image);
+                $obj['status']      = Status($category->status);
+                $obj['created_at']  = date("d-m-Y", strtotime($category->created_at));
                 $obj['listBox']     = checkBoxDelete($id);
                 $obj['options']     = $edit . $delete;;
                 
@@ -192,8 +185,7 @@ class InstallationRepository
         $query = $this->model->where(function($query) use($search) {
                     $query->where('id'         , 'like' , '%'. $search .'%')
                           ->orWhere('name_ar'  , 'like' , '%'. $search .'%')
-                          ->orWhere('name_en'  , 'like' , '%'. $search .'%')
-                          ->orWhere('price'    , 'like' , '%'. $search .'%');
+                          ->orWhere('name_en'  , 'like' , '%'. $search .'%');
                 });
     
         if ($request['req']['from'] != '')
