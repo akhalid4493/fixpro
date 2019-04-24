@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\Subscriptions\SubscriptionResource;
 use Illuminate\Http\Resources\Json\Resource;
-use JWTAuth;
-use Auth;
 
 class UserResource extends Resource
 {
@@ -22,7 +21,7 @@ class UserResource extends Resource
             'mobile'        => $this->mobile,
             'name'          => $this->name,
             'avatar'        => url($this->image),
-            'subscription'  => $this->checkSubscription ? true : false,
+            'subscription'  => $this->checkSubscription ? new SubscriptionResource($this->hasSubscription) : null,
         ];
     }
 }
