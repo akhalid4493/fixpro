@@ -197,6 +197,8 @@ class PreviewRepository
 
         if (!empty($userToken)) {
             $data = [
+                'type'  => 'previews',
+                'id'    => $preview['id'],
                 'title' => 'حالة الطلب الخاص بك',
                 'body'  => 'تم تغير حالة الطلب الى: '.$preview->previewStatus->name_ar.''
             ];
