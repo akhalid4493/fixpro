@@ -25,7 +25,7 @@
                     <div class="portlet-body">
                         <div class="row">
                             <div class="no-print">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <ul class="ver-inline-menu tabbable margin-bottom-10">
                                         <li class="active">
                                             <a data-toggle="tab" href="#general">
@@ -50,7 +50,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-md-9 contentPrint">
+                            <div class="col-md-10 contentPrint">
                                 <div class="tab-content">
                                     @include('admin.users.tabs.general')
                                     @include('admin.users.tabs.address')
