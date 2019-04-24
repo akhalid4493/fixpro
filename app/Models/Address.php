@@ -18,6 +18,7 @@ class Address extends Model
         'note',
         'province_id',
         'user_id',
+        'status'
     ];
 
     public function addressProvince()

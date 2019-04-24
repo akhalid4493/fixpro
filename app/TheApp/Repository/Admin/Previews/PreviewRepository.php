@@ -207,12 +207,17 @@ class PreviewRepository
 
     public function filter($request,$search)
     {
-        $query = $this->model->where(function($query) use($search) {
+        $query = $this->model
+                ->where(function($query) use($search) {
                     $query->where('id'          , 'like' , '%'. $search .'%')
                           ->orWhere('time'      , 'like' , '%'. $search .'%')
                           ->orWhere('note'      , 'like' , '%'. $search .'%');
                 });
-    
+        
+        if ($request['user_id']) {
+            $query->where('user_id',$request['user_id']);
+        }
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

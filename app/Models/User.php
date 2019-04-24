@@ -90,6 +90,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany('App\Models\Preview', 'technical_previews');
     }
 
+    public function previews()
+    {
+        return $this->hasMany('App\Models\Preview');
+    }
+
     public function deviceToken()
     {       
         return $this->hasOne('App\Models\DeviceToken')->latest();

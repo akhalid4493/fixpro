@@ -17,8 +17,10 @@
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-switch/css/bootstrap-switch-rtl.min.css')}}">
 	{{-- DATATABLE CSS --}}
-	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/datatables.min.css')}}">
-	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css')}}">
+{{-- 	<link rel="stylesheet" href="{{url('https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css')}}">
+ --}}	
+ 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/datatables.min.css')}}">
+ 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css')}}">
 	{{-- DATEPACKER CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">
@@ -34,6 +36,7 @@
 	<link rel="stylesheet" href="{{url('admin/assets/pages/css/invoice-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/cubeportfolio/css/cubeportfolio.css')}}">
+	<link rel="stylesheet" href="{{url('admin/assets/pages/css/profile-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/pages/css/portfolio.min.css')}}">
 	{{-- CUSTOM LAYOUT CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/layouts/layout/css/layout-rtl.min.css')}}">

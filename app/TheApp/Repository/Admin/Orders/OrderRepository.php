@@ -182,9 +182,13 @@ class OrderRepository
     {
         $query = $this->model->where(function($query) use($search) {
                     $query->where('id'          , 'like' , '%'. $search .'%')
-                          ->orWhere('total'      , 'like' , '%'. $search .'%');
+                          ->orWhere('total'     , 'like' , '%'. $search .'%');
                 });
-    
+        
+        if ($request['user_id']) {
+            $query->where('user_id',$request['user_id']);
+        }
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

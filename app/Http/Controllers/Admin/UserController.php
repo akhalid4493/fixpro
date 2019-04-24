@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TheApp\Repository\Admin\Governorates\GovernorateRepository;
 use App\TheApp\Repository\Admin\Users\UserRepository;
 use App\TheApp\Repository\Admin\Roles\RoleRepository;
 use App\TheApp\Requests\Admin\Users\EditUserRequest;
@@ -14,10 +15,11 @@ use DB;
 class UserController extends AdminController
 {
 
-    function __construct(UserRepository $user, RoleRepository $role)
+    function __construct(UserRepository $user, RoleRepository $role,GovernorateRepository $governorate)
     {
-        $this->userModel  = $user;
-        $this->roleModel  = $role;
+        $this->userModel        = $user;
+        $this->roleModel        = $role;
+        $this->governorateModel = $governorate;
     }
 
 
@@ -31,8 +33,7 @@ class UserController extends AdminController
 
     public function dataTable(Request $request)
     {
-        if ($request->ajax())
-            return $this->userModel->dataTable($request);
+        return $this->userModel->dataTable($request);
     }
 
 
@@ -59,12 +60,14 @@ class UserController extends AdminController
 
     public function show($id)
     {
+        $governorates = $this->governorateModel->getAll();
+
         $user = $this->userModel->findById($id);
         
         if (!$user)
             abort(404);
 
-        return view('admin.users.show' , compact('user'));
+        return view('admin.users.show' , compact('user','governorates'));
     }
 
 

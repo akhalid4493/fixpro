@@ -15,6 +15,7 @@ class Subscription extends Model
         'status',
         'isCanceled',
         'next_billing',
+        'note'
     ];
 
     public function user()

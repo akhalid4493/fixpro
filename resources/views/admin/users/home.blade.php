@@ -66,6 +66,7 @@
                                 <tr role="row" class="heading">
                                     <th width="15%"> بحث بتاريخ الانشاء </th>
                                     <th width="15%"> بحث بالحالة </th>
+                                    <th width="15%"> بحث حالة الاشتراك </th>
                                     <th width="15%"> بحث بالصلاحيات </th>
                                 </tr>
                                 <tr role="row" class="filter">
@@ -85,6 +86,15 @@
                                                     <option value="">اختر</option>
                                                     <option value="1">مفعل</option>
                                                     <option value="0">غير مفعل</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="subscription" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    <option value="1">مشترك</option>
+                                                    <option value="0">غير مشترك</option>
                                                 </select>
                                             </div>
                                         </td>
@@ -126,6 +136,7 @@
                                     <th>الصورة الشخصية</th>
                                     <th>الاسم</th>
                                     <th>البريد</th>
+                                    <th>الاشتراك</th>
                                     <th>رقم الهاتف</th>
                                     <th>الحالة</th>
                                     <th>الصلاحيات</th>
@@ -176,6 +187,7 @@
         },
         "processing":true,
         "serverSide":true,
+        "scrollX":true,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
         },
@@ -191,16 +203,17 @@
             },
             { "data": "name" },
             { "data": "email"    },
+            { "data": "subscription"    , "orderable": false },
             { "data": "mobile"    },
             { "data": "active"    },
-            { "data": "roles", "render": "[ , ].display_name" ,"orderable": false ,"width": "5%"},
+            { "data": "roles", "render": "[ , ].display_name" ,"orderable": false},
             { "data": "created_at" },
-            { "data": "options"   , "orderable": false  },
+            { "data": "options"   , "orderable": false },
         ],
         dom: 'Bfrtip',
         lengthMenu: [
-            [ 10, 25, 50 , 100 , 500 , -1 ],
-            [ '10 rows', '25 rows', '50 rows', '100 rows' , '500 rows' ,'Show all' ]
+            [ 10, 25, 50 , 100 , 500],
+            [ '10 rows', '25 rows', '50 rows', '100 rows' , '500 rows']
         ],
         buttons: [
         'pageLength',

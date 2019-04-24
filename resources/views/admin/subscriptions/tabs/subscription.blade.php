@@ -119,5 +119,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">
+                        ملاحطات
+                        <span class="required">*</span>
+                    </label>
+                    <textarea class="form-control" name="note" id="" cols="30" rows="10">{{ $subscription->note }}</textarea>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

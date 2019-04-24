@@ -100,26 +100,26 @@ if (!function_exists('OrderStatus')) {
     }
 }
 
-if (!function_exists('SubscribeAds')) {
+if (!function_exists('Subscribe')) {
     /**
-     * Access the SubscribeAds helper.
+     * Access the Subscribe helper.
      */
-    function SubscribeAds($ad)
+    function Subscribe($user)
     {
-      if ($ad->hasSubscribe == null){
+      if ($user->hasSubscription == null){
         return '<span class="label label-danger circle" style="font-size:13px">
                   غير مشترك
                </span>';
         
-      }elseif($ad->hasSubscribe !=  null){
+      }elseif($user->hasSubscription !=  null){
 
-        if($ad->hasSubscribe->subscribe_end < date('Y-m-d')){
+        if($user->hasSubscription->end_at < date('Y-m-d')){
           return '<span class="label label-warning circle" style="font-size:13px">
-                  '.$ad->hasSubscribe->subscribe_end.'
+                  '.$user->hasSubscription->end_at.'
                </span>';
         }else{
           return '<span class="label label-success circle" style="font-size:13px">
-                  '.$ad->hasSubscribe->subscribe_end.'
+                  ينتهي : '.$user->hasSubscription->end_at.'
                </span>';
         }
         
@@ -141,7 +141,7 @@ if (!function_exists('subcriber')) {
         
       }elseif($store->hasSubscribe !=  null){
 
-        if($store->hasSubscribe->subscribe_end < date('Y-m-d')){
+        if($store->hasSubscribe->end_at < date('Y-m-d')){
           return '<span class="label label-warning circle" style="font-size:13px">
                   الاشتراك منتهي
                </span>';

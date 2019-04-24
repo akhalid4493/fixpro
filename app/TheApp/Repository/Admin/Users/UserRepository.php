@@ -260,6 +260,7 @@ class UserRepository
 
                 $obj['id']          = $id;
                 $obj['name']        = $user->name;
+                $obj['subscription']= Subscribe($user);
                 $obj['mobile']      = $user->mobile;
                 $obj['email']       = $user->email;
                 $obj['image']       = url($user->image);
@@ -271,7 +272,7 @@ class UserRepository
                 if ($id == Auth::id()) {
                     $obj['options']      = $edit;
                 }else{  
-                    $obj['options']      = $edit.''.$delete;
+                    $obj['options']      = $show . $edit.''.$delete;
                 }
                 
                 $data[] = $obj;
@@ -290,7 +291,7 @@ class UserRepository
                     $query
                     // SEARCH IN USER TABLE
                     ->where('id'            , 'like' , '%'. $search .'%')
-                    ->orWhere('name'   , 'like' , '%'. $search .'%')
+                    ->orWhere('name'        , 'like' , '%'. $search .'%')
                     ->orWhere('mobile'      , 'like' , '%'. $search .'%')
                     ->orWhere('email'       , 'like' , '%'. $search .'%')
 
@@ -320,6 +321,15 @@ class UserRepository
                 });
             }
 
+        }
+
+        if ($request['req']['subscription'] != ''){
+
+            if($request['req']['subscription'] == '0') {
+                $query->doesnthave('hasSubscription');
+            }else{
+                $query->has('hasSubscription');
+            }
         }
 
         return $query;

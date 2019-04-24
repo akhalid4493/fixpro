@@ -58,6 +58,7 @@ class SubscriptionRepository
                 'end_at'                => $request['end_at'],
                 'status'                => $request['status'],
                 'next_billing'          => $request['next_billing'],
+                'note'                  => $request['note'],
             ]);
 
             DB::commit();
@@ -78,6 +79,7 @@ class SubscriptionRepository
             $subscription->update([
                 'status'        => $request['status'],
                 'next_billing'  => $request['next_billing'],
+                'note'          => $request['note'],
             ]);
 
             if (is_array_empty($request['price'])) {
