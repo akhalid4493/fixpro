@@ -165,7 +165,7 @@ class SubscriptionRepository
                 $obj['mobile']           = $subscription->user->mobile;
                 $obj['created_at']       = date("d-m-Y", strtotime($subscription->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
-                $obj['options']          = $edit . $show;
+                $obj['options']          = $edit . '' .$show;
                 
                 $data[] = $obj;
             }
