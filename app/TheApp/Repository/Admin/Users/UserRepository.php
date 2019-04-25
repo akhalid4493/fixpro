@@ -270,9 +270,9 @@ class UserRepository
                 $obj['listBox']     = checkBoxDelete($id);
 
                 if ($id == Auth::id()) {
-                    $obj['options']      = $edit;
+                    $obj['options']      = $show .''. $edit;
                 }else{  
-                    $obj['options']      = $show . $edit.''.$delete;
+                    $obj['options']      = $show .''.$edit.''.$delete;
                 }
                 
                 $data[] = $obj;

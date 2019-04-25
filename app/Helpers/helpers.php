@@ -59,7 +59,7 @@ if (!function_exists('PreviewStatus')) {
         return '<span class="label label-warning circle" style="font-size:13px">
                   '.$preview->previewStatus->name_ar.'
                </span>';
-      }elseif($preview->previewStatus->status_code == 'canceled'){
+      }elseif($preview->previewStatus->status_code == 'cancelled'){
         return '<span class="label label-danger circle" style="font-size:13px">
                   '.$preview->previewStatus->name_ar.'
                </span>';

@@ -29,7 +29,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-default">
                         <li>
-                            <a href="page_user_profile_1.html">
+                            <a href="{{ url(route('users.show',Auth::id())) }}">
                             <i class="icon-user"></i> الملف الشخصي </a>
                         </li>
                         <li>
