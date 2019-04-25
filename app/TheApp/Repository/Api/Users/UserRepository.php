@@ -52,7 +52,7 @@ class UserRepository
     {
         DB::beginTransaction();
 
-        $img = ImageTrait::copyImage('users/user.png','users/'.ar_slug($request->name),'user.png');
+        $img = ImageTrait::copyImage('users/user.png','users/'.$request->email,'user.png');
 
         try {
             
@@ -103,7 +103,7 @@ class UserRepository
 
         $user = Auth::user();
 
-        $img = ImageTrait::uploadImage($request->avatar,'users/'.ar_slug($user->name),$user->image);
+        $img = ImageTrait::uploadImage($request->avatar,'users/'.$user->email,$user->image);
 
         try {
             

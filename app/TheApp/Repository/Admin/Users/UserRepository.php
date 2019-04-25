@@ -100,9 +100,9 @@ class UserRepository
         DB::beginTransaction();
     
         if ($request->hasFile('image'))
-            $img = ImageTrait::uploadImage($request->image,'users/'.ar_slug($request->name));
+            $img = ImageTrait::uploadImage($request->image,'users/'.$request->email);
         else
-            $img = ImageTrait::copyImage('users/user.png','users/'.ar_slug($request->name),'user.png');
+            $img = ImageTrait::copyImage('users/user.png','users/'.$request->email,'user.png');
         try {
             
             $user = $this->model->create([
@@ -147,7 +147,7 @@ class UserRepository
             $password  = bcrypt($request['password']);
 
         if ($request->hasFile('image'))
-            $img = ImageTrait::uploadImage($request->image,'users/'.ar_slug($request->name),$user->image);
+            $img = ImageTrait::uploadImage($request->image,'users/'.$request->email,$user->image);
         else
             $img  = $user->image;
 
@@ -188,7 +188,7 @@ class UserRepository
             
             $user = $this->findById($id);
 
-            ImageTrait::deleteDirectory('uploads/users/'.ar_slug($user->name));
+            ImageTrait::deleteDirectory('uploads/users/'.$user->email);
 
             $user->delete();
 
@@ -211,7 +211,7 @@ class UserRepository
             $users = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($users as $user) {
-                ImageTrait::deleteDirectory('uploads/users/'.ar_slug($user->name));
+                ImageTrait::deleteDirectory('uploads/users/'.$user->email);
                 $user->delete();
             }
 
