@@ -7,7 +7,9 @@ use App\TheApp\Repository\Api\General\GeneralRepository;
 use App\Http\Resources\Settings\SettingResource;
 use App\Http\Controllers\Api\ApiController;
 use App\Http\Resources\Pages\PageResource;
+use App\Notifications\SubscriptionRequest;
 use Illuminate\Http\Request;
+use Notification;
 
 class GlobalController extends ApiController
 {
@@ -60,5 +62,11 @@ class GlobalController extends ApiController
             return $this->responseMessages('device token updated' ,true,200,[]);
 
         return $this->responseMessages([],false,405,['can not update']);
+    }
+
+    public function SubscriptionRequest(Request $request)
+    {
+        Notification::route('mail', settings('receive_mail'))->notify(new SubscriptionRequest($request));
+        return $this->responseMessages([],true,200);
     }
 }
