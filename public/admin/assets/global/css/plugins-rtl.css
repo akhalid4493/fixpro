@@ -848,8 +848,8 @@ table.dataTable th.sorting_3 {
   margin-top: 10px; }
   .dataTables_extended_wrapper .seperator {
     padding: 0 2px; }
-  .dataTables_extended_wrapper .table.dataTable {
-    margin: 20px 0 !important; }
+/*  .dataTables_extended_wrapper .table.dataTable {
+    margin: 20px 0 !important; }*/
   
   .dataTables_extended_wrapper .table-group-actions > span {
     font-size: 13px; }
