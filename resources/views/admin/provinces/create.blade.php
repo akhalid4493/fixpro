@@ -57,7 +57,7 @@
 										<span class="required">*</span>
 									</label>
 									<div class="col-md-9">
-										<select name="governorate_id" id="single" class="form-control select2" >
+										<select name="governorate_id" id="single" class="form-control select2" required="">
 											<option></option>
 											@foreach ($governorates as $governorate)
 											<option value="{{$governorate->id}}">
