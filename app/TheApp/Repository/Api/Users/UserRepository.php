@@ -103,7 +103,7 @@ class UserRepository
 
         $user = Auth::user();
 
-        $img = ImageTrait::uploadImage($request->avatar,'users/'.$user->email,$user->image);
+        $img = ImageTrait::base64($request->avatar,'users/'.$user->email,$user->image);
 
         try {
             
