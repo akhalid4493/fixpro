@@ -75,7 +75,7 @@ class PreviewRepository
 
             if ($request['image']) {
                 foreach ($request['image'] as $img) {
-                    $img = ImageTrait::uploadImage($img,'previews/'.ar_slug($preview->id));
+                    $img = ImageTrait::base64($img,'previews/'.ar_slug($preview->id));
 
                     $this->modelGallery->create([
                         'preview_id'        => $preview['id'],

@@ -8,6 +8,37 @@ use File;
 trait ImageTrait
 {
 
+    static public function base64($imgUrl,$folder,$oldPath=null,$highet=null,$width=null)
+    {
+
+        $folder = self::createFolder('uploads/'.$folder);
+
+        $path   = $imgUrl;
+        $type   = '.jpg';
+        $imgname = md5(rand() * time()) . '.' . $type;
+
+        // Get new name of image Url & Path of folder to save in it
+        $fname = $folder.'/'.$imgname;
+        $img = Image::make($path);
+
+        // Resize image 
+        if ($highet && $width != null)
+            $img->resize($highet,$width);
+
+        // End of this proccess
+        $img->save($fname);
+
+        // Remove the old path in update method
+        if ($path != null){
+            if(file_exists($path))
+                unlink($path);
+        }
+
+        
+        return $fname;
+    }
+
+    
     static public function uploadImage($imgUrl,$folder,$oldPath=null,$highet=null,$width=null)
     {
         $path = self::createFolder('uploads/'.$folder);
