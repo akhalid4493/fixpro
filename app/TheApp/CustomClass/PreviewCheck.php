@@ -38,7 +38,10 @@ class PreviewCheck
 
     static public function getGovernorateId($preview)
     {
-        return $preview->address->addressProvince->governorate_id;
+        if($preview->address != null)
+            return $preview->address->addressProvince->governorate_id;
+        else
+            return $preview->oldAddress->addressProvince->governorate_id;
     }
 
     static public function getServicesIds($preview)

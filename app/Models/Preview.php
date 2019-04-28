@@ -15,9 +15,14 @@ class Preview extends Model
     ];
 
 
+    public function oldAddress()
+    {       
+        return $this->belongsTo('App\Models\Address', 'address_id' ,'id');
+    }
+    
     public function address()
     {       
-        return $this->belongsTo('App\Models\Address' , 'address_id' ,'id');
+        return $this->hasOne('App\Models\PreviewAddress');
     }
 
     public function previewStatus()

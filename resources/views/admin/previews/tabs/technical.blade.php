@@ -6,7 +6,11 @@
             <input name="_method" type="hidden" value="PUT">
             <input type="hidden" name="preview_id" value="{{ $preview['id'] }}">
             <input type="hidden" name="status"     value="{{ $preview['preview_status_id'] }}">
+            @if ($preview->address != null)
             <input type="hidden" name="province_id" value="{{$preview->address->addressProvince->id}}">
+            @else
+            <input type="hidden" name="province_id" value="{{$preview->oldAddress->addressProvince->id}}">
+            @endif
             
             <div class="row">
                 @foreach ($preview->details as $detail)

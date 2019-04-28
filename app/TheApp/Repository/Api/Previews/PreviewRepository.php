@@ -5,7 +5,9 @@ use App\Notifications\PreviewToAdmin;
 use App\Notifications\PreviewMail;
 use App\Models\PreviewGallery;
 use App\Models\PreviewDetail;
+use App\Models\PreviewAddress;
 use App\Models\PreviewDate;
+use App\Models\Address;
 use App\Models\Preview;
 use App\Models\Service;
 use Notification;
@@ -23,7 +25,9 @@ class PreviewRepository
         Preview $preview,
         PreviewDetail $details,
         PreviewDate $date,
-        PreviewGallery $gallery
+        PreviewGallery $gallery,
+        PreviewAddress $preAddress,
+        Address $address
     )
     {
         $this->model        = $preview;
@@ -31,6 +35,8 @@ class PreviewRepository
         $this->modelService = $service;
         $this->modelGallery = $gallery;
         $this->modelDate    = $date;
+        $this->modelAddress = $preAddress;
+        $this->addressModel = $address;
     }  
 
     /*
@@ -54,13 +60,13 @@ class PreviewRepository
             
             $preview = $this->model->create([
                 'user_id'           => Auth::id(),
-                'address_id'        => $request['address_id'],
                 'note'              => $request['note'],
                 'time'              => $request['time'],
                 'preview_status_id' => 1,
             ]);
 
             if ($preview){
+                $this->createPreviewAddress($preview,$request);
                 $this->createPreviewDetails($preview,$request);
                 $this->createPreviewDates($preview,$request);
                 $this->sendNotificationMail($preview);
@@ -80,6 +86,38 @@ class PreviewRepository
 
             DB::commit();
             return $preview;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function createPreviewAddress($preview,$request)
+    {
+        DB::beginTransaction();
+        
+        $address = $this->addressModel->find($request['address_id']);
+
+        try {
+
+            $address = $this->modelAddress->create([
+                'lat'           => $address['lat'],
+                'lang'          => $address['lang'],
+                'province_id'   => $address['province_id'],
+                'block'         => $address['block'],
+                'street'        => $address['street'],
+                'building'      => $address['building'],
+                'floor'         => $address['floor'],
+                'house_no'      => $address['house_no'],
+                'note'          => $address['note'],
+                'address'       => $address['address'],
+                'user_id'       => Auth::user()->id,
+                'preview_id'    => $preview['id'],
+            ]);
+
+            DB::commit();
+            return true;
 
         }catch(\Exception $e){
             DB::rollback();
@@ -112,7 +150,7 @@ class PreviewRepository
     public function createPreviewDates($preview,$request)
     {        
         DB::beginTransaction();
-
+        
         try {
 
             foreach ($request['service_id'] as $service) {
@@ -120,7 +158,7 @@ class PreviewRepository
                     'date'              => $request['time'],
                     'service_id'        => $service,
                     'preview_id'        => $preview['id'],
-                    'governorate_id'    => $preview->address->addressProvince->governorate_id,
+                    'governorate_id'    => $preview->address->addressProvince->governorate->id,
                 ]);
             }
 

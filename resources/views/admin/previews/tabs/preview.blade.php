@@ -91,17 +91,32 @@
         <div class="row">
             <div class="col-xs-4">
                 <div class="well">
-                    <address>
-                        المحافظة : {{ $preview->address->addressProvince->governorate->name_ar }}
-                        <br/> المنطقة : {{ $preview->address->addressProvince->name_ar }}
-                        <br/> قطعة : {{ $preview->address->block }}
-                        <br/> شارع : {{ $preview->address->street }}
-                        <br/> مبنى : {{ $preview->address->building }}
-                        <br>
-                    </address>
-                    <address>
-                        تفاصيل العنوان {{ $preview->address->address }}
-                    </address>
+                    @if ($preview->address != null)
+                        <address>
+                            المحافظة : {{ $preview->address->addressProvince->governorate->name_ar }}
+                            <br/> المنطقة : {{ $preview->address->addressProvince->name_ar }}
+                            <br/> قطعة : {{ $preview->address->block }}
+                            <br/> شارع : {{ $preview->address->street }}
+                            <br/> مبنى : {{ $preview->address->building }}
+                            <br>
+                        </address>
+                        <address>
+                            تفاصيل العنوان {{ $preview->address->address }}
+                        </address>
+                    @else
+                        <address>
+                            المحافظة : {{ $preview->oldAddress->addressProvince->governorate->name_ar }}
+                            <br/> المنطقة : {{ $preview->oldAddress->addressProvince->name_ar }}
+                            <br/> قطعة : {{ $preview->oldAddress->block }}
+                            <br/> شارع : {{ $preview->oldAddress->street }}
+                            <br/> مبنى : {{ $preview->oldAddress->building }}
+                            <br>
+                        </address>
+                        <address>
+                            تفاصيل العنوان {{ $preview->oldAddress->address }}
+                        </address>
+                    @endif
+                        
                 </div>
                 <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
                     <i class="fa fa-print"></i>
