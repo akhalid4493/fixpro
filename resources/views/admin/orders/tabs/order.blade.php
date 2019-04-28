@@ -130,17 +130,31 @@
         <div class="row">
             <div class="col-xs-4">
                 <div class="well">
-                    <address>
-                        المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
-                        <br/> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
-                        <br/> قطعة : {{ $order->preview->address->block }}
-                        <br/> شارع : {{ $order->preview->address->street }}
-                        <br/> مبنى : {{ $order->preview->address->building }}
-                        <br>
-                    </address>
-                    <address>
-                        تفاصيل العنوان {{ $order->preview->address->address }}
-                    </address>
+                    @if ($order->preview->address != null)
+                        <address>
+                            المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
+                            <br/> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
+                            <br/> قطعة : {{ $order->preview->address->block }}
+                            <br/> شارع : {{ $order->preview->address->street }}
+                            <br/> مبنى : {{ $order->preview->address->building }}
+                            <br>
+                        </address>
+                        <address>
+                            تفاصيل العنوان {{ $order->preview->address->address }}
+                        </address>
+                    @else
+                        <address>
+                            المحافظة : {{ $order->preview->oldAddress->addressProvince->governorate->name_ar }}
+                            <br/> المنطقة : {{ $order->preview->oldAddress->addressProvince->name_ar }}
+                            <br/> قطعة : {{ $order->preview->oldAddress->block }}
+                            <br/> شارع : {{ $order->preview->oldAddress->street }}
+                            <br/> مبنى : {{ $order->preview->oldAddress->building }}
+                            <br>
+                        </address>
+                        <address>
+                            تفاصيل العنوان {{ $order->preview->oldAddress->address }}
+                        </address>
+                    @endif
                 </div>
             </div>
             <div class="col-xs-8 invoice-block">
