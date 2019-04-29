@@ -28,11 +28,8 @@ trait ImageTrait
         // End of this proccess
         $img->save($fname);
 
-        // Remove the old path in update method
-        if ($path != null){
-            if(file_exists($path))
-                unlink($path);
-        }
+        if(File::exists($oldPath))
+            self::deleteImagePath($oldPath);
 
         
         return $fname;
