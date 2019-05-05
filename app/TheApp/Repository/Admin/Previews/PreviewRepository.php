@@ -140,7 +140,7 @@ class PreviewRepository
                 'title' => 'New Preview',
                 'body'  => 'You Have new preview request',
                 'type'  => 'previews',
-                'id'    => $preview->id,
+                'id'    => $tech->preview_id,
             ];
             
             return $this->send($data,$userToken->device_token);
