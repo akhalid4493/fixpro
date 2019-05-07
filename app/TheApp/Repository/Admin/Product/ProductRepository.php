@@ -42,6 +42,7 @@ class ProductRepository
                     'slug'                  => ar_slug($request['name_en']),
                     'status'                => $request['status'],
                     'price'                 => $request['price'],
+                    'qty'                   => $request['qty'],
                     'warranty'              => $request['warranty'],
                     'description_ar'        => $request['description_ar'],
                     'description_en'        => $request['description_en'],
@@ -79,6 +80,7 @@ class ProductRepository
                 'slug'                  => ar_slug($request['name_en']),
                 'status'                => $request['status'],
                 'price'                 => $request['price'],
+                'qty'                   => $request['qty'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
                 'image'                 => $img,
@@ -174,6 +176,7 @@ class ProductRepository
                 $obj['id']          = $id;
                 $obj['name_ar']     = $product->name_ar;
                 $obj['warranty']    = $product->warranty;
+                $obj['qty']         = $product->qty;
                 $obj['price']       = Price($product->price);
                 $obj['image']       = url($product->image);
                 $obj['status']      = Status($product->status);

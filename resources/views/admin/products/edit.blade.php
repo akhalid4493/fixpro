@@ -81,6 +81,15 @@
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3">
+                          الكمية
+                          <span class="required">*</span>
+                        </label>
+                        <div class="col-md-9">
+                          <input type="text" name="qty" placeholder="20" class="form-control" value="{{ $product->qty }}">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3">
                           الاقسام
                           <span class="required">*</span>
                         </label>

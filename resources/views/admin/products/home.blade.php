@@ -89,6 +89,7 @@
                                     <th>الصورة</th>
                                     <th>العنوان بالعربي</th>
                                     <th>السعر (KWD)</th>
+                                    <th>الكمية</th>
                                     <th>الكفالة (بالشهر)</th>
                                     <th>الحالة</th>
                                     <th>تاريخ الانشاء</th>
@@ -151,7 +152,8 @@
 	       	  },
 	    	},
 			{ "data": "name_ar" 	},
-			{ "data": "price" 		},
+            { "data": "price"       },
+			{ "data": "qty" 		},
 			{ "data": "warranty" 	},
 			{ "data": "status" 		},
 			{ "data": "created_at" 	},
