@@ -14,6 +14,7 @@ class Product extends Model
         'status',
         'slug',
         'price',
+        'qty',
         'image',
         'warranty', 
         'seo_description_en',
