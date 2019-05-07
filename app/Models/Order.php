@@ -8,6 +8,7 @@ class Order extends Model
 {
     protected $fillable = [
         'note',
+        'transID',
         'service',
         'subtotal',
         'total',
