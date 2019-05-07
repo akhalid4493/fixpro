@@ -20,6 +20,7 @@ class ProductRepository
     {
         $prdouct = $this->model
                ->where('status',1)
+               ->where('qty','!=',0)
                ->orderBy('id','desc');
         
         if ($request['category_id']){
