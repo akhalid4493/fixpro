@@ -77,9 +77,12 @@ class SubscriptionRepository
             $subscription = $this->findById($id);
 
             $subscription->update([
-                'status'        => $request['status'],
-                'next_billing'  => $request['next_billing'],
-                'note'          => $request['note'],
+                'total'                 => $request['total'],
+                'start_at'              => $request['start_at'],
+                'end_at'                => $request['end_at'],
+                'status'                => $request['status'],
+                'next_billing'          => $request['next_billing'],
+                'note'                  => $request['note'],
             ]);
 
             if (is_array_empty($request['price'])) {
@@ -122,6 +125,49 @@ class SubscriptionRepository
             throw $e;
         }
     }
+
+    public function delete($id)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $subscription = $this->findById($id);
+
+            $subscription->delete();
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $subscriptions = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($subscriptions as $subscription) {
+                $subscription->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+
     public function dataTable($request)
     {
         $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
@@ -153,6 +199,7 @@ class SubscriptionRepository
 
                 $edit   = btn('edit'  ,'edit_subscriptions'  ,url(route('subscriptions.edit',$id)));
                 $show   = btn('show','show_subscriptions' ,url(route('subscriptions.show',$id)));
+                $delete = btn('delete','delete_subscriptions',url(route('subscriptions.show',$id)));
 
                 $obj['id']               = $subscription->id;
                 $obj['remnder']          = billingRemender($subscription);
@@ -165,7 +212,7 @@ class SubscriptionRepository
                 $obj['mobile']           = $subscription->user->mobile;
                 $obj['created_at']       = date("d-m-Y", strtotime($subscription->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
-                $obj['options']          = $edit . '' .$show;
+                $obj['options']          = $show . '' .$edit . '' .$delete;
                 
                 $data[] = $obj;
             }

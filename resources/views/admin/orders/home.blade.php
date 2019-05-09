@@ -104,16 +104,6 @@
                                     <th>العمليات</th>
                                 </tr>
                             </thead>
-                            <tfoot style="background: #36414f;color: white;">
-                                <tr>
-                                    <td style="border: none;"></td>
-                                    <td style="border: none;"></td>
-                                    <td style="border: none;"></td>
-                                    <td style="border: none;"></td>
-                                    <td style="border: none;">المجموع الكلي</td>
-                                    <td style="border: none;"></td>
-                                </tr>
-                            </tfoot>
                         </table>
                         <div class="row"></div>
                     </div>
@@ -142,26 +132,6 @@
         "serverSide":true,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
-        },
-        'footerCallback': function ( row, data, start, end, display ) {
-
-            var api = this.api();
-            nb_cols = api.columns().nodes().length;
-            var j = 5;
-
-            while(j < nb_cols){
-
-                var pageTotal = api.column( j, { page: 'current'} ).data().reduce( function (a, b) {
-                    
-                    return Number(a) + Number(b);
-                    
-                    },0 
-                );
-
-                $(api.column(j).footer()).html(pageTotal+' KWD');
-
-                j++;
-            } 
         },
         "order": [[ 1 , "desc" ]],
         "columns":[
