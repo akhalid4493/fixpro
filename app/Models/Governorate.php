@@ -14,7 +14,7 @@ class Governorate extends Model
 
     public function province()
     {       
-        return $this->hasMany('App\Models\Province');
+        return $this->hasMany('App\Models\Province')->where('status',1);
     }
 
     public function locationsOfTechnical()
