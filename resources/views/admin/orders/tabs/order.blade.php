@@ -88,7 +88,7 @@
         </div>
         <hr>
         <div class="row">
-            <h3>تفاصيل القطع الاستهلاكية</h3>
+            <h3>تفاصيل تركيب القطع الاستهلاكية</h3>
             <div class="col-xs-12 table-responsive">
                 <table class="table table-striped table-hover">
                     <thead>
