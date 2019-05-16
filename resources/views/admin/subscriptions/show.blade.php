@@ -46,7 +46,7 @@ display: none !important;
                                     <ul class="ver-inline-menu tabbable margin-bottom-10">
                                         <li class="active">
                                             <a data-toggle="tab" href="#subscription">
-                                                <i class="fa fa-cog"></i> فاتورة طلب المعاينة
+                                                <i class="fa fa-cog"></i> بيانات اشتراك العضو
                                             </a>
                                             <span class="after"></span>
                                         </li>
