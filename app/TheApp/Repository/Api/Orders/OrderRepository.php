@@ -158,10 +158,12 @@ class OrderRepository
 
         try {
             
+            $serviceFees = $request['service'] == 'on' ? settings('service') : 0.000;
+
             $order = $this->model->create([
                 'subtotal'          => $subtotal,
-                'service'           => settings('service'),
-                'total'             => $subtotal + settings('service'),
+                'service'           => $serviceFees,
+                'total'             => $subtotal + $serviceFees,
                 'method'            => $request['method'],
                 'transID'           => $request['transID'],
                 'preview_id'        => $request['preview_id'],
