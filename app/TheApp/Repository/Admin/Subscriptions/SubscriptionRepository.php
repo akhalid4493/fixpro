@@ -34,6 +34,13 @@ class SubscriptionRepository
         return $data;
     }
 
+    public function totalSubscriptions()
+    {
+        $profits = $this->model->sum('total');
+
+        return $profits;
+    }
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
@@ -47,9 +54,9 @@ class SubscriptionRepository
     public function create($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $subscription = $this->model->create([
                 'package_id'            => $request['package_id'],
                 'user_id'               => $request['user_id'],
@@ -69,11 +76,11 @@ class SubscriptionRepository
             throw $e;
         }
     }
-    
+
     public function update($request , $id)
     {
         try {
-            
+
             $subscription = $this->findById($id);
 
             $subscription->update([
@@ -101,9 +108,9 @@ class SubscriptionRepository
     public function createInvoice($request,$subscription)
     {
         DB::beginTransaction();
-        
+
         try {
-        
+
             if ($subscription->monthlyBilling != null) {
                 $this->monthlyModel->where('subscription_id',$subscription['id'])->delete();
             }
@@ -129,9 +136,9 @@ class SubscriptionRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $subscription = $this->findById($id);
 
             $subscription->delete();
@@ -148,9 +155,9 @@ class SubscriptionRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $subscriptions = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($subscriptions as $subscription) {
@@ -170,7 +177,7 @@ class SubscriptionRepository
 
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -213,13 +220,13 @@ class SubscriptionRepository
                 $obj['created_at']       = date("d-m-Y", strtotime($subscription->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
                 $obj['options']          = $show . '' .$edit . '' .$delete;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -231,13 +238,13 @@ class SubscriptionRepository
                            ->orWhere('start_at'        , 'like' , '%'. $search .'%')
                            ->orWhere('end_at'          , 'like' , '%'. $search .'%');
                 });
-    
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 
         if ($request['req']['to'] != '')
             $query->whereDate('created_at'  , '<=' , $request['req']['to']);
-        
+
         if ($request['req']['active'] != '')
             $query->where('status' , $request['req']['active']);
 
