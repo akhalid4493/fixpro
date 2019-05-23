@@ -158,10 +158,12 @@ class OrderRepository
 
         try {
             
+            $serviceFees = $request['service'] == 'on' ? settings('service') : 0.000;
+
             $order = $this->model->create([
                 'subtotal'          => $subtotal,
-                'service'           => settings('service'),
-                'total'             => $subtotal + settings('service'),
+                'service'           => $serviceFees,
+                'total'             => $subtotal + $serviceFees,
                 'method'            => $request['method'],
                 'transID'           => $request['transID'],
                 'preview_id'        => $request['preview_id'],
@@ -190,24 +192,25 @@ class OrderRepository
 
         try {
 
-            foreach ($request['product_id'] as $key => $product) {
-                
-                $item = Product::find($product);
-                
-                $warranty = $this->calculatWarranty($request,$item);
+            if ($request['product_id']) {
+                foreach ($request['product_id'] as $key => $product) {
+                    
+                    $item = Product::find($product);
+                    
+                    $warranty = $this->calculatWarranty($request,$item);
 
-                $this->modelProduct->create([
-                    'warranty'      => $warranty['months'],
-                    'warranty_start'=> $warranty['start'],
-                    'warranty_end'  => $warranty['end'],
-                    'product_id'    => $product,
-                    'qty'           => $request['qty_product'][$key],
-                    'order_id'      => $orderId,
-                    'price'         => $item->price,
-                    'total'         => $item->price * $request['qty_product'][$key],
-                ]);
+                    $this->modelProduct->create([
+                        'warranty'      => $warranty['months'],
+                        'warranty_start'=> $warranty['start'],
+                        'warranty_end'  => $warranty['end'],
+                        'product_id'    => $product,
+                        'qty'           => $request['qty_product'][$key],
+                        'order_id'      => $orderId,
+                        'price'         => $item->price,
+                        'total'         => $item->price * $request['qty_product'][$key],
+                    ]);
+                }
             }
-
 
             if ($request['installation_id']) {
                 foreach ($request['installation_id'] as $key => $installation) {

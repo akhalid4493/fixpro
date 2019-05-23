@@ -12,7 +12,7 @@
         </div>
 
         <h4> اهلا بك ، <b style="color:red">{{ Auth::user()->name }} </b></h4>
-        
+
         <div class="row">
             <div class="portlet light portlet-fit bordered">
                 <div class="portlet-title">
@@ -43,13 +43,14 @@
                             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                 <a class="dashboard-stat dashboard-stat-v2 green">
                                     <div class="visual">
-                                        <i class="icon-bar-chart"></i>
+                                        <i class="fa fa-usd"></i>
                                     </div>
                                     <div class="details">
                                         <div class="number">
-                                            <span data-counter="counterup" data-value="{{$allServices}}">0</span>
+                                            <small class="font-wihte-sharp">KWD</small>
+                                            <span data-counter="counterup" data-value="{{Price($totalSubscriptions)}}">0.000</span>
                                         </div>
-                                        <div class="desc">الخدمات</div>
+                                        <div class="desc"> الاشتراكات السنوية</div>
                                     </div>
                                 </a>
                             </div>
@@ -82,6 +83,7 @@
                                     </div>
                                 </a>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -103,7 +105,7 @@
                         <div class="mt-element-card mt-card-round mt-element-overlay">
                             <div class="row">
                                 <div class="general-item-list">
-                                    
+
                                     <div class="col-md-6">
                                         <b class="page-title">تاريخ اضافة الاعضاء</b>
                                         <canvas id="myChart2" width="540" height="270" ></canvas>
@@ -121,7 +123,7 @@
                                         <b class="page-title">الطلبات</b>
                                         <canvas id="OrderStatus" width="540" height="270" ></canvas>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -226,7 +228,7 @@
                 pointHitRadius: 10,
                 data: count,
                 spanGaps: false,
-            } 
+            }
         ]
     };
     var myLineChart = new Chart(ctx, {

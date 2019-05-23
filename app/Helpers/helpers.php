@@ -84,7 +84,7 @@ if (!function_exists('OrderStatus')) {
                   '.$order->orderStatus->name_ar.'
                </span>';
       }elseif($order->orderStatus->status_code == 'cancelled_user'){
-        return '<span class="label label-success circle" style="font-size:13px">
+        return '<span class="label label-danger circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
       }elseif($order->orderStatus->status_code == 'payment_succ'){

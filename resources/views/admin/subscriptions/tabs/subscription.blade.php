@@ -48,7 +48,7 @@
                         السعر الكلي للاشتراك
                         <span class="required">*</span>
                     </label>
-                    <input type="text" class="form-control" name="total" value="{{ number_format($subscription->total,3)}}" disabled="">
+                    <input type="text" class="form-control" name="total" value="{{ number_format($subscription->total,3)}}">
                 </div>
             </div>
             <div class="col-md-6">
@@ -78,7 +78,7 @@
                         <span class="required">*</span>
                     </label>
                     <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-                        <input type="text" class="form-control" name="start_at" value="{{ $subscription->start_at }}" disabled="">
+                        <input type="text" class="form-control" name="start_at" value="{{ $subscription->start_at }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>
@@ -94,7 +94,7 @@
                         <span class="required">*</span>
                     </label>
                     <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd" data-date-start-date="+0d">
-                        <input type="text" class="form-control" name="end_at" value="{{ $subscription->end_at }}" disabled="">
+                        <input type="text" class="form-control" name="end_at" value="{{ $subscription->end_at }}">
                         <span class="input-group-btn">
                             <button class="btn default" type="button">
                             <i class="fa fa-calendar"></i>

@@ -30,6 +30,7 @@ class StatisticsComposer
         $this->newPreviews      = $preview->countNewPreviews();
         $this->donePreviews     = $preview->countDone();
         $this->subscriptionChart= $subscription->monthlyProfite();
+        $this->totalSubscriptions = $subscription->totalSubscriptions();
     }
 
     /**
@@ -52,5 +53,6 @@ class StatisticsComposer
         $view->with('orderStatus'           , $this->orderStatus);
         $view->with('newPreviews'           , $this->newPreviews);
         $view->with('donePreviews'          , $this->donePreviews);
+        $view->with('totalSubscriptions'    , $this->totalSubscriptions);
     }
 }

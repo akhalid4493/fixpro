@@ -121,8 +121,43 @@ class OrderRepository
 
     public function delete($id)
     {
-        $order = $this->findById($id);
-        return $order->delete();
+        DB::beginTransaction();
+        
+        try {
+            
+            $order = $this->findById($id);
+
+            $order->delete();
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function deleteAll($request)
+    {
+        DB::beginTransaction();
+        
+        try {
+            
+            $orders = $this->model->whereIn('id',$request['ids'])->get();
+
+            foreach ($orders as $order) {
+                $order->delete();
+            }
+
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
     }
 
     public function dataTable($request)
@@ -155,6 +190,7 @@ class OrderRepository
                 $id = $order['id'];
 
                 $show = btn('show','show_orders' , url(route('orders.show',$id)));
+                $delete = btn('delete','delete_orders',url(route('orders.show',$id)));
 
                 $obj['id']               = $order->id;
                 $obj['total']            = Price($order->total);
@@ -167,7 +203,7 @@ class OrderRepository
                 $obj['mobile']           = $order->user->mobile;
                 $obj['created_at']       = date("d-m-Y", strtotime($order->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
-                $obj['options']          = $show;
+                $obj['options']          = $show.''.$delete;
                 
                 $data[] = $obj;
             }
