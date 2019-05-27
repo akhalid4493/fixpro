@@ -6,7 +6,7 @@ use App\Models\DeviceToken;
 
 trait SendNotification
 {
-    public  function send($data ,$tokens = null) 
+    public  function send($data ,$tokens = null)
     {
         if (is_array($tokens)) {
             $tokens = array_values(array_unique($tokens));
@@ -54,7 +54,7 @@ trait SendNotification
             'notification'     => $notification,
             'data'             => $data,
         ];
-    
+
         return $this->Push($fields_ios);
     }
 
@@ -73,7 +73,7 @@ trait SendNotification
             'registration_ids' => $tokens,
             'data'             => $notification
         ];
-    
+
         return $this->Push($fields_android);
     }
 
@@ -91,19 +91,19 @@ trait SendNotification
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         // echo json_encode($fields);
 
-        $result = curl_exec($ch);           
+        $result = curl_exec($ch);
         echo curl_error($ch);
-         
+
         if ($result === FALSE) {
            die('Curl failed: ' . curl_error($ch));
         }
         curl_close($ch);
-        
+
         return $result;
     }
 }

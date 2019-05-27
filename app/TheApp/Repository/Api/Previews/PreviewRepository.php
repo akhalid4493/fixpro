@@ -37,7 +37,7 @@ class PreviewRepository
         $this->modelDate    = $date;
         $this->modelAddress = $preAddress;
         $this->addressModel = $address;
-    }  
+    }
 
     /*
         USER APP PREVIEWS METHODS
@@ -57,7 +57,7 @@ class PreviewRepository
         DB::beginTransaction();
 
         try {
-            
+
             $preview = $this->model->create([
                 'user_id'           => Auth::id(),
                 'note'              => $request['note'],
@@ -96,7 +96,7 @@ class PreviewRepository
     public function createPreviewAddress($preview,$request)
     {
         DB::beginTransaction();
-        
+
         $address = $this->addressModel->find($request['address_id']);
 
         try {
@@ -148,9 +148,9 @@ class PreviewRepository
     }
 
     public function createPreviewDates($preview,$request)
-    {        
+    {
         DB::beginTransaction();
-        
+
         try {
 
             foreach ($request['service_id'] as $service) {
@@ -170,7 +170,7 @@ class PreviewRepository
             throw $e;
         }
     }
-    
+
     public function myPreviews($request)
     {
         $previews = $this->model->where('user_id',Auth::id())->get();
@@ -222,11 +222,11 @@ class PreviewRepository
             ]);
 
             $this->sendNotifiToUser($preview);
-            
+
             return $preview;
         }
-         
-        return false;   
+
+        return false;
     }
 
     public function sendNotifiToUser($preview)

@@ -13,6 +13,7 @@
 
         <h4> اهلا بك ، <b style="color:red">{{ Auth::user()->name }} </b></h4>
 
+        @permission('statistics')
         <div class="row">
             <div class="portlet light portlet-fit bordered">
                 <div class="portlet-title">
@@ -131,11 +132,14 @@
                 </div>
             </div>
         </div>
+        @endpermission
+
     </div>
 </div>
 @stop
 
 {{-- JQUERY++ --}}
+@permission('statistics')
 @section('scripts')
 
 <script>
@@ -265,3 +269,4 @@
     });
 </script>
 @stop
+@endpermission

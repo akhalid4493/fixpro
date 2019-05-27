@@ -124,12 +124,12 @@ function updateSeen()
       },
   });
 }
- 
+
 load_unseen_notification();
 
-setInterval(function(){ 
+setInterval(function(){
   load_alert_notification();
-  load_unseen_notification(); 
+  load_unseen_notification();
 }, 5000);
 
 $(document).on('click', '.notifications', function(e) {

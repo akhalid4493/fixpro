@@ -6,8 +6,8 @@
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 
 	{{-- CDN --}}
-    <link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Cairo" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.1/emojionearea.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -17,10 +17,10 @@
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap/css/bootstrap-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-switch/css/bootstrap-switch-rtl.min.css')}}">
 	{{-- DATATABLE CSS --}}
-{{-- 	<link rel="stylesheet" href="{{url('https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css')}}">
- --}}	
- 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/datatables.min.css')}}">
- 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css')}}">
+	{{-- <link rel="stylesheet" href="{{url('https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css')}}">
+	--}}
+	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/datatables.min.css')}}">
+	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css')}}">
 	{{-- DATEPACKER CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">
@@ -28,7 +28,7 @@
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}">
 	{{-- SELECT2 --}}
 	<link href="{{ url('admin/assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url('admin/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ url('admin/assets/global/plugins/select2/css/select2-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 	{{-- PLUGINS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/css/components-md-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/css/plugins-rtl.css')}}">
@@ -43,14 +43,16 @@
 	<link rel="stylesheet" href="{{url('admin/assets/layouts/layout/css/themes/darkblue-rtl.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/layouts/layout/css/custom-rtl.min.css')}}">
 	<style>
-	body{
-		font-family: 'Cairo', sans-serif !important;
-	}
-	.portlet.box>.portlet-body{
-		padding: 27px 12px 80px;
-	}
-	.dropdown-menu{
-		font-family: 'Cairo', sans-serif !important;
-	}
+		body {
+			font-family: 'Cairo', sans-serif !important;
+		}
+
+		.portlet.box>.portlet-body {
+			padding: 27px 12px 80px;
+		}
+
+		.dropdown-menu {
+			font-family: 'Cairo', sans-serif !important;
+		}
 	</style>
 </head>

@@ -14,11 +14,12 @@
                 </li>
             </ul>
         </div>
-        
+
         <h1 class="page-title"></h1>
 
         <div class="row">
             <div class="profile-content">
+                @permission('statistics')
                 {{-- Statistics --}}
                 <div class="portlet light">
                     <div class="portlet-title tabbable-line">
@@ -46,6 +47,7 @@
                         </div>
                     </div>
                 </div>
+                @endpermission
                 {{-- Content --}}
                 <div class="portlet light">
                     <div class="portlet-body">
@@ -114,10 +116,10 @@
 
                                     </form>
                                     <td>
-                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search"> 
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
                                             <i class="fa fa-search"></i>بحث
                                         </button>
-                                        
+
                                         <button class="btn btn-sm red btn-outline filter-cancel">
                                             <i class="fa fa-times"></i>حذف
                                         </button>
@@ -173,7 +175,7 @@
 @stop
 
 @section('scripts')
-<script> 
+<script>
  function tableGenerate(data='') {
 
     var dataTable =
@@ -181,8 +183,8 @@
         "ajax" : {
             url:"{{ route('users.dataTable') }}",
             type:"GET",
-            data : { 
-                req : data, 
+            data : {
+                req : data,
             },
         },
         "processing":true,
@@ -196,8 +198,8 @@
             { "data": "listBox"   , "orderable": false  },
             { "data": "id"    },
             { "data": "image" , "orderable": false , "width": "1%" ,
-              "render": 
-              function(data, type, row){ 
+              "render":
+              function(data, type, row){
                 return '<img src="'+data+'" width="50px"/>'
               },
             },

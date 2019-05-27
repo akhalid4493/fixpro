@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 class PreviewToAdmin extends Notification
 {
     use Queueable;
-    
+
     protected $preview;
 
     /**
