@@ -28,7 +28,7 @@
                     </div>
 					<div class="portlet-body form">
 						<form id="form" method="POST" action="{{url(route('services.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
-							
+
 							{{ csrf_field() }}
 							<div class="tabbable-bordered">
 								<ul class="nav nav-tabs">
@@ -37,11 +37,11 @@
 									</li>
 								</ul>
 								<div class="tab-content">
-									
+
 									{{-- GENERAL CONTENT --}}
 									<div class="tab-pane active" id="general">
 										<div class="form-body">
-											
+
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													عنوان الخدمة ar
@@ -62,7 +62,7 @@
 												</div>
 											</div>
 
-											
+
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													الحالة
@@ -98,14 +98,14 @@
 
 									<div class="form-actions">
 										<div id="result" style="display: none"></div>
-										
+
 										<div class="progress-info" style="display: none">
 											<div class="progress">
 												<span class="progress-bar progress-bar-warning"></span>
 											</div>
 											<div class="status" id="progress-status"></div>
 										</div>
-										
+
 										<div class="form-group">
 											<div class="col-md-offset-3 col-md-9">
 												<button type="submit" id="submit" class="btn btn-lg blue">

@@ -19,12 +19,12 @@ class Subscription extends Model
     ];
 
     public function user()
-    {       
+    {
         return $this->belongsTo('App\Models\User' , 'user_id' ,'id');
     }
 
     public function monthlyBilling()
-    {       
+    {
       return $this->hasMany('App\Models\SubscriptionMonthly');
     }
 

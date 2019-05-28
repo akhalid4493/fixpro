@@ -221,40 +221,28 @@
 </div>
 <div class="tab-pane" id="force_update">
   <div class="form-group">
-      <label class="col-md-2 control-label">
-          Android Old Version
-      </label>
-      <div class="col-md-10">
-          <input type="text" class="form-control" name="android_old_v"
-          value="{{settings('android_old_v')}}"/>
+    <label class="control-label col-md-3">
+      تحديث ضروري
+      <span class="required">*</span>
+    </label>
+    <div class="col-md-9">
+      <div class="mt-radio-inline">
+        <label class="mt-radio mt-radio-outline"> يوجد
+          <input type="radio" name="force_update" value="1"
+          @if (settings('force_update') == 1)
+            checked
+          @endif>
+          <span></span>
+        </label>
+        <label class="mt-radio mt-radio-outline">
+          لا يوجد
+          <input type="radio" name="force_update" value="0"
+          @if (settings('force_update') == 0)
+            checked
+          @endif>
+          <span></span>
+        </label>
       </div>
-  </div>
-  <div class="form-group">
-      <label class="col-md-2 control-label">
-          Android Last Version
-      </label>
-      <div class="col-md-10">
-          <input type="text" class="form-control" name="android_last_v"
-          value="{{settings('android_last_v')}}"/>
-      </div>
-  </div>
-
-  <div class="form-group">
-      <label class="col-md-2 control-label">
-          IOS Old Version
-      </label>
-      <div class="col-md-10">
-          <input type="text" class="form-control" name="ios_old_v"
-          value="{{settings('ios_old_v')}}"/>
-      </div>
-  </div>
-  <div class="form-group">
-      <label class="col-md-2 control-label">
-          IOS Last Version
-      </label>
-      <div class="col-md-10">
-          <input type="text" class="form-control" name="ios_last_v"
-          value="{{settings('ios_last_v')}}"/>
-      </div>
+    </div>
   </div>
 </div>
