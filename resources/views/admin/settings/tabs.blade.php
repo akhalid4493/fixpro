@@ -1,5 +1,5 @@
 <div class="tab-pane active" id="global_setting">
-    
+
     <div class="form-body">
         <div class="form-group">
             <label class="col-md-2 control-label">
@@ -37,7 +37,6 @@
                 value="{{settings('service')}}"/>
             </div>
         </div>
-
     </div>
 </div>
 <div class="tab-pane" id="emails">
@@ -219,4 +218,43 @@
             </div>
         </div>
     </div>
+</div>
+<div class="tab-pane" id="force_update">
+  <div class="form-group">
+      <label class="col-md-2 control-label">
+          Android Old Version
+      </label>
+      <div class="col-md-10">
+          <input type="text" class="form-control" name="android_old_v"
+          value="{{settings('android_old_v')}}"/>
+      </div>
+  </div>
+  <div class="form-group">
+      <label class="col-md-2 control-label">
+          Android Last Version
+      </label>
+      <div class="col-md-10">
+          <input type="text" class="form-control" name="android_last_v"
+          value="{{settings('android_last_v')}}"/>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <label class="col-md-2 control-label">
+          IOS Old Version
+      </label>
+      <div class="col-md-10">
+          <input type="text" class="form-control" name="ios_old_v"
+          value="{{settings('ios_old_v')}}"/>
+      </div>
+  </div>
+  <div class="form-group">
+      <label class="col-md-2 control-label">
+          IOS Last Version
+      </label>
+      <div class="col-md-10">
+          <input type="text" class="form-control" name="ios_last_v"
+          value="{{settings('ios_last_v')}}"/>
+      </div>
+  </div>
 </div>

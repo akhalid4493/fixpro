@@ -14,11 +14,11 @@
 				</li>
 			</ul>
 		</div>
-		
+
 		<h1 class="page-title"></h1>
-		
+
 		@include('admin._layouts._msg')
-		
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="profile-content">
@@ -55,6 +55,11 @@
 												</a>
 											</li>
 											<li>
+												<a href="#force_update" data-toggle="tab">
+													تحديثات
+												</a>
+											</li>
+											<li>
 												<a href="#other" data-toggle="tab">
 													اخرى
 												</a>
@@ -76,7 +81,7 @@
 						</form>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
 </div>
