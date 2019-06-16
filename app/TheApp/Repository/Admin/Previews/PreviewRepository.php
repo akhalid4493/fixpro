@@ -59,9 +59,9 @@ class PreviewRepository
         $preview = $this->findById($id);
 
         try {
-            
+
             if ($request['preview_status_id']) {
-    
+
                 $preview->update([
                     'preview_status_id' => $request['preview_status_id'],
                     'time'              => $request['date'].' '.date('H:i:s',strtotime($request->time)),
@@ -76,7 +76,7 @@ class PreviewRepository
                 if($request['user_notifi'] == "1")
                     $this->sendNotifiToUser($preview);
             }
-                
+
 
             if (is_array_empty($request['technical'])) {
 
@@ -97,7 +97,7 @@ class PreviewRepository
                         'province_id'  => $request['province_id'],
                         'date'         => $request['date'].' '.date('H:i:s',strtotime($request->time)),
                     ]);
-                
+
                 }
 
                 if($request['tech_notifi'] == "1")
@@ -142,7 +142,7 @@ class PreviewRepository
                 'type'  => 'previews',
                 'id'    => $tech->preview_id,
             ];
-            
+
             return $this->send($data,$userToken->device_token);
         }
     }
@@ -152,11 +152,11 @@ class PreviewRepository
         $preview = $this->findById($id);
         return $preview->delete();
     }
-    
+
 
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -187,33 +187,39 @@ class PreviewRepository
 
                 $obj['id']               = $id;
                 $obj['time']             = $preview->time;
-                $obj['note']             = $preview->note;
+                $obj['details']          = $preview->details;
                 $obj['preview_status_id']= PreviewStatus($preview);
-                $obj['full_name']        = $preview->user->name;
-                $obj['email']            = $preview->user->email;
-                $obj['mobile']           = $preview->user->mobile;
-                $obj['created_at']       = date("d-m-Y", strtotime($preview->created_at));
+                $obj['user_id']          = $preview->user->name;
+                $obj['subscription']     = $preview->user->checkSubscription ? 'مشترك' : 'غير مشترك';
+                $obj['address']          = $preview->address->addressProvince->name_ar;
+                $obj['created_at']       = date("d-m-Y H:i:s", strtotime($preview->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
                 $obj['options']          = $show;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
     public function filter($request,$search)
     {
         $query = $this->model
+                ->with('details.service')
                 ->where(function($query) use($search) {
                     $query->where('id'          , 'like' , '%'. $search .'%')
                           ->orWhere('time'      , 'like' , '%'. $search .'%')
                           ->orWhere('note'      , 'like' , '%'. $search .'%');
                 });
-        
+
+        if ($request['status_id'] != null) {
+          $query->where('preview_status_id',5);
+        }else{
+          $query->where('preview_status_id','!=',5);
+        }
         if ($request['user_id']) {
             $query->where('user_id',$request['user_id']);
         }

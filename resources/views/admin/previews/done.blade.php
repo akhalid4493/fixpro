@@ -1,5 +1,5 @@
 @extends('admin._layouts.master')
-@section('title','جميع طلبات المعاينة')
+@section('title','جميع طلبات المعاينة المكتلمة')
 @section('content')
 <div class="page-content-wrapper">
     <div class="page-content">
@@ -10,7 +10,7 @@
                     <i class="fa fa-circle"></i>
                 </li>
                 <li>
-                    <a href="#">جميع طلبات المعاينة</a>
+                    <a href="#">جميع طلبات المعاينة المكتلمة</a>
                 </li>
             </ul>
         </div>
@@ -96,7 +96,7 @@
     var dataTable =
     $('#dataTable').DataTable({
         "ajax" : {
-            url:"{{ route('previews.dataTable') }}",
+            url:"{{ route('previews.dataTable','status_id=5') }}",
             type:"GET",
             data : {
                 req : data,

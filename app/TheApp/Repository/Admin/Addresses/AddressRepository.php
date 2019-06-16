@@ -13,13 +13,13 @@ class AddressRepository
     function __construct(Address $address)
     {
         $this->model = $address;
-    }  
+    }
 
     public function count()
     {
         return $this->model->count();
     }
-    
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
@@ -35,7 +35,7 @@ class AddressRepository
         DB::beginTransaction();
 
         try {
-            
+
             $address = $this->model->create([
                     'block'                 => $request['block'],
                     'street'                => $request['street'],
@@ -61,7 +61,7 @@ class AddressRepository
         DB::beginTransaction();
 
         try {
-            
+
             $address->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
@@ -83,9 +83,9 @@ class AddressRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $address = $this->findById($id);
 
             $address->delete();
@@ -102,9 +102,9 @@ class AddressRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $addresses = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($addresses as $address) {
@@ -120,10 +120,10 @@ class AddressRepository
             throw $e;
         }
     }
-    
+
    public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -165,13 +165,13 @@ class AddressRepository
                 $obj['created_at']  = date("d-m-Y", strtotime($address->created_at));
                 $obj['listBox']     = checkBoxDelete($id);
                 $obj['options']     = $delete;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 

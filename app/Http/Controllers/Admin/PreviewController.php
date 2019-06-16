@@ -24,18 +24,20 @@ class PreviewController extends AdminController
         return view('admin.previews.home');
     }
 
+    public function done()
+    {
+        return view('admin.previews.done');
+    }
 
     public function dataTable(Request $request)
     {
         return $this->previewModel->dataTable($request);
     }
 
-
     public function create()
     {
         return view('admin.previews.create');
     }
-
 
     public function store(Request $request)
     {
@@ -43,7 +45,7 @@ class PreviewController extends AdminController
 
             if($create)
                 return Response()->json([true , 'تم الاضافة بنجاح' ]);
-            
+
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }

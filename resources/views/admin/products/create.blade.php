@@ -39,11 +39,11 @@
 									</li>
 								</ul>
 								<div class="tab-content">
-									
+
 									{{-- GENERAL CONTENT --}}
 									<div class="tab-pane active" id="general">
 										<div class="form-body">
-											
+
 											<div class="form-group">
 												<label class="control-label col-md-3">
 													عنوان القطعة استهلاكية ar
@@ -137,14 +137,14 @@
 									</div>
 									<div class="form-actions">
 										<div id="result" style="display: none"></div>
-										
+
 										<div class="progress-info" style="display: none">
 											<div class="progress">
 												<span class="progress-bar progress-bar-warning"></span>
 											</div>
 											<div class="status" id="progress-status"></div>
 										</div>
-										
+
 										<div class="form-group">
 											<div class="col-md-offset-3 col-md-9">
 												<button type="submit" id="submit" class="btn btn-lg blue">

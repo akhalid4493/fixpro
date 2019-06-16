@@ -116,7 +116,7 @@
                             تفاصيل العنوان {{ $preview->oldAddress->address }}
                         </address>
                     @endif
-                        
+
                 </div>
                 <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
                     <i class="fa fa-print"></i>

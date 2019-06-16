@@ -13,13 +13,13 @@ class PreviewDetail extends Model
 
 
     public function previewOfDetails()
-    {       
+    {
         return $this->belongsTo('App\Models\Previews' , 'preview_id' ,'id');
     }
 
 
     public function service()
-    {       
+    {
         return $this->belongsTo('App\Models\Service' , 'service_id' , 'id' );
     }
 }

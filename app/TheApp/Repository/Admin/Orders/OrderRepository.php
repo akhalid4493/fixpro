@@ -104,7 +104,7 @@ class OrderRepository
         $order = $this->findById($id);
 
         try {
-            
+
             $order->update([
                 'order_status_id'      => $request['order_status_id'],
             ]);
@@ -122,9 +122,9 @@ class OrderRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $order = $this->findById($id);
 
             $order->delete();
@@ -141,9 +141,9 @@ class OrderRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $orders = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($orders as $order) {
@@ -162,7 +162,7 @@ class OrderRepository
 
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -204,13 +204,13 @@ class OrderRepository
                 $obj['created_at']       = date("d-m-Y", strtotime($order->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
                 $obj['options']          = $show.''.$delete;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -220,7 +220,7 @@ class OrderRepository
                     $query->where('id'          , 'like' , '%'. $search .'%')
                           ->orWhere('total'     , 'like' , '%'. $search .'%');
                 });
-        
+
         if ($request['user_id']) {
             $query->where('user_id',$request['user_id']);
         }

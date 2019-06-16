@@ -39,7 +39,7 @@
             <h4 class="profile-desc-title">الاشتراك</h4>
             @if ($user->hasSubscription)
             <span class="label label-success">مشترك</span>
-            
+
             <div class="margin-top-20 profile-desc-link">
                 <i class="fa fa-calendar"></i>
                 بدء الاتشراك : {{ $user->hasSubscription->start_at }}

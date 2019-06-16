@@ -24,7 +24,7 @@
                 </a>
             </li>
             @endpermission
-            
+
             @permission('show_users')
             <li class="nav-item">
                 <a href="{{ url(route('users.index')) }}" class="nav-link nav-toggle">
@@ -33,7 +33,7 @@
                 </a>
             </li>
             @endpermission
-            
+
             @permission('show_technicals')
             <li class="nav-item">
                 <a href="{{ url(route('technicals.index')) }}" class="nav-link nav-toggle">
@@ -61,7 +61,7 @@
                 </a>
             </li>
             @endpermission
-            
+
             @permission('show_pages')
             <li class="nav-item">
                 <a href="{{ url(route('pages.index')) }}" class="nav-link nav-toggle">
@@ -81,7 +81,7 @@
                 </a>
             </li>
             @endpermission
-            
+
             @permission('show_previews')
             <li class="nav-item">
                 <a href="{{ url(route('previews.index')) }}" class="nav-link nav-toggle">
@@ -93,11 +93,20 @@
                 </a>
             </li>
             @endpermission
-            
+
+            @permission('show_previews')
+            <li class="nav-item">
+                <a href="{{ url(route('previews.done')) }}" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title">طلبات المعاينة المكتملة</span>
+                </a>
+            </li>
+            @endpermission
+
             <li class="heading">
                 <h3 class="uppercase">الطلبات</h3>
             </li>
-            
+
             @permission('show_categories')
             <li class="nav-item">
                 <a href="{{ url(route('categories.index')) }}" class="nav-link nav-toggle">
@@ -159,7 +168,7 @@
                         </a>
                     </li>
                     @endpermission
-                    
+
                     @permission('show_invoices')
                     <li class="nav-item  ">
                         <a href="{{ url(route('invoices.index')) }}" class="nav-link nav-toggle">
@@ -174,7 +183,7 @@
             <li class="heading">
                 <h3 class="uppercase">اعدادات</h3>
             </li>
-            
+
             @permission('show_notifications')
             <li class="nav-item">
                 <a href="{{ url(route('notification.index')) }}" class="nav-link nav-toggle">
@@ -183,7 +192,7 @@
                 </a>
             </li>
             @endpermission
-            
+
             @permission('show_settings')
             <li class="nav-item">
                 <a href="{{ url(route('settings.index')) }}" class="nav-link nav-toggle">
