@@ -29,6 +29,11 @@ class PreviewController extends AdminController
         return view('admin.previews.done');
     }
 
+    public function cancelled()
+    {
+        return view('admin.previews.cancelled');
+    }
+
     public function dataTable(Request $request)
     {
         return $this->previewModel->dataTable($request);

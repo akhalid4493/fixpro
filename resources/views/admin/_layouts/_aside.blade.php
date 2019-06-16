@@ -96,6 +96,15 @@
 
             @permission('show_previews')
             <li class="nav-item">
+                <a href="{{ url(route('previews.cancelled')) }}" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title">طلبات المعاينة الملغية</span>
+                </a>
+            </li>
+            @endpermission
+
+            @permission('show_previews')
+            <li class="nav-item">
                 <a href="{{ url(route('previews.done')) }}" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i>
                     <span class="title">طلبات المعاينة المكتملة</span>

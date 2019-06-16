@@ -216,9 +216,13 @@ class PreviewRepository
                 });
 
         if ($request['status_id'] != null) {
-          $query->where('preview_status_id',5);
+
+          $query->where('preview_status_id',$request['status_id']);
+
         }else{
-          $query->where('preview_status_id','!=',5);
+
+          $query->where('preview_status_id','!=',5)->where('preview_status_id','!=',6);
+
         }
         if ($request['user_id']) {
             $query->where('user_id',$request['user_id']);

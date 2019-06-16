@@ -10,6 +10,10 @@ Route::group(['prefix' => 'previews'], function () {
 	->name('previews.done')
     ->middleware(['permission:show_previews']);
 
+	Route::get('cancelled' ,'Admin\PreviewController@cancelled')
+	->name('previews.cancelled')
+    ->middleware(['permission:show_previews']);
+
 	Route::get('datatable'	,'Admin\PreviewController@dataTable')
 	->name('previews.dataTable')
     ->middleware(['permission:show_previews']);
