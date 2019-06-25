@@ -1,7 +1,7 @@
 <head>
 	<meta charset="utf-8" />
 	<link rel="shortcut icon" href="{{url(settings('favicon'))}}">
-	<title>@yield('title','الرئيسية') || FIXPRO STG</title>
+	<title>@yield('title','الرئيسية') || FIXPRO</title>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta content="width=device-width, initial-scale=1" name="viewport" />
 
