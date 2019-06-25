@@ -38,7 +38,7 @@
                   </li>
                 </ul>
                 <div class="tab-content">
-                  
+
                   {{-- GENERAL CONTENT --}}
                   <div class="tab-pane active" id="general">
                     <div class="form-body">
@@ -79,6 +79,25 @@
                           <input type="text" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
                         </div>
                       </div>
+                      <div class="form-group">
+												<label class="control-label col-md-3">
+													السعر الكلي للقطعة
+													<span class="required">*</span>
+												</label>
+												<div class="col-md-9">
+													<input type="number" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													مبلغ الربح من القطعة
+													<span class="required">*</span>
+												</label>
+												<div class="col-md-9">
+													<input type="number" name="profit_price" placeholder="2.000" class="form-control" value="{{ number_format($product->profit_price,3)}}">
+												</div>
+											</div>
                       <div class="form-group">
                         <label class="control-label col-md-3">
                           الكمية
@@ -171,14 +190,14 @@
                   </div>
                   <div class="form-actions">
                     <div id="result" style="display: none"></div>
-                    
+
                     <div class="progress-info" style="display: none">
                       <div class="progress">
                         <span class="progress-bar progress-bar-warning"></span>
                       </div>
                       <div class="status" id="progress-status"></div>
                     </div>
-                    
+
                     <div class="form-group">
                       <div class="col-md-offset-3 col-md-9">
                         <button type="submit" id="submit" class="btn btn-lg blue">

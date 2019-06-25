@@ -13,7 +13,7 @@ class ProductRepository
     function __construct(Product $product)
     {
         $this->model        = $product;
-    }  
+    }
 
     public function getAll($order = 'id', $sort = 'desc')
     {
@@ -28,27 +28,28 @@ class ProductRepository
     public function create($request)
     {
         DB::beginTransaction();
-        
+
         if ($request->hasFile('image'))
             $img = ImageTrait::uploadImage($request->image,'products/'.ar_slug($request->name_en));
         else
             $img = ImageTrait::copyImage('default.png','products/'.ar_slug($request->name_en),'default.png');
 
         try {
-            
+
             $product = $this->model->create([
                     'name_ar'               => $request['name_ar'],
                     'name_en'               => $request['name_en'],
                     'slug'                  => ar_slug($request['name_en']),
                     'status'                => $request['status'],
                     'price'                 => $request['price'],
+                    'profit_price'          => $request['profit_price'],
                     'qty'                   => $request['qty'],
                     'warranty'              => $request['warranty'],
                     'description_ar'        => $request['description_ar'],
                     'description_en'        => $request['description_en'],
                     'image'                 => $img,
                 ]);
-            
+
             $product->categories()->sync($request['categories']);
 
             DB::commit();
@@ -72,7 +73,7 @@ class ProductRepository
             $img  = $product->image;
 
         try {
-            
+
             $product->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
@@ -80,6 +81,7 @@ class ProductRepository
                 'slug'                  => ar_slug($request['name_en']),
                 'status'                => $request['status'],
                 'price'                 => $request['price'],
+                'profit_price'          => $request['profit_price'],
                 'qty'                   => $request['qty'],
                 'description_ar'        => $request['description_ar'],
                 'description_en'        => $request['description_en'],
@@ -101,9 +103,9 @@ class ProductRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $product = $this->findById($id);
 
             ImageTrait::deleteDirectory('uploads/products/'.ar_slug($product->name_en));
@@ -122,9 +124,9 @@ class ProductRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $products = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($products as $product) {
@@ -140,10 +142,10 @@ class ProductRepository
             throw $e;
         }
     }
-    
+
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -178,18 +180,19 @@ class ProductRepository
                 $obj['warranty']    = $product->warranty;
                 $obj['qty']         = $product->qty;
                 $obj['price']       = Price($product->price);
+                $obj['profit_price']= Price($product->profit_price);
                 $obj['image']       = url($product->image);
                 $obj['status']      = Status($product->status);
                 $obj['created_at']  = date("d-m-Y", strtotime($product->created_at));
                 $obj['listBox']     = checkBoxDelete($id);
                 $obj['options']     = $edit . $delete;;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -202,7 +205,7 @@ class ProductRepository
                           ->orWhere('warranty' , 'like' , '%'. $search .'%')
                           ->orWhere('price'    , 'like' , '%'. $search .'%');
                 });
-    
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 
