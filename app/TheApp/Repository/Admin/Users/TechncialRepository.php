@@ -17,12 +17,12 @@ class TechncialRepository
     {
         $this->model = $user;
     }
-    
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
     }
-    
+
     public function TechnicalUsers()
     {
         return $this->model
@@ -45,6 +45,7 @@ class TechncialRepository
         $this->technicalShift($user,$request);
         $this->technicalWorkDays($user,$request);
         $user->servicesOfTechnical()->sync($request['services']);
+        $user->categoriesOfTechnical()->sync($request['categories']);
         $user->locationsOfTechnical()->sync($request['governorates']);
 
         return true;
@@ -59,7 +60,7 @@ class TechncialRepository
 
             $shift = new TechnicalShift([ 'from'=>$from , 'to' => $to ]);
             return $user->shift()->save($shift);
-        
+
         }else{
 
             return $user->shift->update([ 'from'=>$from , 'to' => $to ]);
@@ -80,13 +81,13 @@ class TechncialRepository
                 ]);
             }
         }
-            
+
         return true;
     }
 
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -132,7 +133,7 @@ class TechncialRepository
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -156,7 +157,7 @@ class TechncialRepository
                     });
                 });
 
-    
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

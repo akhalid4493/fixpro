@@ -35,7 +35,7 @@ class StoreController extends ApiController
 	// GetAll Categories
 	public function categories(Request $request)
 	{
-		return $data = CategoryResource::collection($this->categoryModel->getAll($request));
+		return $data = CategoryResource::collection($this->categoryModel->getAllForTechnicalUser($request));
 	}
 
 	// GetAll Products
@@ -75,16 +75,16 @@ class StoreController extends ApiController
 	/*
  	===============================================
   				ORDER METHODS
-    =============================================== 
+    ===============================================
     */
-	
+
 	public function myOrders(Request $request)
 	{
 		$orders = $this->orderModel->technicalOrders($request);
 
 		return $this->responseMessages(OrderResource::collection($orders),true,200);
 	}
-	
+
 	public function getOrder(Request $request,$id)
 	{
 		$order = $this->orderModel->technicalOrderById($id);
@@ -99,7 +99,7 @@ class StoreController extends ApiController
 	public function createOrder(Request $request)
 	{
 		if ($request['method'] == 'Knet') {
-	
+
 		 	$newOrder = $this->orderModel->addNewOrder($request);
 
 		 	if ($newOrder){
