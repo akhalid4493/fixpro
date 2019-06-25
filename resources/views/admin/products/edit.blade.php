@@ -71,15 +71,6 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label class="control-label col-md-3">
-                          سعر القطعة
-                          <span class="required">*</span>
-                        </label>
-                        <div class="col-md-9">
-                          <input type="text" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
-                        </div>
-                      </div>
-                      <div class="form-group">
 												<label class="control-label col-md-3">
 													السعر الكلي للقطعة
 													<span class="required">*</span>
