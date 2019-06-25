@@ -190,7 +190,9 @@ class PreviewRepository
     */
     public function techPreviews($request)
     {
-        $previews = Auth::user()->previewsOfTechnical;
+        $previews = Auth::user()->previewsOfTechnical
+                    ->where('preview_status_id','!=',5)
+                    ->where('preview_status_id','!=',6);
 
         if ($previews) {
             return $previews;
@@ -203,6 +205,8 @@ class PreviewRepository
     {
         $preview = $this->model
                     ->where('id',$id)
+                    ->where('preview_status_id','!=',5)
+                    ->where('preview_status_id','!=',6)
                     ->whereHas('technical', function($query){
                         $query->where('user_id',Auth::id());
                     })
