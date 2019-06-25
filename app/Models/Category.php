@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $fillable = [
-        'name_en', 
-        'name_ar', 
+        'name_en',
+        'name_ar',
         'description_en',
         'description_ar',
         'status',
@@ -28,5 +28,10 @@ class Category extends Model
     public function installations()
     {
         return $this->belongsToMany('App\Models\Installation', 'installation_categories');
+    }
+
+    public function categoriesOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\User', 'technical_categories');
     }
 }

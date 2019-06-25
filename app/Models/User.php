@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 
+        'name',
         'email',
         'mobile',
         'image',
@@ -61,17 +61,17 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function orders()
-    {       
+    {
         return $this->hasMany('App\Models\Order');
     }
 
     public function hasSubscription()
-    {       
+    {
         return $this->hasOne('App\Models\Subscription');
     }
 
     public function checkSubscription()
-    {       
+    {
         return $this->hasSubscription()->where('end_at','>',date('Y-m-d'));
     }
 
@@ -79,7 +79,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany('App\Models\Address');
     }
-    
+
     public function workDays()
     {
         return $this->hasMany('App\Models\TechnicalDay');
@@ -96,12 +96,12 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function deviceToken()
-    {       
+    {
         return $this->hasOne('App\Models\DeviceToken')->latest();
     }
 
     public function shift()
-    {       
+    {
         return $this->hasOne('App\Models\TechnicalShift')->latest();
     }
 
@@ -113,6 +113,11 @@ class User extends Authenticatable implements JWTSubject
     public function servicesOfTechnical()
     {
         return $this->belongsToMany('App\Models\Service', 'technical_services');
+    }
+
+    public function categoriesOfTechnical()
+    {
+        return $this->belongsToMany('App\Models\Category', 'technical_categories');
     }
 
     public function locationsOfTechnical()

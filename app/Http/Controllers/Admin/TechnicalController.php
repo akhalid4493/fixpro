@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\TheApp\Repository\Admin\Governorates\GovernorateRepository as Governorate;
 use App\TheApp\Repository\Admin\Users\TechncialRepository as Technical;
 use App\TheApp\Repository\Admin\Services\ServiceRepository as Service;
+use App\TheApp\Repository\Admin\Categories\CategoryRepository as Category;
 use App\TheApp\Repository\Admin\Roles\RoleRepository as Role;
 use App\TheApp\Requests\Admin\Users\EditUserRequest;
 use App\TheApp\Requests\Admin\Users\UserRequest;
@@ -15,12 +16,19 @@ use DB;
 class TechnicalController extends AdminController
 {
 
-    function __construct(Technical $user,Role $role,Governorate $governorate,Service $service)
+    function __construct(
+      Technical $user,
+      Role $role,
+      Governorate $governorate,
+      Service $service,
+      Category $category
+    )
     {
         $this->userModel        = $user;
         $this->roleModel        = $role;
         $this->serviceModel     = $service;
         $this->governorateModel = $governorate;
+        $this->categoryModel    = $category;
     }
 
 
@@ -41,7 +49,7 @@ class TechnicalController extends AdminController
     public function show($id)
     {
         $user = $this->userModel->findById($id);
-        
+
         if (!$user)
             abort(404);
 
@@ -56,13 +64,14 @@ class TechnicalController extends AdminController
         if (!$user)
             abort(404);
 
+        $categories     = $this->categoryModel->getAll();
         $governorates   = $this->governorateModel->getAll();
         $services       = $this->serviceModel->getAll();
         $roles          = $this->roleModel->getAll();
         $admin_roles    = $user->roles()->pluck('id')->toArray();
 
         return view('admin.technicals.edit',
-               compact('user','admin_roles','roles','governorates','services'));
+               compact('user','admin_roles','roles','governorates','services','categories'));
     }
 
 
