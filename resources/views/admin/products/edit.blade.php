@@ -76,7 +76,7 @@
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<input type="number" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
+													<input type="text" name="price" placeholder="25.000" class="form-control" value="{{ number_format($product->price,3)}}">
 												</div>
 											</div>
 
@@ -86,7 +86,7 @@
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<input type="number" name="profit_price" placeholder="2.000" class="form-control" value="{{ number_format($product->profit_price,3)}}">
+													<input type="text" name="profit_price" placeholder="2.000" class="form-control" value="{{ number_format($product->profit_price,3)}}">
 												</div>
 											</div>
                       <div class="form-group">
