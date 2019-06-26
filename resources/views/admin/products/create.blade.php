@@ -77,7 +77,7 @@
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<input type="number" name="price" placeholder="25.000" class="form-control">
+													<input type="text" name="price" placeholder="25.000" class="form-control">
 												</div>
 											</div>
 
@@ -87,7 +87,7 @@
 													<span class="required">*</span>
 												</label>
 												<div class="col-md-9">
-													<input type="number" name="profit_price" placeholder="2.000" class="form-control">
+													<input type="text" name="profit_price" placeholder="2.000" class="form-control">
 												</div>
 											</div>
 											<div class="form-group">
