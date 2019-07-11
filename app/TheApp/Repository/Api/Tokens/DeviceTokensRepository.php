@@ -12,16 +12,16 @@ class DeviceTokensRepository
     function __construct(DeviceToken $deviceToken)
     {
         $this->deviceToken  = $deviceToken;
-    }  
+    }
 
     public function deviceToken($data)
     {
         DB::beginTransaction();
-        
+
         $this->checkUserId($data);
 
         try {
-                        
+
             $user = $this->deviceToken->updateOrCreate([
                 'device_token' => $data['device_token'],
             ],
@@ -49,7 +49,7 @@ class DeviceTokensRepository
             $token->update([
                 'user_id' => null
             ]);
-            
+
         }
     }
 }

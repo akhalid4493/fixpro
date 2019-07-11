@@ -26,8 +26,9 @@ trait SendNotification
         ->groupBy('device_token')
         ->pluck('device_token');
 
+
         if ($ios) {
-            $this->PushIOS($data,$ios);
+            return $this->PushIOS($data,$ios);
         }
 
         if ($android) {
@@ -79,31 +80,28 @@ trait SendNotification
 
     public function Push($fields)
     {
-        $url = 'https://fcm.googleapis.com/fcm/send';
+        	$url = 'https://fcm.googleapis.com/fcm/send';
 
-        $headers = array(
-            'Authorization:key=AAAA5hkpT9c:APA91bHDgPd3YL2OQZJXvW1DUUKNNSwdCX93WSvqQB7NZSWOZUx_qt1a6-7zpZWxUqiOrB3Z5FT38-nIWCC2TJkVgqQ50GcH6lYZu1hDEZLbNPiFrsN3Oowj16sRqB0RCQA7rggKhHF6',
-            'Content-Type: application/json'
-        );
+        	$server_key = 'AAAA5hkpT9c:APA91bHDgPd3YL2OQZJXvW1DUUKNNSwdCX93WSvqQB7NZSWOZUx_qt1a6-7zpZWxUqiOrB3Z5FT38-nIWCC2TJkVgqQ50GcH6lYZu1hDEZLbNPiFrsN3Oowj16sRqB0RCQA7rggKhHF6';
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
-        // echo json_encode($fields);
+        	$headers = array(
+        		'Content-Type:application/json',
+        		'Authorization:key='.$server_key
+        	);
 
-        $result = curl_exec($ch);
-        echo curl_error($ch);
-
-        if ($result === FALSE) {
-           die('Curl failed: ' . curl_error($ch));
-        }
-        curl_close($ch);
-
-        return $result;
-    }
+        	$ch = curl_init();
+        	curl_setopt($ch, CURLOPT_URL, $url);
+        	curl_setopt($ch, CURLOPT_POST, true);
+        	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+        	$result = curl_exec($ch);
+        	if ($result === FALSE) {
+        		die('FCM Send Error: ' . curl_error($ch));
+        	}
+        	curl_close($ch);
+        	return $result;
+    	}
 }

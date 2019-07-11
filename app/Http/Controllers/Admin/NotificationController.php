@@ -20,7 +20,7 @@ class NotificationController extends AdminController
         return view('admin.notifications.create');
     }
 
-    public  function push_notification(Request $request) 
+    public  function push_notification(Request $request)
     {
         $tokens = $this->userModel->getAllTokens();
 
@@ -32,7 +32,7 @@ class NotificationController extends AdminController
         ];
 
       	$this->send($data,$tokens);
-     
+
         return back()->with(['msg'=>'Notification Send Successfully','alert'=>'success']);
     }
 }

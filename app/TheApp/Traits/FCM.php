@@ -3,14 +3,14 @@ namespace App\TheApp\Traits;
 
 trait SendNotification
 {
-    public  function send($data ,$devices_id = null) 
+    public  function send($data ,$devices_id = null)
     {
 
-      if (is_array($devices_id)) {
-          $tokens = array_values(array_unique($devices_id));
-      } else {
-          $tokens = array($devices_id);
-      }
+      // if (is_array($devices_id)) {
+      //     $tokens = array_values(array_unique($devices_id));
+      // } else {
+      //     $tokens = array($devices_id);
+      // }
 
       $notification = [
         'title'    => $data['title'],
@@ -47,19 +47,19 @@ trait SendNotification
       curl_setopt($ch, CURLOPT_POST, true);
       curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);  
+      curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
       curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
       curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
       // echo json_encode($fields);
 
-      $result = curl_exec($ch);           
+      $result = curl_exec($ch);
       echo curl_error($ch);
-       
+
       if ($result === FALSE) {
          die('Curl failed: ' . curl_error($ch));
       }
       curl_close($ch);
-      
+
       return $result;
     }
 
