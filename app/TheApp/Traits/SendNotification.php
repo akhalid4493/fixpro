@@ -16,6 +16,7 @@ trait SendNotification
 
         $ios = DeviceToken::
         whereIn('device_token', $tokens)
+        ->select('device_token')
         ->where('platform', 'IOS')
         ->groupBy('device_token')
         ->pluck('device_token');
@@ -28,11 +29,19 @@ trait SendNotification
 
 
         if ($ios) {
-            return $this->PushIOS($data,$ios);
+            $regIdIOS = array_chunk(json_decode($ios),999);
+
+            foreach ($regIdIOS as $tokens) {
+              $msg[] = $this->PushIOS($data,$tokens);
+            }
         }
 
         if ($android) {
-            $this->PushANDROID($data,$android);
+            $regIdIOS = array_chunk(json_decode($ios),999);
+
+            foreach ($regIdIOS as $tokens) {
+              $this->PushANDROID($data,$tokens);
+            }
         }
     }
 
@@ -43,7 +52,7 @@ trait SendNotification
           'body'     => $data['body'],
           'sound'    => 'default',
           'priority' => 'high',
-          'badge' => '0'
+          'badge' => '0',
         ];
 
         $data = [
