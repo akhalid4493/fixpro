@@ -43,6 +43,7 @@ trait SendNotification
           'body'     => $data['body'],
           'sound'    => 'default',
           'priority' => 'high',
+          'badge' => '0'
         ];
 
         $data = [
