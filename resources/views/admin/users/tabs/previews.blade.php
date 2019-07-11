@@ -1,19 +1,18 @@
 <div class="tab-pane" id="previews">
     {{-- DataTable --}}
     <table class="table table-striped table-bordered table-hover dataTable2" id="dataTable2">
-        <thead>
-            <tr>
-                <th width="2%">#</th>
-                <th>اسم العميل</th>
-                <th>البريد</th>
-                <th>رقم الهاتف</th>
-                <th>تاريخ طلب المعاينة</th>
-                <th>الحالة</th>
-                <th>ملاحظات</th>
-                <th>تاريخ الانشاء</th>
-                <th>العمليات</th>
-            </tr>
-        </thead>
+      <thead>
+          <tr>
+              <th width="2%">#</th>
+              <th>اسم العميل</th>
+              <th>المنطقة</th>
+              <th>تاريخ طلب المعاينة</th>
+              <th>الخدمة المطلوبة</th>
+              <th>الحالة</th>
+              <th>تاريخ الانشاء</th>
+              <th>العمليات</th>
+          </tr>
+      </thead>
     </table>
     <div class="row"></div>
 </div>
@@ -21,7 +20,7 @@
 
 @section('PreviewDT')
 
-<script> 
+<script>
 var dataTable =
     $('#dataTable2').DataTable({
         "ajax": "{{ route('previews.dataTable','user_id='.$user->id) }}",
@@ -33,12 +32,11 @@ var dataTable =
         "order": [[ 0 , "desc" ]],
         "columns":[
             { "data": "id"    },
-            { "data": "full_name" , "orderable": false},
-            { "data": "email" , "orderable": false},
-            { "data": "mobile" , "orderable": false},
+            { "data": "user_id"},
+            { "data": "address"   , "orderable": false  },
             { "data": "time" ,"width": "140px"},
+            { "data": "details", "render": "[ , ].service.name_ar" ,"orderable": false},
             { "data": "preview_status_id" },
-            { "data": "note" },
             { "data": "created_at" },
             { "data": "options"  , "orderable": false ,"width": "10%"},
         ],
