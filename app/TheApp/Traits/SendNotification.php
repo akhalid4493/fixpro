@@ -37,9 +37,9 @@ trait SendNotification
         }
 
         if ($android) {
-            $regIdIOS = array_chunk(json_decode($ios),999);
+            $regIdAndroid = array_chunk(json_decode($android),999);
 
-            foreach ($regIdIOS as $tokens) {
+            foreach ($regIdAndroid as $tokens) {
               $this->PushANDROID($data,$tokens);
             }
         }
