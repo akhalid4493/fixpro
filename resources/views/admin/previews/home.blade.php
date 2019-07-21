@@ -96,7 +96,7 @@
     var dataTable =
     $('#dataTable').DataTable({
         "ajax" : {
-            url:"{{ route('previews.dataTable') }}",
+            url:"{{ route('previews.dataTable','status_id=no') }}",
             type:"GET",
             data : {
                 req : data,

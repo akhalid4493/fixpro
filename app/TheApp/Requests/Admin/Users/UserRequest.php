@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
         return [
 
             'name.required'   => 'من فضلك ادخل اسم المستخدم بالكامل.',
-            
+
             'email.required'      => 'من فضلك ادخل البريد الالكتروني.',
             'email.email'         => 'من فضلك ادخل البريد بشكل صحيح { email@example.com }.',
             'email.unique'        => 'هذا البريد موجود بالفعل.',
@@ -58,7 +58,7 @@ class UserRequest extends FormRequest
             'image.image'           => 'هذا الملف ليس صورة',
             'image.mimes'           => 'يجب ان تكون الصوره من نوع [ jpg , png ] .',
             'image.max'             => 'الحجم يجب الا يكون اكبر من  2 MB  للغلاف.',
-            
+
         ];
     }
 }

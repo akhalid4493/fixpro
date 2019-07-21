@@ -215,15 +215,12 @@ class PreviewRepository
                           ->orWhere('note'      , 'like' , '%'. $search .'%');
                 });
 
-        if ($request['status_id'] != null) {
-
-          $query->where('preview_status_id',$request['status_id']);
-
-        }else{
-
+        if($request['status_id'] == 'no'){
           $query->where('preview_status_id','!=',5)->where('preview_status_id','!=',6);
-
+        }elseif ($request['status_id'] != null) {
+          $query->where('preview_status_id',$request['status_id']);
         }
+
         if ($request['user_id']) {
             $query->where('user_id',$request['user_id']);
         }

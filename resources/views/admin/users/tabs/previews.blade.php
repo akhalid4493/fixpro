@@ -23,7 +23,7 @@
 <script>
 var dataTable =
     $('#dataTable2').DataTable({
-        "ajax": "{{ route('previews.dataTable','user_id='.$user->id) }}",
+        "ajax": "{{ route('previews.dataTable',['user_id'=>$user->id]) }}",
         "processing":true,
         "serverSide":true,
         "language": {
