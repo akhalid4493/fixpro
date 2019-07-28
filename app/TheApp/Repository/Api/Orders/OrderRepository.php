@@ -23,13 +23,13 @@ class OrderRepository
         $this->model            = $order;
         $this->modelProduct     = $product;
         $this->modelInstallation= $installation;
-    }  
+    }
 
 
     /*
     ===============================================
             USER APP API ORDER METHODS
-    =============================================== 
+    ===============================================
     */
     public function myOrders()
     {
@@ -47,19 +47,19 @@ class OrderRepository
     }
 
     public function orderAction($order,$request)
-    {        
+    {
         DB::beginTransaction();
 
         try {
-            
+
             $order->update([
                 'order_status_id'   => $request['status'],
                 'method'            => $request['method'],
             ]);
-            
+
 
             DB::commit();
-            
+
             return $order;
 
         }catch(\Exception $e){
@@ -69,21 +69,21 @@ class OrderRepository
     }
 
     public function finalStep($data)
-    {        
+    {
         $order = $this->orderById($data['udf1']);
-        
+
         DB::beginTransaction();
 
         try {
-            
+
             $order = $order->update([
                 'order_status_id'   => 5,
                 'method'            => 'KNET',
             ]);
-            
+
 
             DB::commit();
-            
+
             return true;
 
         }catch(\Exception $e){
@@ -95,9 +95,9 @@ class OrderRepository
     /*
     ===============================================
             TECHNICAL APP API ORDER METHODS
-    =============================================== 
+    ===============================================
     */
-   
+
     public function technicalOrders()
     {
         $orders = $this->model->where('technical_id',Auth::id())->get();
@@ -122,23 +122,29 @@ class OrderRepository
 
     public function calculateTotal($request)
     {
-        $subtotal  = 0;
+        $total_products        = 0;
+        $total_profit          = 0;
+        $installation_total    = 0;
 
         if ($request['product_id']) {
             foreach ($request['product_id'] as $key => $product) {
                 $item_ = Product::find($product);
-                $subtotal += $item_['price'] * $request['qty_product'][$key];
-            }
-        }
-            
-        if ($request['installation_id']) {
-            foreach ($request['installation_id'] as $key => $installation) {
-                $installation_ = Installation::find($installation);
-                $subtotal += $installation_['price'] * $request['qty_installation'][$key];
+                $total_products += $item_['price'] * $request['qty_product'][$key];
+                $total_profit += $item_['profit_price'] * $request['qty_product'][$key];
             }
         }
 
-        $order = $this->createOrder($request,$subtotal);
+        if ($request['installation_id']) {
+            foreach ($request['installation_id'] as $key => $installation) {
+                $installation_ = Installation::find($installation);
+                $installation_total += $installation_['price'] * $request['qty_installation'][$key];
+            }
+        }
+
+        $subtotal        = $total_products + $installation_total;
+        $subtotal_profit = $total_profit + $installation_total;
+
+        $order = $this->createOrder($request,$subtotal,$subtotal_profit);
 
         if ($order) {
             return $order;
@@ -146,7 +152,7 @@ class OrderRepository
 
     }
 
-    public function createOrder($request,$subtotal)
+    public function createOrder($request,$subtotal,$subtotal_profit)
     {
         DB::beginTransaction();
 
@@ -157,13 +163,15 @@ class OrderRepository
         }
 
         try {
-            
+
             $serviceFees = $request['service'] == 'on' ? settings('service') : 0.000;
 
             $order = $this->model->create([
                 'subtotal'          => $subtotal,
+                'subtotal_profit'   => $subtotal_profit,
                 'service'           => $serviceFees,
                 'total'             => $subtotal + $serviceFees,
+                'total_profit'      => $subtotal_profit + $serviceFees,
                 'method'            => $request['method'],
                 'transID'           => $request['transID'],
                 'preview_id'        => $request['preview_id'],
@@ -194,9 +202,9 @@ class OrderRepository
 
             if ($request['product_id']) {
                 foreach ($request['product_id'] as $key => $product) {
-                    
+
                     $item = Product::find($product);
-                    
+
                     $warranty = $this->calculatWarranty($request,$item);
 
                     $this->modelProduct->create([
@@ -207,6 +215,8 @@ class OrderRepository
                         'qty'           => $request['qty_product'][$key],
                         'order_id'      => $orderId,
                         'price'         => $item->price,
+                        'profit_price'  => $item->profit_price,
+                        'profit_total'  => $item->profit_price * $request['qty_product'][$key],
                         'total'         => $item->price * $request['qty_product'][$key],
                     ]);
                 }
@@ -214,9 +224,9 @@ class OrderRepository
 
             if ($request['installation_id']) {
                 foreach ($request['installation_id'] as $key => $installation) {
-                
+
                     $installation_ = Installation::find($installation);
-                    
+
                     $warranty_inst = $this->calculatWarrantyInstallation();
 
                     $this->modelInstallation->create([

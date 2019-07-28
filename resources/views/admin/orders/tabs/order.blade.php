@@ -2,7 +2,7 @@
     <div class="invoice">
         <div class="row invoice-logo">
             <div class="col-xs-6 invoice-logo-space">
-                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;"/>
+                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;" />
             </div>
             <div class="col-xs-6">
                 <p> #{{ $order['id'] }} /
@@ -10,7 +10,7 @@
                 </p>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <h3>بيانات العميل</h3>
             <div class="col-xs-12 table-responsive">
@@ -56,8 +56,10 @@
                             <th class="invoice-title uppercase text-center"> # </th>
                             <th class="invoice-title uppercase text-center">المنتج </th>
                             <th class="invoice-title uppercase text-center">السعر</th>
+                            <th class="invoice-title uppercase text-center no-print">سعر الربح</th>
                             <th class="invoice-title uppercase text-center">الكمية</th>
                             <th class="invoice-title uppercase text-center">المجموع</th>
+                            <th class="invoice-title uppercase text-center no-print">مجموع الربح</th>
                             <th class="invoice-title uppercase text-center">انتهاء الكفالة</th>
                         </tr>
                     </thead>
@@ -72,10 +74,23 @@
                                 {{ Price($item->price) }}
                                 <span> KD</span>
                             </td>
+                            <td class="text-center sbold no-print">
+                                <span class="label label-success" style="font-size: 13px">
+                                    {{Price($item->profit_price)}}
+                                    <span> KD</span>
+                                </span>
+                            </td>
                             <td class="text-center sbold">{{ $item->qty }}</td>
                             <td class="text-center sbold">
-                                {{Price($item->price * $item->qty)}}
+                                {{Price($item->total)}}
                                 <span> KD</span>
+                            </td>
+
+                            <td class="text-center sbold no-print">
+                                <span class="label label-success" style="font-size: 13px">
+                                    {{Price($item->profit_total)}}
+                                    <span> KD</span>
+                                </span>
                             </td>
                             <td class="text-center sbold">
                                 {{ $item->warranty_end }}
@@ -126,38 +141,55 @@
                 </table>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <div class="col-xs-4">
                 <div class="well">
                     @if ($order->preview->address != null)
-                        <address>
-                            المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $order->preview->address->block }}
-                            <br/> شارع : {{ $order->preview->address->street }}
-                            <br/> مبنى : {{ $order->preview->address->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $order->preview->address->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $order->preview->address->block }}
+                        <br /> شارع : {{ $order->preview->address->street }}
+                        <br /> مبنى : {{ $order->preview->address->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $order->preview->address->address }}
+                    </address>
                     @else
-                        <address>
-                            المحافظة : {{ $order->preview->oldAddress->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $order->preview->oldAddress->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $order->preview->oldAddress->block }}
-                            <br/> شارع : {{ $order->preview->oldAddress->street }}
-                            <br/> مبنى : {{ $order->preview->oldAddress->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $order->preview->oldAddress->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $order->preview->oldAddress->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $order->preview->oldAddress->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $order->preview->oldAddress->block }}
+                        <br /> شارع : {{ $order->preview->oldAddress->street }}
+                        <br /> مبنى : {{ $order->preview->oldAddress->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $order->preview->oldAddress->address }}
+                    </address>
                     @endif
                 </div>
             </div>
-            <div class="col-xs-8 invoice-block">
+            <div class="no-print">
+                <div class="col-xs-4 invoice-block">
+                    <ul class="list-unstyled amounts">
+                        <li>
+                            <strong>مجموع الربح :</strong> {{ Price($order->subtotal_profit) }} KWD
+                        </li>
+                        <li>
+                            <strong>الخدمة :</strong> {{ Price($order->service) }} KWD
+                        </li>
+                        <hr>
+                        <li>
+                            <strong>المجموع الكلي للربح :</strong> {{ Price($order->total_profit) }} KWD
+                        </li>
+                    </ul>
+                    <br/>
+                </div>
+            </div>
+            <div class="col-xs-4 invoice-block">
                 <ul class="list-unstyled amounts">
                     <li>
                         <strong>المجموع :</strong> {{ Price($order->subtotal) }} KWD
@@ -170,11 +202,13 @@
                         <strong>المجموع الكلي :</strong> {{ Price($order->total) }} KWD
                     </li>
                 </ul>
-                <br/>
-                <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
-                    <i class="fa fa-print"></i>
-                </a>
+                <br />
             </div>
         </div>
+
+        <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة
+            <i class="fa fa-print"></i>
+        </a>
+
     </div>
 </div>

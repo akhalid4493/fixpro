@@ -44,6 +44,10 @@
 										<b class="page-title">الطلبات</b>
 										<canvas id="myChart2" width="540" height="270"></canvas>
 									</div>
+									<div class="col-md-6">
+										<b class="page-title">مبيعات صافي الربح</b>
+										<canvas id="myChart3" width="540" height="270"></canvas>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -99,6 +103,7 @@
 									<th>البريد</th>
 									<th>رقم الهاتف</th>
 									<th>المجموع الكلي</th>
+									<th>المجموع الكلي للربح</th>
 									<th>طريقة الدفع</th>
 									<th>الحالة</th>
 									<th>تاريخ الانشاء</th>
@@ -160,6 +165,9 @@
 						"data": "total"
 					},
 					{
+						"data": "total_profit"
+					},
+					{
 						"data": "method"
 					},
 					{
@@ -201,14 +209,8 @@
 
 <script>
 	var ctx = document.getElementById("myChart");
-	var labels = {
-		!!$orderChart['profit_dates'] !!
-	};
-	var count = {
-		{
-			$orderChart['profits']
-		}
-	};
+	var labels = {!!$orderChart['profit_dates'] !!};
+	var count = {{$orderChart['profits']}};
 	var data = {
 		labels: labels,
 		datasets: [{
@@ -247,15 +249,50 @@
 </script>
 
 <script>
-	var ctx = document.getElementById("myChart2").getContext('2d');
-	var orders = {
-		!!$orderStatus['ordersType'] !!
+	var ctx = document.getElementById("myChart3");
+	var labels = {!!$order_profit['profit_dates'] !!};
+	var count = {{$order_profit['profits']}};
+	var data = {
+		labels: labels,
+		datasets: [{
+			label: "مبيعات صافي الربح",
+			fill: false,
+			lineTension: 0.1,
+			backgroundColor: "#36A2EB",
+			borderColor: "#36A2EB",
+			borderCapStyle: 'butt',
+			borderDash: [],
+			borderDashOffset: 0.0,
+			borderJoinStyle: 'miter',
+			pointBorderColor: "#36A2EB",
+			pointBackgroundColor: "#fff",
+			pointBorderWidth: 1,
+			pointHoverRadius: 5,
+			pointHoverBackgroundColor: "#36A2EB",
+			pointHoverBorderColor: "#FFCE56",
+			pointHoverBorderWidth: 2,
+			pointRadius: 1,
+			pointHitRadius: 10,
+			data: count,
+			spanGaps: false,
+		}]
 	};
-	var ordersCount = {
-		{
-			$orderStatus['ordersCount']
+	var myLineChart = new Chart(ctx, {
+		type: 'line',
+		label: labels,
+		data: data,
+		options: {
+			animation: {
+				animateScale: true
+			}
 		}
-	};
+	});
+</script>
+
+<script>
+	var ctx = document.getElementById("myChart2").getContext('2d');
+	var orders = {!!$orderStatus['ordersType'] !!};
+	var ordersCount = {{$orderStatus['ordersCount']}};
 	var myChart = new Chart(ctx, {
 		type: 'doughnut',
 		data: {

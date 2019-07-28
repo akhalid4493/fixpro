@@ -37,6 +37,25 @@ class OrderRepository
         return $data;
     }
 
+    public function monthlyProfiteOnly()
+    {
+        $data["profit_dates"] = $this->model
+                                ->where('order_status_id',5)
+                                ->select(\DB::raw("DATE_FORMAT(created_at,'%Y-%m') as date"))
+                                ->groupBy('date')
+                                ->pluck('date');
+
+        $profits = $this->model
+                    ->where('order_status_id',5)
+                    ->select(\DB::raw("sum(total_profit) as profit"))
+                    ->groupBy(\DB::raw("DATE_FORMAT(created_at, '%Y-%m')"))
+                    ->get();
+
+        $data["profits"] = json_encode(array_pluck($profits, 'profit'));
+
+        return $data;
+    }
+
     public function ordersType()
     {
         $orders = $this->model
@@ -194,6 +213,7 @@ class OrderRepository
 
                 $obj['id']               = $order->id;
                 $obj['total']            = Price($order->total);
+                $obj['total_profit']     = Price($order->total_profit);
                 $obj['subtotal']         = Price($order->subtotal);
                 $obj['service']          = Price($order->service);
                 $obj['method']           = Label($order->method,'label-info');

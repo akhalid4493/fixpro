@@ -17,23 +17,25 @@ class Order extends Model
         'technical_id',
         'preview_id',
         'order_status_id',
+        'subtotal_profit',
+        'total_profit'
     ];
-    
+
     public function address()
-    {       
+    {
         return $this->belongsTo('App\Models\Address' , 'address_id' ,'id');
     }
 
     public function preview()
-    {       
+    {
         return $this->belongsTo('App\Models\Preview' , 'preview_id' ,'id');
     }
-    
+
     public function orderStatus()
     {
         return $this->belongsTo('App\Models\OrderStatus','order_status_id','id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo('App\Models\User','user_id','id');
@@ -45,12 +47,12 @@ class Order extends Model
     }
 
     public function productsOfOrder()
-    {       
+    {
       return $this->hasMany('App\Models\OrderProduct');
     }
 
     public function installationsOfOrder()
-    {       
+    {
       return $this->hasMany('App\Models\OrderInstallation');
     }
 }
