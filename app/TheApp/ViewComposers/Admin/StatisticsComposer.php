@@ -26,6 +26,7 @@ class StatisticsComposer
         $this->ordersProfit     = $order->totalProfit();
         $this->newOrders        = $order->countNewOrders();
         $this->orderChart       = $order->monthlyProfite();
+        $this->ordersProfiteOnly= $order->ordersProfiteOnly();
         $this->order_profit     = $order->monthlyProfiteOnly();
         $this->orderStatus      = $order->ordersType();
         $this->newPreviews      = $preview->countNewPreviews();
@@ -51,6 +52,7 @@ class StatisticsComposer
         $view->with('newOrders'             , $this->newOrders);
         $view->with('orderChart'            , $this->orderChart);
         $view->with('order_profit'          , $this->order_profit);
+        $view->with('onlyProfit'            , $this->ordersProfiteOnly);
         $view->with('subscriptionChart'     , $this->subscriptionChart);
         $view->with('orderStatus'           , $this->orderStatus);
         $view->with('newPreviews'           , $this->newPreviews);

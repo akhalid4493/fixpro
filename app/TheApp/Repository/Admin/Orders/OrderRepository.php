@@ -101,6 +101,11 @@ class OrderRepository
         return $this->model->where('order_status_id',5)->sum('total');
     }
 
+    public function ordersProfiteOnly()
+    {
+        return $this->model->where('order_status_id',5)->sum('total_profit');
+    }
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
