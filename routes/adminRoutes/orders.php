@@ -2,6 +2,11 @@
 
 Route::group(['prefix' => 'orders'], function () {
 
+	Route::get('update-profit' ,'Admin\OrderController@updateProfit')
+	->name('orders.update-profit')
+    ->middleware(['permission:show_orders']);
+
+
 	Route::get('/' ,'Admin\OrderController@index')
 	->name('orders.index')
     ->middleware(['permission:show_orders']);
