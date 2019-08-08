@@ -25,7 +25,6 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center sbold"> {{ $preview->user->name }}</td>
                             <td class="text-center sbold">
                                 <a href="{{url(route('users.show',$preview->user->id))}}">
                                     {{ $preview->user->name }}
