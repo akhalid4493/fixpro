@@ -2,7 +2,7 @@
     <div class="invoice">
         <div class="row invoice-logo">
             <div class="col-xs-6 invoice-logo-space">
-                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;"/>
+                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;" />
             </div>
             <div class="col-xs-6">
                 <p> #{{ $order->preview['id'] }} /
@@ -10,7 +10,7 @@
                 </p>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <h3>بيانات العميل</h3>
             <div class="col-xs-12 table-responsive">
@@ -24,7 +24,12 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="text-center sbold"> {{ $order->preview->user->name }}</td>
+
+                            <td class="text-center sbold">
+                                <a href="{{url(route('users.show',$order->preview->user->id))}}">
+                                    {{ $order->preview->user->name }}
+                                </a>
+                            </td>
                             <td class="text-center sbold"> {{ $order->preview->user->email }}</td>
                             <td class="text-center sbold"> {{ $order->preview->user->mobile }}</td>
                         </tr>
@@ -54,7 +59,7 @@
                 </table>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <h3>بيانات اضافية</h3>
             <div class="col-xs-12 table-responsive">
@@ -78,29 +83,29 @@
             <div class="col-xs-4">
                 <div class="well">
                     @if ($order->preview->address != null)
-                        <address>
-                            المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $order->preview->address->block }}
-                            <br/> شارع : {{ $order->preview->address->street }}
-                            <br/> مبنى : {{ $order->preview->address->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $order->preview->address->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $order->preview->address->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $order->preview->address->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $order->preview->address->block }}
+                        <br /> شارع : {{ $order->preview->address->street }}
+                        <br /> مبنى : {{ $order->preview->address->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $order->preview->address->address }}
+                    </address>
                     @else
-                        <address>
-                            المحافظة : {{ $order->preview->oldAddress->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $order->preview->oldAddress->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $order->preview->oldAddress->block }}
-                            <br/> شارع : {{ $order->preview->oldAddress->street }}
-                            <br/> مبنى : {{ $order->preview->oldAddress->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $order->preview->oldAddress->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $order->preview->oldAddress->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $order->preview->oldAddress->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $order->preview->oldAddress->block }}
+                        <br /> شارع : {{ $order->preview->oldAddress->street }}
+                        <br /> مبنى : {{ $order->preview->oldAddress->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $order->preview->oldAddress->address }}
+                    </address>
                     @endif
                 </div>
                 <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();"> طباعة

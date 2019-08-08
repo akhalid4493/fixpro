@@ -24,8 +24,13 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         <tr>
-                            <td class="text-center sbold"> {{ $order->user->name }}</td>
+                            <td class="text-center sbold">
+                                <a href="{{url(route('users.show',$order->user->id))}}">
+                                    {{ $order->user->name }}
+                                </a>
+                            </td>
                             <td class="text-center sbold"> {{ $order->user->email }}</td>
                             <td class="text-center sbold"> {{ $order->user->mobile }}</td>
                             @if ($order->user->checkSubscription == true)
@@ -186,7 +191,7 @@
                             <strong>المجموع الكلي للربح :</strong> {{ Price($order->total_profit) }} KWD
                         </li>
                     </ul>
-                    <br/>
+                    <br />
                 </div>
             </div>
             <div class="col-xs-4 invoice-block">

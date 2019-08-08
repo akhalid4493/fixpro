@@ -129,7 +129,7 @@
             <li class="nav-item">
                 <a href="{{ url(route('products.index')) }}" class="nav-link nav-toggle">
                     <i class="icon-bar-chart"></i>
-                    <span class="title">القطع الاستهلاكية</span>
+                    <span class="title">قطع الغيار</span>
                 </a>
             </li>
             @endpermission

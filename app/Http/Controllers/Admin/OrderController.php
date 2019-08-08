@@ -15,44 +15,44 @@ class OrderController extends AdminController
         $this->orderModel = $order;
     }
 
-    public function updateProfit()
-    {
-       $order = $this->orderModel->getAll();
+    // public function updateProfit()
+    // {
+    //    $order = $this->orderModel->getAll();
+    //
+    //     $array = [];
+    //
+    //       foreach ($order as $key => $value) {
+    //
+    //         $total_profit_product  = 0;
+    //         $installation_total    = 0;
+    //
+    //         foreach ($value->productsOfOrder as $key => $orderProduct) {
+    //
+    //           $orderProduct->update([
+    //             'profit_price' =>  $orderProduct->product->profit_price ,
+    //             'profit_total' =>  $orderProduct->product->profit_price * $orderProduct->qty,
+    //           ]);
+    //
+    //           $total_profit_product += $orderProduct['profit_price'] * $orderProduct['qty'];
+    //         }
+    //
+    //         foreach ($value->installationsOfOrder as $key => $installation) {
+    //           $installation_total += $installation['price'] * $installation['qty'];
+    //         }
+    //
+    //
+    //         $subtotal = $installation_total+$total_profit_product;
+    //
+    //         $value->update([
+    //           'subtotal_profit' => $subtotal,
+    //           'total_profit'    => $subtotal + $value->service,
+    //         ]);
+    //
+    //       }
+    //
+    //     return $array;
+    // }
 
-        $array = [];
-
-          foreach ($order as $key => $value) {
-
-            $total_profit_product  = 0;
-            $installation_total    = 0;
-
-            foreach ($value->productsOfOrder as $key => $orderProduct) {
-
-              $orderProduct->update([
-                'profit_price' =>  $orderProduct->product->profit_price ,
-                'profit_total' =>  $orderProduct->product->profit_price * $orderProduct->qty,
-              ]);
-
-              $total_profit_product += $orderProduct['profit_price'] * $orderProduct['qty'];
-            }
-
-            foreach ($value->installationsOfOrder as $key => $installation) {
-              $installation_total += $installation['price'] * $installation['qty'];
-            }
-
-
-            $subtotal = $installation_total+$total_profit_product;
-
-            $value->update([
-              'subtotal_profit' => $subtotal,
-              'total_profit'    => $subtotal + $value->service,
-            ]);
-
-          }
-
-        return $array;
-    }
-    
     public function index()
     {
         return view('admin.orders.home');

@@ -101,7 +101,7 @@
                                       <small class="font-wihte-sharp">KWD</small>
                                       <span data-counter="counterup" data-value="{{Price($onlyProfit)}}">0.000</span>
                                   </div>
-                                  <div class="desc"> صافي الربح</div>
+                                  <div class="desc"> ارباح الطلبات</div>
                               </div>
                           </a>
                       </div>

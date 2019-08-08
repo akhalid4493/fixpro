@@ -45,7 +45,7 @@
 										<canvas id="myChart2" width="540" height="270"></canvas>
 									</div>
 									<div class="col-md-6">
-										<b class="page-title">مبيعات صافي الربح</b>
+										<b class="page-title">ربح الطلبات</b>
 										<canvas id="myChart3" width="540" height="270"></canvas>
 									</div>
 								</div>

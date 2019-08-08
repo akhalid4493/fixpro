@@ -26,6 +26,11 @@
                     <tbody>
                         <tr>
                             <td class="text-center sbold"> {{ $preview->user->name }}</td>
+                            <td class="text-center sbold">
+                                <a href="{{url(route('users.show',$preview->user->id))}}">
+                                    {{ $preview->user->name }}
+                                </a>
+                            </td>
                             <td class="text-center sbold"> {{ $preview->user->email }}</td>
                             <td class="text-center sbold"> {{ $preview->user->mobile }}</td>
                             @if ($preview->user->checkSubscription == true)
