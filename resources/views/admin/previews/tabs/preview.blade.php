@@ -2,7 +2,7 @@
     <div class="invoice">
         <div class="row invoice-logo">
             <div class="col-xs-6 invoice-logo-space">
-                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;"/>
+                <img src="{{ url(settings('logo')) }}" class="img-responsive" style="width: 100px;" />
             </div>
             <div class="col-xs-6">
                 <p> #{{ $preview['id'] }} /
@@ -10,7 +10,32 @@
                 </p>
             </div>
         </div>
-        <hr/>
+        <hr />
+        <div class="no-print">
+            <div class="row">
+                <h3>المشاهدة</h3>
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th class="invoice-title uppercase text-center"> حالة المشاهدة </th>
+                                <th class="invoice-title uppercase text-center"> تاريخ المشاهدة </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center sbold">
+                                    @if ($preview->seen == 1)
+                                    تم المشاهدة
+                                    @endif
+                                </td>
+                                <td class="text-center sbold"> {{ $preview->seen_at }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <h3>بيانات العميل</h3>
             <div class="col-xs-12 table-responsive">
@@ -35,14 +60,14 @@
                             @if ($preview->user->checkSubscription == true)
                             <td class="text-center sbold">
                                 <span class="label label-success circle" style="font-size:13px">
-                                مشترك
-                               </span>
+                                    مشترك
+                                </span>
                             </td>
                             @else
                             <td class="text-center sbold">
                                 <span class="label label-danger circle" style="font-size:13px">
-                                غير مشترك
-                               </span>
+                                    غير مشترك
+                                </span>
                             </td>
                             @endif
                         </tr>
@@ -72,7 +97,7 @@
                 </table>
             </div>
         </div>
-        <hr/>
+        <hr />
         <div class="row">
             <h3>بيانات اضافية</h3>
             <div class="col-xs-12 table-responsive">
@@ -96,29 +121,29 @@
             <div class="col-xs-4">
                 <div class="well">
                     @if ($preview->address != null)
-                        <address>
-                            المحافظة : {{ $preview->address->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $preview->address->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $preview->address->block }}
-                            <br/> شارع : {{ $preview->address->street }}
-                            <br/> مبنى : {{ $preview->address->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $preview->address->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $preview->address->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $preview->address->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $preview->address->block }}
+                        <br /> شارع : {{ $preview->address->street }}
+                        <br /> مبنى : {{ $preview->address->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $preview->address->address }}
+                    </address>
                     @else
-                        <address>
-                            المحافظة : {{ $preview->oldAddress->addressProvince->governorate->name_ar }}
-                            <br/> المنطقة : {{ $preview->oldAddress->addressProvince->name_ar }}
-                            <br/> قطعة : {{ $preview->oldAddress->block }}
-                            <br/> شارع : {{ $preview->oldAddress->street }}
-                            <br/> مبنى : {{ $preview->oldAddress->building }}
-                            <br>
-                        </address>
-                        <address>
-                            تفاصيل العنوان {{ $preview->oldAddress->address }}
-                        </address>
+                    <address>
+                        المحافظة : {{ $preview->oldAddress->addressProvince->governorate->name_ar }}
+                        <br /> المنطقة : {{ $preview->oldAddress->addressProvince->name_ar }}
+                        <br /> قطعة : {{ $preview->oldAddress->block }}
+                        <br /> شارع : {{ $preview->oldAddress->street }}
+                        <br /> مبنى : {{ $preview->oldAddress->building }}
+                        <br>
+                    </address>
+                    <address>
+                        تفاصيل العنوان {{ $preview->oldAddress->address }}
+                    </address>
                     @endif
 
                 </div>

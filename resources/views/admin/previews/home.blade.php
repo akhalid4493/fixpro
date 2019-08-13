@@ -70,6 +70,7 @@
                                         <a href="#.">تحديد الكل</a>
                                     </th>
                                     <th width="2%">#</th>
+                                    <th>Seen</th>
                                     <th>اسم العميل</th>
                                     <th>حالة الاشتراك</th>
                                     <th>المنطقة</th>
@@ -112,6 +113,7 @@
         "columns":[
             { "data": "listBox"   , "orderable": false  },
             { "data": "id"    },
+            { "data": "seen"},
             { "data": "user_id"},
             { "data": "subscription"   , "orderable": false  },
             { "data": "address"   , "orderable": false  },

@@ -16,9 +16,9 @@
 				</li>
 			</ul>
 		</div>
-		
+
 		<h1 class="page-title"></h1>
-		
+
 		<div class="row">
             <div class="profile-content">
                 <div class="portlet light">
@@ -29,6 +29,12 @@
                                     <div class="btn-group">
                                         <a href="{{ url(route('services.create')) }}" class="btn sbold green">
                                             <i class="fa fa-plus"></i> اضافة
+                                        </a>
+                                    </div>
+
+                                    <div class="btn-group">
+                                        <a href="{{ url(route('services.reOrder')) }}" class="btn sbold blue">
+                                            <i class="fa fa-plus"></i> ترتيب الخدمات
                                         </a>
                                     </div>
                                 </div>
@@ -67,7 +73,7 @@
                                         <i class="fa fa-search"></i>
                                         بحث
                                         </button>
-                                        
+
                                         <button class="btn btn-sm red btn-outline filter-cancel">
                                         <i class="fa fa-times"></i>
                                         حذف البحث
@@ -120,15 +126,15 @@
 @stop
 
 @section('scripts')
-<script> 
+<script>
  function tableGenerate(data='') {
     var dataTable =
     $('#dataTable').DataTable({
         "ajax" : {
             url:"{{ route('services.dataTable') }}",
             type:"GET",
-            data : { 
-                req : data, 
+            data : {
+                req : data,
             },
         },
         "processing":true,
@@ -141,8 +147,8 @@
             { "data": "listBox"   , "orderable": false  },
             { "data": "id"    },
 			{ "data": "image" , "orderable": false , "width": "10%" ,
-	       	  "render": 
-	       	  function(data, type, row){ 
+	       	  "render":
+	       	  function(data, type, row){
 				return '<img src="'+data+'" width="50px"/>'
 	       	  },
 	    	},

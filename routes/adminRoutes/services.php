@@ -6,6 +6,14 @@ Route::group(['prefix' => 'services'], function () {
 	->name('services.index')
     ->middleware(['permission:show_services']);
 
+	Route::get('re-order', 'Admin\ServiceController@reOrder')
+  ->name('services.reOrder')
+  ->middleware(['permission:show_services']);
+
+  Route::get('save-re-order', 'Admin\ServiceController@saveReOrder')
+  ->name('services.saveReOrder')
+  ->middleware(['permission:show_services']);
+
 	Route::get('datatable'	,'Admin\ServiceController@dataTable')
 	->name('services.dataTable')
     ->middleware(['permission:show_services']);

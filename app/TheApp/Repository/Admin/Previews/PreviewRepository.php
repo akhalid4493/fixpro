@@ -63,6 +63,7 @@ class PreviewRepository
             if ($request['preview_status_id']) {
 
                 $preview->update([
+                    'note_from_admin'   => $request['note_from_admin'],
                     'preview_status_id' => $request['preview_status_id'],
                     'time'              => $request['date'].' '.date('H:i:s',strtotime($request->time)),
                 ]);
@@ -187,6 +188,7 @@ class PreviewRepository
 
                 $obj['id']               = $id;
                 $obj['time']             = $preview->time;
+                $obj['seen']             = $preview->seen ? 'تم المشاهدة من قبل الفني' : '';
                 $obj['details']          = $preview->details;
                 $obj['preview_status_id']= PreviewStatus($preview);
                 $obj['user_id']          = $preview->user->name;

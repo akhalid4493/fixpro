@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PreviewGallery extends Model
+class PreviewTechGallery extends Model
 {
 		protected $fillable = [
         'preview_id',

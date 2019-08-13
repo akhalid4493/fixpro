@@ -21,6 +21,7 @@
 	--}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/datatables.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap-rtl.css')}}">
+	<link href="/admin/assets/global/plugins/jquery-nestable/jquery.nestable.css" rel="stylesheet" type="text/css" />
 	{{-- DATEPACKER CSS --}}
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css')}}">
 	<link rel="stylesheet" href="{{url('admin/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css')}}">

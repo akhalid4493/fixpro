@@ -13,13 +13,13 @@ class ServiceRepository
     function __construct(Service $service)
     {
         $this->model         = $service;
-    }  
+    }
 
     public function getAll()
     {
         $service = $this->model
                ->where('status',1)
-               ->orderBy('id','desc')
+               ->orderBy('position','ASC')
                ->get();
 
         return $service;
@@ -45,11 +45,11 @@ class ServiceRepository
             $image = ImgRepository::uploadImage($request['head_image']);
         else
             $image  = 'uploads/default.png';
-        
+
         DB::beginTransaction();
 
         try {
-            
+
             $ad = $this->model->create([
                     'name'           => $request['name'],
                     'description'    => $request['description'],
@@ -64,7 +64,7 @@ class ServiceRepository
             $payment = $this->paymentsModel->send($request,$ad);
 
             DB::commit();
-            
+
             return ['adId' => $ad['id'] , 'paymentUrl' => $payment['paymentURL']];
 
         }catch(\Exception $e){

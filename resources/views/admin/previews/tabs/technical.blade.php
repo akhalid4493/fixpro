@@ -11,10 +11,10 @@
             @else
             <input type="hidden" name="province_id" value="{{$preview->oldAddress->addressProvince->id}}">
             @endif
-            
+
             <div class="row">
                 @foreach ($preview->details as $detail)
-                
+
                 <input type="hidden" name="service_id[]" value="{{ $detail->service_id }}">
                 <div class="col-lg-12 col-xs-12 col-sm-12">
                     <div class="portlet light ">
@@ -86,7 +86,7 @@
                                                     </div>
                                                 </div>
                                                 @endif
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -155,6 +155,16 @@
                     </div>
                 </div>
                 <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label class="control-label">ملاحظات</label>
+                      <textarea name="note_from_admin"  class="form-control" rows="8" cols="80">{!!$preview->note_from_admin!!}</textarea>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <div class="mt-checkbox-list">
@@ -179,9 +189,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div id="result" style="display: none"></div>
-            
+
             <div class="progress-info" style="display: none">
                 <div class="progress">
                     <span class="progress-bar progress-bar-warning"></span>

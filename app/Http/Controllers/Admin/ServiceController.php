@@ -22,6 +22,22 @@ class ServiceController extends AdminController
     }
 
 
+    public function reOrder()
+    {
+        $services = $this->serviceModel->getAll('position','ASC');
+        return view('admin.services.order',compact('services'));
+    }
+
+    public function saveReOrder(Request $request)
+    {
+        $services = $this->serviceModel->saveReOrder($request);
+
+        if($services)
+            return Response()->json([true , 'تم الاضافة بنجاح' ]);
+
+        return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
+    }
+
     public function dataTable(Request $request)
     {
         return $this->serviceModel->dataTable($request);
@@ -40,7 +56,7 @@ class ServiceController extends AdminController
 
             if($create)
                 return Response()->json([true , 'تم الاضافة بنجاح' ]);
-            
+
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
@@ -49,7 +65,7 @@ class ServiceController extends AdminController
     public function show($id)
     {
         $service = $this->serviceModel->findById($id);
-        
+
         if (!$service)
             abort(404);
 

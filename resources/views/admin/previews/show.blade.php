@@ -57,11 +57,12 @@
                                                 <i class="fa fa-picture-o"></i> الصور المرفقة
                                             </a>
                                         </li>
-                                        {{-- <li>
-                                            <a data-toggle="tab" href="#edit">
-                                                <i class="fa fa-lock"></i> تعديل حالة الطلب
+
+                                        <li>
+                                            <a data-toggle="tab" href="#tech_gallery">
+                                                <i class="fa fa-picture-o"></i> الصور المرفقة من الفني
                                             </a>
-                                        </li> --}}
+                                        </li>
                                         <li>
                                             <a data-toggle="tab" href="#technical">
                                                 <i class="fa fa-eye"></i> تعديل و اسناد للفنين
@@ -74,8 +75,8 @@
                                 <div class="tab-content">
                                     @include('admin.previews.tabs.preview')
                                     @include('admin.previews.tabs.gallery')
-{{--                                     @include('admin.previews.tabs.edit')
- --}}                                    @include('admin.previews.tabs.technical')
+                                    @include('admin.previews.tabs.tech_gallery')
+                                    @include('admin.previews.tabs.technical')
                                 </div>
                             </div>
                         </div>

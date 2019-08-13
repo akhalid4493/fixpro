@@ -3,6 +3,7 @@ namespace App\TheApp\Repository\Api\Previews;
 
 use App\Notifications\PreviewToAdmin;
 use App\Notifications\PreviewMail;
+use App\Models\PreviewTechGallery;
 use App\Models\PreviewGallery;
 use App\Models\PreviewDetail;
 use App\Models\PreviewAddress;
@@ -13,6 +14,7 @@ use App\Models\Service;
 use Notification;
 use ImageTrait;
 use SendNotifi;
+use Carbon\Carbon;
 use Auth;
 use DB;
 
@@ -27,7 +29,8 @@ class PreviewRepository
         PreviewDate $date,
         PreviewGallery $gallery,
         PreviewAddress $preAddress,
-        Address $address
+        Address $address,
+        PreviewTechGallery $techGallery
     )
     {
         $this->model        = $preview;
@@ -37,6 +40,7 @@ class PreviewRepository
         $this->modelDate    = $date;
         $this->modelAddress = $preAddress;
         $this->addressModel = $address;
+        $this->techGallery  = $techGallery;
     }
 
     /*
@@ -46,7 +50,7 @@ class PreviewRepository
     {
         $services = $this->modelService
                ->where('status',1)
-               ->orderBy('id','desc')
+               ->orderBy('position','ASC')
                ->get();
 
         return $services;
@@ -215,6 +219,29 @@ class PreviewRepository
         return $preview;
     }
 
+    public function previewTechGallery($request,$id)
+    {
+        $preview = $this->techPreviewById($id);
+
+        if ($preview) {
+
+            if ($request['image']) {
+                foreach ($request['image'] as $img) {
+                    $img = ImageTrait::base64($img,'previews/'.ar_slug($preview->id));
+
+                    $this->techGallery->create([
+                        'preview_id'        => $preview['id'],
+                        'image'             => $img,
+                    ]);
+                }
+            }
+
+            return $preview;
+        }
+
+        return false;
+    }
+
     public function previewChangeStatus($request,$id)
     {
         $preview = $this->techPreviewById($id);
@@ -223,6 +250,25 @@ class PreviewRepository
 
             $preview->update([
                 'preview_status_id'  => $request['status'],
+            ]);
+
+            $this->sendNotifiToUser($preview);
+
+            return $preview;
+        }
+
+        return false;
+    }
+
+    public function previewChangeSeen($request,$id)
+    {
+        $preview = $this->techPreviewById($id);
+
+        if ($preview) {
+
+            $preview->update([
+                'seen_at'  => Carbon::now(),
+                'seen'  => 1,
             ]);
 
             $this->sendNotifiToUser($preview);

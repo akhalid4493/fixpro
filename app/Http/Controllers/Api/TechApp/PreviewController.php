@@ -21,7 +21,7 @@ class PreviewController extends ApiController
 
         return $this->responseMessages(PreviewResource::collection($previews),true,200);
     }
-    
+
     public function myPreview(Request $request,$id)
     {
         $preview = $this->previewModel->techPreviewById($id);
@@ -32,9 +32,31 @@ class PreviewController extends ApiController
         return $this->responseMessages([],false,405,['no preview with this id']);
     }
 
+
+    public function previewTechGallery(Request $request,$id)
+    {
+        $preview = $this->previewModel->previewTechGallery($request,$id);
+
+        if ($preview)
+            return $this->responseMessages(new PreviewResource($preview),true,200);
+
+        return $this->responseMessages([],false,405,['no preview with this id']);
+    }
+
+
     public function changeStatus(Request $request,$id)
     {
         $preview = $this->previewModel->previewChangeStatus($request,$id);
+
+        if ($preview)
+            return $this->responseMessages(new PreviewResource($preview),true,200);
+
+        return $this->responseMessages([],false,405,['no preview with this id']);
+    }
+
+    public function seen(Request $request,$id)
+    {
+        $preview = $this->previewModel->previewChangeSeen($request,$id);
 
         if ($preview)
             return $this->responseMessages(new PreviewResource($preview),true,200);

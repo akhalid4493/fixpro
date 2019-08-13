@@ -13,13 +13,13 @@ class ServiceRepository
     function __construct(Service $service)
     {
         $this->model = $service;
-    }  
+    }
 
     public function count()
     {
         return $this->model->count();
     }
-    
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
@@ -40,7 +40,7 @@ class ServiceRepository
             $img = ImageTrait::copyImage('default.png','services/'.ar_slug($request->name_en),'default.png');
 
         try {
-            
+
             $service = $this->model->create([
                     'name_ar'               => $request['name_ar'],
                     'name_en'               => $request['name_en'],
@@ -70,7 +70,7 @@ class ServiceRepository
             $img  = $service->image;
 
         try {
-            
+
             $service->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
@@ -88,13 +88,35 @@ class ServiceRepository
         }
     }
 
+    public function saveReOrder($request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($request['service'] as $key => $value) {
+              $key++;
+              $service = $this->findById($value)->update([
+                  'position' => $key,
+              ]);
+
+            }
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
 
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $service = $this->findById($id);
 
             ImageTrait::deleteDirectory('uploads/services/'.ar_slug($service->name_en));
@@ -113,9 +135,9 @@ class ServiceRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $services = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($services as $service) {
@@ -131,10 +153,10 @@ class ServiceRepository
             throw $e;
         }
     }
-    
+
    public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -172,13 +194,13 @@ class ServiceRepository
                 $obj['created_at']  = date("d-m-Y", strtotime($service->created_at));
                 $obj['listBox']     = checkBoxDelete($id);
                 $obj['options']     = $edit . $delete;;
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -189,7 +211,7 @@ class ServiceRepository
                           ->orWhere('name_en'  , 'like' , '%'. $search .'%')
                           ->orWhere('name_ar'  , 'like' , '%'. $search .'%');
                 });
-    
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

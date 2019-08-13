@@ -21,6 +21,7 @@ class PreviewResource extends Resource
             'status'            => transText($this->previewStatus,'name'),
             'status_code'       => $this->previewStatus->id,
             'time'              => $this->time,
+            'note_from_admin'   => $this->note_from_admin,
             'note'              => $this->note,
             'preview_details'   => PreviewDetailsResource::collection($this->details),
             'preview_gallery'   => PreviewGalleryResource::collection($this->gallery),
