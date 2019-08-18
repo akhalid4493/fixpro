@@ -16,7 +16,7 @@ class UserRepository
     {
         $this->model      = $user;
         $this->tokenModel = $token;
-    }  
+    }
 
     public function userCreatedStatistics()
     {
@@ -67,12 +67,12 @@ class UserRepository
     {
         return $this->model->count();
     }
-    
+
     public function getAll($order = 'id', $sort = 'desc')
     {
         return $this->model->orderBy($order, $sort)->get();
     }
-    
+
     public function TechnicalUsers()
     {
         return $this->model
@@ -98,13 +98,13 @@ class UserRepository
     public function create($request)
     {
         DB::beginTransaction();
-    
+
         if ($request->hasFile('image'))
             $img = ImageTrait::uploadImage($request->image,'users/'.$request->email);
         else
             $img = ImageTrait::copyImage('users/user.png','users/'.$request->email,'user.png');
         try {
-            
+
             $user = $this->model->create([
                     'name'          => $request['name'],
                     'email'         => $request['email'],
@@ -161,10 +161,9 @@ class UserRepository
                 'password'      => $password,
             ]);
 
+            DB::table('role_user')->where('user_id',$id)->delete();
             if($request['roles'] != null)
             {
-                DB::table('role_user')->where('user_id',$id)->delete();
-            
                 foreach ($request['roles'] as $key => $value) {
                     $user->attachRole($value);
                 }
@@ -183,9 +182,9 @@ class UserRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $user = $this->findById($id);
 
             ImageTrait::deleteDirectory('uploads/users/'.$user->email);
@@ -199,15 +198,15 @@ class UserRepository
             DB::rollback();
             throw $e;
         }
-        
+
     }
 
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $users = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($users as $user) {
@@ -227,7 +226,7 @@ class UserRepository
 
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -271,16 +270,16 @@ class UserRepository
 
                 if ($id == Auth::id()) {
                     $obj['options']      = $show .''. $edit;
-                }else{  
+                }else{
                     $obj['options']      = $show .''.$edit.''.$delete;
                 }
-                
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
@@ -301,7 +300,7 @@ class UserRepository
                     });
                 });
 
-    
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 
