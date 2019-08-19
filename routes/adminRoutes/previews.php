@@ -6,6 +6,18 @@ Route::group(['prefix' => 'previews'], function () {
 	->name('previews.index')
     ->middleware(['permission:show_previews']);
 
+	Route::get('create'		,'Admin\PreviewController@create')
+	->name('previews.create')
+    ->middleware(['permission:add_previews']);
+
+	Route::get('user-addresses'		,'Admin\PreviewController@userAddresses')
+	->name('previews.user.addresses')
+    ->middleware(['permission:add_previews']);
+
+	Route::post('/'			,'Admin\PreviewController@store')
+	->name('previews.store')
+    ->middleware(['permission:add_previews']);
+
 	Route::get('done' ,'Admin\PreviewController@done')
 	->name('previews.done')
     ->middleware(['permission:show_previews']);

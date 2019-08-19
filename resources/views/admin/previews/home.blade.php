@@ -22,6 +22,17 @@
                 {{-- Content --}}
                 <div class="portlet light">
                     <div class="portlet-body">
+                      <div class="table-toolbar">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="btn-group">
+                                      <a href="{{ url(route('previews.create')) }}" class="btn sbold green">
+                                          <i class="fa fa-plus"></i> اضافة
+                                      </a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                         {{-- Filter DataTable --}}
                         <table class="table table-striped table-bordered table-hover">
                             <thead>

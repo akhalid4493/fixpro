@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\TheApp\Repository\Admin\Previews\PreviewRepository;
+use App\TheApp\Repository\Admin\Services\ServiceRepository;
+use App\TheApp\Requests\Admin\Previews\NewPreviewRequest;
 use App\TheApp\Repository\Admin\Users\UserRepository;
 use Illuminate\Http\Request;
 use Response;
@@ -12,10 +14,11 @@ use DB;
 class PreviewController extends AdminController
 {
 
-    function __construct(PreviewRepository $preview,UserRepository $user)
+    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service)
     {
         $this->previewModel = $preview;
         $this->userModel = $user;
+        $this->serviceModel = $service;
     }
 
 
@@ -41,10 +44,12 @@ class PreviewController extends AdminController
 
     public function create()
     {
-        return view('admin.previews.create');
+        $services  = $this->serviceModel->getAll();
+        $users  = $this->userModel->getAll();
+        return view('admin.previews.create',compact('users','services'));
     }
 
-    public function store(Request $request)
+    public function store(NewPreviewRequest $request)
     {
             $create = $this->previewModel->create($request);
 
@@ -110,6 +115,15 @@ class PreviewController extends AdminController
         }catch (\PDOException $e){
             return Response()->json([false, $e->errorInfo[2]]);
         }
+    }
+
+
+    public function userAddresses(Request $request)
+    {
+        $user = $this->userModel->findById($request['id']);
+        $addresses = $user->address;
+
+        return view('admin.previews.parts.addresses')->with([ 'addresses' => $addresses ]);
     }
 
 }

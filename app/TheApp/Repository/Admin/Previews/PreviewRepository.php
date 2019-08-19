@@ -3,9 +3,14 @@ namespace App\TheApp\Repository\Admin\Previews;
 
 use App\TheApp\Libraries\ImgRepository;
 use App\Models\TechnicalPreview;
+use App\Models\PreviewAddress;
 use App\Models\PreviewStatus;
+use App\Models\PreviewDetail;
 use App\Models\PreviewDate;
+use App\Models\Address;
 use App\Models\Preview;
+use App\Models\Service;
+use Carbon\Carbon;
 use SendNotifi;
 use Auth;
 use DB;
@@ -15,9 +20,13 @@ class PreviewRepository
     use SendNotifi;
 
     function __construct(
+        PreviewDetail $details,
+        Service $service,
         Preview $preview,
         PreviewStatus $status,
         TechnicalPreview $tech,
+        PreviewAddress $preAddress,
+        Address $address,
         PreviewDate $date
     )
     {
@@ -25,6 +34,10 @@ class PreviewRepository
         $this->modelStatus  = $status;
         $this->modelTech    = $tech;
         $this->modelDate    = $date;
+        $this->modelDetails = $details;
+        $this->modelService = $service;
+        $this->modelAddress = $preAddress;
+        $this->addressModel = $address;
     }
 
     public function countNewPreviews()
@@ -52,6 +65,115 @@ class PreviewRepository
         return $this->model->find($id);
     }
 
+
+    public function create($request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $preview = $this->model->create([
+                'user_id'           => $request['user_id'],
+                'note'              => $request['note'],
+                'note_from_admin'   => $request['note_from_admin'],
+                'time'              => $request->date .' '.date('H:i:s',strtotime($request->time)),
+                'preview_status_id' => 1,
+            ]);
+
+            if ($preview){
+                $this->createPreviewAddress($preview,$request);
+                $this->createPreviewDetails($preview,$request);
+                $this->createPreviewDates($preview,$request);
+            }
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function createPreviewAddress($preview,$request)
+    {
+        DB::beginTransaction();
+
+        $address = $this->addressModel->find($request['address_id']);
+
+        try {
+
+            $address = $this->modelAddress->create([
+                'lat'           => $address['lat'],
+                'lang'          => $address['lang'],
+                'province_id'   => $address['province_id'],
+                'block'         => $address['block'],
+                'street'        => $address['street'],
+                'building'      => $address['building'],
+                'floor'         => $address['floor'],
+                'house_no'      => $address['house_no'],
+                'note'          => $address['note'],
+                'address'       => $address['address'],
+                'user_id'       => $address['user_id'],
+                'preview_id'    => $preview['id'],
+            ]);
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function createPreviewDetails($preview,$request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($request['service_id'] as $service) {
+                $this->modelDetails->create([
+                    'service_id' => $service,
+                    'preview_id' => $preview['id'],
+                ]);
+            }
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+    public function createPreviewDates($preview,$request)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($request['service_id'] as $service) {
+                $this->modelDate->create([
+                    'date'              => $request->date .' '.date('H:i:s',strtotime($request->time)),
+                    'service_id'        => $service,
+                    'preview_id'        => $preview['id'],
+                    'governorate_id'    => $preview->address->addressProvince->governorate->id,
+                ]);
+            }
+
+            DB::commit();
+            return true;
+
+        }catch(\Exception $e){
+            DB::rollback();
+            throw $e;
+        }
+    }
+
+
     public function update($request , $id)
     {
         DB::beginTransaction();
@@ -65,7 +187,7 @@ class PreviewRepository
                 $preview->update([
                     'note_from_admin'   => $request['note_from_admin'],
                     'preview_status_id' => $request['preview_status_id'],
-                    'time'              => $request['date'].' '.date('H:i:s',strtotime($request->time)),
+                    'time'              => $request->date .' '.date('H:i:s',strtotime($request->time)),
                 ]);
 
                 $date = $this->modelDate->where('preview_id',$preview['id'])->first();
