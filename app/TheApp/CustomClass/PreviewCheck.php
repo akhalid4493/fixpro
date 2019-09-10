@@ -114,7 +114,7 @@ class PreviewCheck
 
             $data['startShift'] = $startShift;
             $data['endShift']   = $endShift;
-            
+
         }elseif($shift->from == $shift->to){
             $startShift = date(self::dateOfPreview($preview->time).' '.$shift->from);
             $endShift   = date(self::dateOfPreview($preview->time).' '.$shift->to);
@@ -131,7 +131,7 @@ class PreviewCheck
     {
         if ($techincal->previewsOfTechnical) {
             foreach ($techincal->previewsOfTechnical as $previewsOfTechnical) {
-                
+
                 if ($previewsOfTechnical->time==$preview->time&&$previewsOfTechnical->id!=$preview->id){
                     return true;
                 }
@@ -139,12 +139,12 @@ class PreviewCheck
         }
     }
 
-    /* 
+    /*
     ====================================
     *         Not Available Dates
     =====================================
-    */ 
-   
+    */
+
     static public function getPreviews($serviceId,$locationId)
     {
         $previewDates = self::groupDates($serviceId,$locationId);
@@ -206,7 +206,7 @@ class PreviewCheck
                 $obj['service_id']      = $date['service_id'];
                 $obj['governorate_id']  = $date['governorate_id'];
                 $obj['off']             = true;
-    
+
                 $offDays[] = $obj;
             }
         }

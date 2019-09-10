@@ -94,13 +94,13 @@ class UserController extends ApiController
 	public function changePassword(ChangePassword $request)
 	{
 		$result = $this->userModel->changePassword($request);
-			
+
 		if ($result)
 			return $this->responseMessages(new UserResource(Auth::user()),true,200);
 
 		return $this->responseMessages([],false,405,[ 'The old password is incorrect']);
 	}
-	
+
 	/**
      * Logout and destroy the session of JWT.
      */
@@ -123,7 +123,7 @@ class UserController extends ApiController
         );
 
         if($request->expectsJson()){
-            
+
         	return $response = Password::RESET_LINK_SENT
             	? $this->responseMessages(['Reset Password Link Sent'],true,200)
             	: $this->responseMessages([],false,405,[ 'Reset Link Could Not Be Sent']);

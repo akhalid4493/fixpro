@@ -2,8 +2,8 @@
 
 Route::group(['prefix' => 'auth'], function () {
 
-	Route::post('register' 			,'Api\UserApp\UserController@register');
-	Route::post('login' 			,'Api\UserApp\UserController@login');
+	Route::post('register' 					,'Api\UserApp\UserController@register');
+	Route::post('login' 						,'Api\UserApp\UserController@login');
 	Route::post('forget-password' 	,'Api\UserApp\UserController@__invoke');
 
 });

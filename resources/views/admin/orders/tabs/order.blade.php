@@ -53,6 +53,31 @@
         </div>
         <hr>
         <div class="row">
+            <h3>بيانات الفني</h3>
+            <div class="col-xs-12 table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="invoice-title uppercase text-center"> الاسم الفني</th>
+                            <th class="invoice-title uppercase text-center"> البريد الالكتروني </th>
+                            <th class="invoice-title uppercase text-center"> الهاتف </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td class="text-center sbold">
+                              {{ $order->technical->name }}
+                            </td>
+                            <td class="text-center sbold"> {{ $order->technical->email }}</td>
+                            <td class="text-center sbold"> {{ $order->technical->mobile }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
             <h3>تفاصيل القطع الاستهلاكية</h3>
             <div class="col-xs-12 table-responsive">
                 <table class="table table-striped table-hover">

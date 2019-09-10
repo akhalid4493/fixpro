@@ -14,7 +14,7 @@ class localization
   * @param \Closure $next
   * @return mixed
   */
- 
+
   public function handle($request, Closure $next)
   {
 
@@ -23,7 +23,7 @@ class localization
 
      // set laravel localization
      app()->setLocale($local);
-     
+
     // continue request
     return $next($request);
   }

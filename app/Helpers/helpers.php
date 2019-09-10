@@ -12,7 +12,7 @@ if (!function_exists('checkBoxDelete')) {
                   <input type="checkbox" class="group-checkable" name="ids" value="'.$id.'">
                   <span></span>
               </label>';
-    }      
+    }
 }
 
 if (!function_exists('checkSubsribe')) {
@@ -64,7 +64,7 @@ if (!function_exists('PreviewStatus')) {
                   '.$preview->previewStatus->name_ar.'
                </span>';
       }
-      
+
     }
 }
 
@@ -78,7 +78,7 @@ if (!function_exists('OrderStatus')) {
         return '<span class="label label-primary circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
                </span>';
-        
+
       }elseif($order->orderStatus->status_code == 'accepted_user'){
         return '<span class="label label-info circle" style="font-size:13px">
                   '.$order->orderStatus->name_ar.'
@@ -96,7 +96,7 @@ if (!function_exists('OrderStatus')) {
                   '.$order->orderStatus->name_ar.'
                </span>';
       }
-      
+
     }
 }
 
@@ -110,7 +110,7 @@ if (!function_exists('Subscribe')) {
         return '<span class="label label-danger circle" style="font-size:13px">
                   غير مشترك
                </span>';
-        
+
       }elseif($user->hasSubscription !=  null){
 
         if($user->hasSubscription->end_at < date('Y-m-d')){
@@ -122,9 +122,9 @@ if (!function_exists('Subscribe')) {
                   ينتهي : '.$user->hasSubscription->end_at.'
                </span>';
         }
-        
+
       }
-      
+
     }
 }
 
@@ -138,7 +138,7 @@ if (!function_exists('subcriber')) {
         return '<span class="label label-danger circle" style="font-size:13px">
                   غير مشترك
                </span>';
-        
+
       }elseif($store->hasSubscribe !=  null){
 
         if($store->hasSubscribe->end_at < date('Y-m-d')){
@@ -150,9 +150,9 @@ if (!function_exists('subcriber')) {
                   مشترك
                </span>';
         }
-        
+
       }
-      
+
     }
 }
 
@@ -172,7 +172,7 @@ if (!function_exists('Label')) {
      */
     function Label($data,$color)
     {
-      return 
+      return
             '<span class="label label-lg '.$color.' circle" style="font-size:13px">
                   '.$data.'
              </span>';
@@ -203,14 +203,14 @@ if (!function_exists('Status')) {
         return '<span class="label label-danger circle" style="font-size:13px">
                   غير مفعل
                </span>';
-        
+
       }elseif($status == 1)
       {
         return '<span class="label label-success circle" style="font-size:13px">
                   مفعل
                </span>';
       }
-      
+
     }
 }
 
@@ -335,7 +335,7 @@ function activeMenu($url)
   }
 
   return false;
-  
+
   // return strstr(request()->path(), $uri);
 }
 
@@ -375,19 +375,19 @@ if (!function_exists('ArabicDate')) {
 
       header('Content-Type: text/html; charset=utf-8');
 
-      $months = array("Jan" => "يناير", 
-              "Feb" => "فبراير", 
-              "Mar" => "مارس", 
-              "Apr" => "أبريل", 
-              "May" => "مايو", 
-              "Jun" => "يونيو", 
-              "Jul" => "يوليو", 
-              "Aug" => "أغسطس", 
-              "Sep" => "سبتمبر", 
-              "Oct" => "أكتوبر", 
-              "Nov" => 
-              "نوفمبر", 
-              "Dec" => 
+      $months = array("Jan" => "يناير",
+              "Feb" => "فبراير",
+              "Mar" => "مارس",
+              "Apr" => "أبريل",
+              "May" => "مايو",
+              "Jun" => "يونيو",
+              "Jul" => "يوليو",
+              "Aug" => "أغسطس",
+              "Sep" => "سبتمبر",
+              "Oct" => "أكتوبر",
+              "Nov" =>
+              "نوفمبر",
+              "Dec" =>
               "ديسمبر");
 
       $standard = array("0","1","2","3","4","5","6","7","8","9");
@@ -400,7 +400,7 @@ if (!function_exists('ArabicDate')) {
       $en_year  = date("Y", strtotime($theDate));
 
       foreach ($months as $en => $ar) {
-          if ($en == $en_month) 
+          if ($en == $en_month)
              $ar_month = $ar;
       }
 
@@ -456,7 +456,7 @@ if (!function_exists('dayName')) {
 if (!function_exists('billingRemender')) {
 
     function billingRemender($subscription){
-      
+
       $totalBilling = 0;
 
       foreach ($subscription->monthlyBilling as $billing) {
@@ -465,7 +465,7 @@ if (!function_exists('billingRemender')) {
 
       $remnder = $subscription->total - $totalBilling;
 
-      return number_format($remnder,3);        
+      return number_format($remnder,3);
 
     }
 }

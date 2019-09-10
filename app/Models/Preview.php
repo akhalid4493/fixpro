@@ -52,7 +52,7 @@ class Preview extends Model
     {
       return $this->hasMany('App\Models\PreviewTechGallery');
     }
-    
+
     public function technical()
     {
       return $this->hasOne('App\Models\TechnicalPreview');
