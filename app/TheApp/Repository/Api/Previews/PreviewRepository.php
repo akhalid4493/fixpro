@@ -271,8 +271,6 @@ class PreviewRepository
                 'seen'  => 1,
             ]);
 
-            $this->sendNotifiToUser($preview);
-
             return $preview;
         }
 

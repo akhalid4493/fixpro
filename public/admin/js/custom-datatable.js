@@ -6,28 +6,28 @@ $(document).ready(function(){
 
         var $form = $("#formFilter");
         var data = getFormData($form);
-        
+
         console.log(data);
-        
+
         $('#dataTable').DataTable().destroy();
-        
+
         tableGenerate(data);
 
     });
 
     $('.filter-cancel').click(function(){
-        
+
         document.getElementById("formFilter").reset();
 
         $('#dataTable').DataTable().destroy();
-        
+
         tableGenerate();
 
     });
 });
 
 $('.chkParent').click(function() {
-    
+
     var isChecked = $('input[name=ids]').first().prop('checked');
     $('input[name=ids]').prop('checked', ! isChecked );
 
@@ -68,7 +68,7 @@ $(function() {
         ranges: {
            'الغاء التاريخ' : [null],
            'اليوم'         : [moment(), moment()],
-           'الآمس'         : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'الآمس'          : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
            'اخر ٧ ايام'    : [moment().subtract(6, 'days'), moment()],
            'اخر ٣٠ يوم'    : [moment().subtract(29, 'days'), moment()],
            'هذا الشهر'     : [moment().startOf('month'), moment().endOf('month')],

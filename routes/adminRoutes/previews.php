@@ -12,7 +12,7 @@ Route::group(['prefix' => 'previews'], function () {
 
 	Route::get('user-addresses'		,'Admin\PreviewController@userAddresses')
 	->name('previews.user.addresses')
-    ->middleware(['permission:add_previews']);
+  ->middleware(['permission:add_previews']);
 
 	Route::post('/'			,'Admin\PreviewController@store')
 	->name('previews.store')
