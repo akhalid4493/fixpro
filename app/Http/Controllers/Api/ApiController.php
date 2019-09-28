@@ -16,10 +16,10 @@ class ApiController extends Controller
 
 	public function responseMessages($data=[], $status=false,$code=404,$errors=[])
 	{
-		return response()->json([
-					'data'   		=> $data,
-					'successfully'	=> $status,
-                    'errors' 		=> $errors,
-                ],$code);
+			return response()->json([
+						'data'   		=> $data,
+						'successfully'	=> $status,
+	          'errors' 		=> $errors,
+	    ],$code);
 	}
 }
