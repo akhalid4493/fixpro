@@ -249,7 +249,8 @@ class PreviewRepository
         if ($preview) {
 
             $preview->update([
-                'preview_status_id'  => $request['status'],
+                'preview_status_id'   => $request['status'],
+                'note_from_technical' => $request['notes']
             ]);
 
             $this->sendNotifiToUser($preview);

@@ -15,6 +15,7 @@ class Preview extends Model
         'seen',
         'seen_at',
         'note_from_admin',
+        'note_from_technical',
     ];
 
 

@@ -17,16 +17,17 @@ class PreviewResource extends Resource
     public function toArray($request)
     {
          return [
-            'id'                => $this->id,
-            'status'            => transText($this->previewStatus,'name'),
-            'status_code'       => $this->previewStatus->id,
-            'time'              => $this->time,
-            'note_from_admin'   => $this->note_from_admin,
-            'note'              => $this->note,
-            'preview_details'   => PreviewDetailsResource::collection($this->details),
-            'preview_gallery'   => PreviewGalleryResource::collection($this->gallery),
-            'address'           => new AddressResource($this->address),
-            'user'              => new UserResource($this->user),
+            'id'                    => $this->id,
+            'status'                => transText($this->previewStatus,'name'),
+            'status_code'           => $this->previewStatus->id,
+            'time'                  => $this->time,
+            'note_from_admin'       => $this->note_from_admin,
+            'note_from_technical'   => $this->note_from_technical,
+            'note'                  => $this->note,
+            'preview_details'       => PreviewDetailsResource::collection($this->details),
+            'preview_gallery'       => PreviewGalleryResource::collection($this->gallery),
+            'address'               => new AddressResource($this->address),
+            'user'                  => new UserResource($this->user),
         ];
     }
 }

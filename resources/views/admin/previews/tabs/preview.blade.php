@@ -106,12 +106,14 @@
                         <tr>
                             <th class="invoice-title uppercase text-center"> موعد المعاينة المطلوب</th>
                             <th class="invoice-title uppercase text-center"> ملاحظات </th>
+                            <th class="invoice-title uppercase text-center"> ملاحظات الفني </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="text-center sbold"> {{ $preview->time }} </td>
                             <td class="text-center sbold"> {{ $preview->note }}</td>
+                            <td class="text-center sbold"> {{ $preview->note_from_technical }}</td>
                         </tr>
                     </tbody>
                 </table>
