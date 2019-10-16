@@ -1,9 +1,9 @@
-<html lang="{{ locale() }}" dir="{{ is_rtl() }}">
+<html dir="rtl">
     @section('title','Reset Password')
+
     @section('css')
       <link rel="stylesheet" href="{{url('admin/assets/pages/css/login.min.css')}}">
     @stop
-    <html lang="{{ locale() }}" dir="{{ is_rtl() }}">
 
     @include('admin._layouts._head')
 
