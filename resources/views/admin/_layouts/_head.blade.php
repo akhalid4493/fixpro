@@ -56,4 +56,7 @@
 			font-family: 'Cairo', sans-serif !important;
 		}
 	</style>
+
+	@yield('css')
+
 </head>
