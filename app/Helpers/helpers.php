@@ -63,6 +63,10 @@ if (!function_exists('PreviewStatus')) {
         return '<span class="label label-danger circle" style="font-size:13px">
                   '.$preview->previewStatus->name_ar.'
                </span>';
+      }elseif($preview->previewStatus->status_code == 'later'){
+        return '<span class="label label-warning circle" style="font-size:13px">
+                  '.$preview->previewStatus->name_ar.'
+               </span>';
       }
 
     }
