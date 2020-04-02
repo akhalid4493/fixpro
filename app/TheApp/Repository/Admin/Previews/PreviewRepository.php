@@ -357,6 +357,14 @@ class PreviewRepository
 
         }
 
+        if ($request['req']['province']) {
+
+            $query->whereHas('address', function($query) use($request) {
+                $query->where('province_id'   , $request['req']['province']);
+            });
+
+        }
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

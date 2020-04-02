@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TheApp\Repository\Admin\Provinces\ProvinceRepository;
 use App\TheApp\Repository\Admin\Previews\PreviewRepository;
 use App\TheApp\Repository\Admin\Services\ServiceRepository;
 use App\TheApp\Requests\Admin\Previews\NewPreviewRequest;
@@ -14,30 +15,34 @@ use DB;
 class PreviewController extends AdminController
 {
 
-    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service)
+    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service,ProvinceRepository $province)
     {
-        $this->previewModel = $preview;
-        $this->userModel = $user;
-        $this->serviceModel = $service;
+        $this->provinceModel  = $province;
+        $this->previewModel   = $preview;
+        $this->userModel      = $user;
+        $this->serviceModel   = $service;
     }
 
 
     public function index()
     {
-        $services  = $this->serviceModel->getAll();
-        return view('admin.previews.home',compact('services'));
+        $provinces  = $this->provinceModel->getAll();
+        $services   = $this->serviceModel->getAll();
+        return view('admin.previews.home',compact('services','provinces'));
     }
 
     public function done()
     {
+        $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.done',compact('services'));
+        return view('admin.previews.done',compact('services','provinces'));
     }
 
     public function cancelled()
     {
+        $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.cancelled',compact('services'));
+        return view('admin.previews.cancelled',compact('services','provinces'));
     }
 
     public function dataTable(Request $request)

@@ -29,6 +29,7 @@
                                     <th width="15%"> بحث بتاريخ الانشاء </th>
                                     <th width="15%"> بحث بالحالة </th>
                                     <th width="15%"> بحث بالخدمة </th>
+                                    <th width="15%"> بحث بالمنطقة </th>
                                 </tr>
                                 <tr role="row" class="filter">
                                     <form id="formFilter">
@@ -56,6 +57,16 @@
                                                     <option value="">اختر</option>
                                                     @foreach ($services as $service)
                                                       <option value="{{ $service->id }}">{{ $service->name_ar }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="province" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    @foreach ($provinces as $province)
+                                                      <option value="{{ $province->id }}">{{ $province->name_ar }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
