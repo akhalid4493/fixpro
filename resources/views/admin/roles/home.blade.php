@@ -16,7 +16,7 @@
         </div>
 
         <h1 class="page-title"></h1>
-        
+
         <div class="row">
             <div class="profile-content">
                 <div class="portlet light">
@@ -51,10 +51,10 @@
                                         </td>
                                     </form>
                                     <td>
-                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search"> 
+                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
                                             <i class="fa fa-search"></i>بحث
                                         </button>
-                                        
+
                                         <button class="btn btn-sm red btn-outline filter-cancel">
                                             <i class="fa fa-times"></i>حذف
                                         </button>
@@ -102,7 +102,7 @@
 @stop
 
 @section('scripts')
-<script> 
+<script>
  function tableGenerate(data='') {
 
     var dataTable =
@@ -110,12 +110,14 @@
         "ajax" : {
             url:"{{ route('roles.dataTable') }}",
             type:"GET",
-            data : { 
-                req : data, 
+            data : {
+                req : data,
             },
         },
+        "stateSave": true,
         "processing":true,
         "serverSide":true,
+        "pageLength": 50,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
         },

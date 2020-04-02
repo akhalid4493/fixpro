@@ -28,6 +28,7 @@
                                 <tr role="row" class="heading">
                                     <th width="15%"> بحث بتاريخ الانشاء </th>
                                     <th width="15%"> بحث بالحالة </th>
+                                    <th width="15%"> بحث بالخدمة </th>
                                 </tr>
                                 <tr role="row" class="filter">
                                     <form id="formFilter">
@@ -46,6 +47,16 @@
                                                     <option value="">اختر</option>
                                                     <option value="1">مفعل</option>
                                                     <option value="0">غير مفعل</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <select name="service" class="form-control">
+                                                    <option value="">اختر</option>
+                                                    @foreach ($services as $service)
+                                                      <option value="{{ $service->id }}">{{ $service->name_ar }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </td>
@@ -103,6 +114,7 @@
                 req : data,
             },
         },
+        "stateSave": true,
         "processing":true,
         "serverSide":true,
         "pageLength": 25,

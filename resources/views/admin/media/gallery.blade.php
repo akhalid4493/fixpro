@@ -12,97 +12,97 @@
 				<li><span>معرض الصور</span></li>
 			</ul>
 		</div>
-		
+
 		<h1 class="page-title"></h1>
 
 		<div class="row">
-            <div class="profile-content">
-                <div class="portlet light">
-                    <div class="portlet-body">
+			<div class="profile-content">
+				<div class="portlet light">
+					<div class="portlet-body">
 						<div class="table-toolbar">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="btn-group">
 										<button type="button" class="btn sbold green" data-toggle="modal" data-target="#myModal">
-                                            <i class="fa fa-plus"></i> اضافة
+											<i class="fa fa-plus"></i> اضافة
 										</button>
 									</div>
 								</div>
 							</div>
 						</div>
 						{{-- Filter DataTable --}}
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                                <tr role="row" class="heading">
-                                    <th width="15%"> بحث بتاريخ الانشاء </th>
-                                    <th width="15%"> بحث بالحالة </th>
-                                </tr>
-                                <tr role="row" class="filter">
-                                    <form id="formFilter">
-                                        <td>
-                                            <div id="reportrange" class="btn default">
-                                                <i class="fa fa-calendar"></i> &nbsp;
-                                                <span> </span>
-                                                <b class="fa fa-angle-down"></b>
-                                                <input type="hidden" name="from">
-                                                <input type="hidden" name="to">
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="form-group">
-                                                <select name="active" class="form-control">
-                                                    <option value="">اختر</option>
-                                                    <option value="1">مفعل</option>
-                                                    <option value="0">غير مفعل</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                    </form>
-                                    <td>
-                                        <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search"> 
-                                            <i class="fa fa-search"></i>بحث
-                                        </button>
-                                        
-                                        <button class="btn btn-sm red btn-outline filter-cancel">
-                                            <i class="fa fa-times"></i>حذف
-                                        </button>
-                                    </td>
-                                </tr>
-                            </thead>
-                        </table>
-                        {{-- DataTable --}}
-                         <table class="table table-striped table-bordered table-hover" id="dataTable">
-                            <thead>
-                                <tr>
-                                    <th width="2%" class="chkParent">
-                                        <a href="#.">تحديد الكل</a>
-                                    </th>
-                                    <th width="2%">#</th>
-                                    <th>الصورة</th>
-                                    <th>الرابط</th>
-                                    <th>تاريخ الانشاء</th>
-                                    <th>خيارات</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="row">
-                            @permission('delete_media')
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <select name="xx" class="form-control">
-                                            <option value="delete">
-                                                حذف المحدد
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" id="deleteChecked" class="btn red btn-sm" onclick="deleteAllChecked('{{ url(route('media.deletes')) }}')">
-                                    تطبيق
-                                    </button>
-                                </div>
-                            @endpermission
-                        </div>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<tr role="row" class="heading">
+									<th width="15%"> بحث بتاريخ الانشاء </th>
+									<th width="15%"> بحث بالحالة </th>
+								</tr>
+								<tr role="row" class="filter">
+									<form id="formFilter">
+										<td>
+											<div id="reportrange" class="btn default">
+												<i class="fa fa-calendar"></i> &nbsp;
+												<span> </span>
+												<b class="fa fa-angle-down"></b>
+												<input type="hidden" name="from">
+												<input type="hidden" name="to">
+											</div>
+										</td>
+										<td>
+											<div class="form-group">
+												<select name="active" class="form-control">
+													<option value="">اختر</option>
+													<option value="1">مفعل</option>
+													<option value="0">غير مفعل</option>
+												</select>
+											</div>
+										</td>
+									</form>
+									<td>
+										<button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
+											<i class="fa fa-search"></i>بحث
+										</button>
+
+										<button class="btn btn-sm red btn-outline filter-cancel">
+											<i class="fa fa-times"></i>حذف
+										</button>
+									</td>
+								</tr>
+							</thead>
+						</table>
+						{{-- DataTable --}}
+						<table class="table table-striped table-bordered table-hover" id="dataTable">
+							<thead>
+								<tr>
+									<th width="2%" class="chkParent">
+										<a href="#.">تحديد الكل</a>
+									</th>
+									<th width="2%">#</th>
+									<th>الصورة</th>
+									<th>الرابط</th>
+									<th>تاريخ الانشاء</th>
+									<th>خيارات</th>
+								</tr>
+							</thead>
+						</table>
+						<div class="row">
+							@permission('delete_media')
+							<div class="col-md-2">
+								<div class="form-group">
+									<select name="xx" class="form-control">
+										<option value="delete">
+											حذف المحدد
+										</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" id="deleteChecked" class="btn red btn-sm" onclick="deleteAllChecked('{{ url(route('media.deletes')) }}')">
+									تطبيق
+								</button>
+							</div>
+							@endpermission
+						</div>
 					</div>
 				</div>
 			</div>
@@ -112,19 +112,21 @@
 @stop
 
 @section('scripts')
-<script> 
+<script>
  function tableGenerate(data='') {
     var dataTable =
     $('#dataTable').DataTable({
         "ajax" : {
             url:"{{ route('media.dataTable') }}",
             type:"GET",
-            data : { 
-                req : data, 
+            data : {
+                req : data,
             },
         },
+        "stateSave": true,
         "processing":true,
         "serverSide":true,
+        "pageLength": 50,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
         },

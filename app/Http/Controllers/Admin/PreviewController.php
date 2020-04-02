@@ -24,17 +24,20 @@ class PreviewController extends AdminController
 
     public function index()
     {
-        return view('admin.previews.home');
+        $services  = $this->serviceModel->getAll();
+        return view('admin.previews.home',compact('services'));
     }
 
     public function done()
     {
-        return view('admin.previews.done');
+        $services  = $this->serviceModel->getAll();
+        return view('admin.previews.done',compact('services'));
     }
 
     public function cancelled()
     {
-        return view('admin.previews.cancelled');
+        $services  = $this->serviceModel->getAll();
+        return view('admin.previews.cancelled',compact('services'));
     }
 
     public function dataTable(Request $request)

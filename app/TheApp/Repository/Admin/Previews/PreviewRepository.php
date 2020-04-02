@@ -349,6 +349,14 @@ class PreviewRepository
             $query->where('user_id',$request['user_id']);
         }
 
+        if ($request['req']['service']) {
+
+            $query->whereHas('details', function($query) use($request) {
+                $query->where('service_id'   , $request['req']['service']);
+            });
+
+        }
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

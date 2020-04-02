@@ -134,8 +134,10 @@
 						req: data,
 					},
 				},
-				"processing": true,
-				"serverSide": true,
+        "stateSave": true,
+        "processing":true,
+        "serverSide":true,
+        "pageLength": 50,
 				"language": {
 					"url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Arabic.json"
 				},
