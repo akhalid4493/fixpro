@@ -314,7 +314,8 @@ class PreviewRepository
                 $obj['details']          = $preview->details;
                 $obj['preview_status_id']= PreviewStatus($preview);
                 $obj['user_id']          = $preview->user->name;
-                $obj['subscription']     = $preview->user->checkSubscription ? 'مشترك' : 'غير مشترك';
+                $obj['subscription']     = Subscribe($preview->user);
+                // $obj['subscription']     = $preview->user->checkSubscription ? 'مشترك' : 'غير مشترك';
                 $obj['address']          = $preview->address->addressProvince->name_ar;
                 $obj['created_at']       = date("d-m-Y H:i:s", strtotime($preview->created_at));
                 $obj['listBox']          = checkBoxDelete($id);
