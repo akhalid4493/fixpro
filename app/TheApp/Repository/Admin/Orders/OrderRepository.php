@@ -250,6 +250,12 @@ class OrderRepository
             $query->where('user_id',$request['user_id']);
         }
 
+        if ($request['req']['technical_id']) {
+            $query->whereHas('technical', function($query) use($request) {
+                $query->where('technical_id'   , $request['req']['technical_id']);
+            });
+        }
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 

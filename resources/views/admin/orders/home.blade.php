@@ -66,6 +66,7 @@
 							<thead>
 								<tr role="row" class="heading">
 									<th width="15%"> بحث بتاريخ الانشاء </th>
+									<th width="15%"> بحث بالفني </th>
 								</tr>
 								<tr role="row" class="filter">
 									<form id="formFilter">
@@ -77,6 +78,16 @@
 												<input type="hidden" name="from">
 												<input type="hidden" name="to">
 											</div>
+										</td>
+										<td>
+												<div class="form-group">
+														<select name="technical_id" class="form-control">
+																<option value="">اختر</option>
+																@foreach ($technicals as $technical)
+																	<option value="{{ $technical->id }}">{{ $technical->name }}</option>
+																@endforeach
+														</select>
+												</div>
 										</td>
 									</form>
 									<td>

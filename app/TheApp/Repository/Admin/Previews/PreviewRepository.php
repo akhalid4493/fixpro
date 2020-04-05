@@ -357,6 +357,14 @@ class PreviewRepository
 
         }
 
+        if ($request['req']['governorate']) {
+
+            $query->whereHas('address.addressProvince', function($query) use($request) {
+                $query->where('governorate_id'   , $request['req']['governorate']);
+            });
+
+        }
+
         if ($request['req']['province']) {
 
             $query->whereHas('address', function($query) use($request) {

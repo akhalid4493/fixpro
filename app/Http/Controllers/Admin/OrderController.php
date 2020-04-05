@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TheApp\Repository\Admin\Users\TechncialRepository as Technical;
 use App\TheApp\Repository\Admin\Orders\OrderRepository;
 use Illuminate\Http\Request;
 use Response;
@@ -10,9 +11,10 @@ use DB;
 class OrderController extends AdminController
 {
 
-    function __construct(OrderRepository $order)
+    function __construct(OrderRepository $order,Technical $technical)
     {
-        $this->orderModel = $order;
+        $this->orderModel       = $order;
+        $this->technicalModel   = $technical;
     }
 
     // public function updateProfit()
@@ -55,7 +57,8 @@ class OrderController extends AdminController
 
     public function index()
     {
-        return view('admin.orders.home');
+        $technicals = $this->technicalModel->TechnicalUsers();
+        return view('admin.orders.home',compact('technicals'));
     }
 
 
@@ -73,19 +76,18 @@ class OrderController extends AdminController
 
     public function store(Request $request)
     {
-            $create = $this->orderModel->create($request);
+        $create = $this->orderModel->create($request);
 
-            if($create)
-                return Response()->json([true , 'تم الاضافة بنجاح' ]);
+        if($create)
+            return Response()->json([true , 'تم الاضافة بنجاح' ]);
 
-            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
-
+        return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
     }
 
 
     public function show($id)
     {
-        $order = $this->orderModel->findById($id);
+        return $order = $this->orderModel->findById($id);
         $statuses   = $this->orderModel->getAllStatus();
 
         if (!$order)
