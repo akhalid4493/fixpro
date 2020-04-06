@@ -87,7 +87,7 @@ class OrderController extends AdminController
 
     public function show($id)
     {
-        return $order = $this->orderModel->findById($id);
+        $order = $this->orderModel->findById($id);
         $statuses   = $this->orderModel->getAllStatus();
 
         if (!$order)
