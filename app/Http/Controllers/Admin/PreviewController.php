@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TheApp\Repository\Admin\Users\TechncialRepository as Technical;
 use App\TheApp\Repository\Admin\Governorates\GovernorateRepository;
 use App\TheApp\Repository\Admin\Provinces\ProvinceRepository;
 use App\TheApp\Repository\Admin\Previews\PreviewRepository;
@@ -16,8 +17,9 @@ use DB;
 class PreviewController extends AdminController
 {
 
-    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service,ProvinceRepository $province,GovernorateRepository $governorate)
+    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service,ProvinceRepository $province,GovernorateRepository $governorate , Technical $technical)
     {
+        $this->technicalModel   = $technical;
         $this->governorateModel = $governorate;
         $this->provinceModel    = $province;
         $this->previewModel     = $preview;
@@ -28,26 +30,29 @@ class PreviewController extends AdminController
 
     public function index()
     {
+        $technicals = $this->technicalModel->TechnicalUsers();
         $governorates  = $this->governorateModel->getAll();
         $provinces     = $this->provinceModel->getAll();
         $services      = $this->serviceModel->getAll();
-        return view('admin.previews.home',compact('services','provinces','governorates'));
+        return view('admin.previews.home',compact('services','provinces','governorates' , 'technicals'));
     }
 
     public function done()
     {
+        $technicals = $this->technicalModel->TechnicalUsers();
         $governorates  = $this->governorateModel->getAll();
         $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.done',compact('services','provinces','governorates'));
+        return view('admin.previews.done',compact('services','provinces','governorates' , 'technicals'));
     }
 
     public function cancelled()
     {
+        $technicals = $this->technicalModel->TechnicalUsers();
         $governorates  = $this->governorateModel->getAll();
         $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.cancelled',compact('services','provinces','governorates'));
+        return view('admin.previews.cancelled',compact('services','provinces','governorates' , 'technicals'));
     }
 
     public function dataTable(Request $request)

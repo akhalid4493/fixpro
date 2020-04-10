@@ -340,17 +340,23 @@ class PreviewRepository
                           ->orWhere('note'      , 'like' , '%'. $search .'%');
                 });
 
+        if ($request['req']['technical_id'] != '') {
+            $query->whereHas('technical', function($query) use($request) {
+                $query->where('user_id'   , $request['req']['technical_id']);
+            });
+        }
+
         if($request['status_id'] == 'no'){
           $query->where('preview_status_id','!=',5)->where('preview_status_id','!=',6);
         }elseif ($request['status_id'] != null) {
           $query->where('preview_status_id',$request['status_id']);
         }
 
-        if ($request['user_id']) {
+        if ($request['user_id'] != '') {
             $query->where('user_id',$request['user_id']);
         }
 
-        if ($request['req']['service']) {
+        if ($request['req']['service'] != '') {
 
             $query->whereHas('details', function($query) use($request) {
                 $query->where('service_id'   , $request['req']['service']);
@@ -358,7 +364,7 @@ class PreviewRepository
 
         }
 
-        if ($request['req']['governorate']) {
+        if ($request['req']['governorate'] != '') {
 
             $query->whereHas('address.addressProvince', function($query) use($request) {
                 $query->where('governorate_id'   , $request['req']['governorate']);
@@ -366,7 +372,7 @@ class PreviewRepository
 
         }
 
-        if ($request['req']['province']) {
+        if (isset($request['req']['province']) && $request['req']['province'] != '') {
 
             $query->whereHas('address', function($query) use($request) {
                 $query->where('province_id'   , $request['req']['province']);

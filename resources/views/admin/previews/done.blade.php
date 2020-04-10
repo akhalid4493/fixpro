@@ -29,8 +29,8 @@
                                     <th width="15%"> بحث بتاريخ الانشاء </th>
                                     <th width="15%"> بحث بالحالة </th>
                                     <th width="15%"> بحث بالخدمة </th>
-                                    <th width="15%"> بحث بالمنطقة </th>
                                     <th width="15%"> بحث بالمحافظة </th>
+                                    <th width="15%"> بحث بالفني </th>
                                 </tr>
                                 <tr role="row" class="filter">
                                     <form id="formFilter">
@@ -72,6 +72,16 @@
                                                 </select>
                                             </div>
                                         </td>
+                    										<td>
+                    												<div class="form-group">
+                    														<select name="technical_id" class="form-control">
+                    																<option value="">اختر</option>
+                    																@foreach ($technicals as $technical)
+                    																	<option value="{{ $technical->id }}">{{ $technical->name }}</option>
+                    																@endforeach
+                    														</select>
+                    												</div>
+                    										</td>
                                     </form>
                                     <td>
                                         <button class="btn btn-sm green btn-outline filter-submit margin-bottom" id="search">
