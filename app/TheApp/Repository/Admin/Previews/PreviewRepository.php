@@ -334,11 +334,26 @@ class PreviewRepository
     {
         $query = $this->model
                 ->with('details.service')
-                ->where(function($query) use($search) {
-                    $query->where('id'          , 'like' , '%'. $search .'%')
-                          ->orWhere('time'      , 'like' , '%'. $search .'%')
-                          ->orWhere('note'      , 'like' , '%'. $search .'%');
-                });
+                ->where(function($query) use($search){
+
+                      $query->where('id'          , 'like' , '%'. $search .'%');
+                      $query->orWhere('time'      , 'like' , '%'. $search .'%');
+                      $query->orWhere('note'      , 'like' , '%'. $search .'%');
+
+                      $query->orWhere( function( $query ) use($search){
+
+                          $query->whereHas('user', function($query) use($search) {
+
+                              $query->where('name'      , 'like' , '%'. $search .'%');
+                              $query->orWhere('mobile'  , 'like' , '%'. $search .'%');
+                              $query->orWhere('email'   , 'like' , '%'. $search .'%');
+
+                          });
+
+                      });
+
+                  });
+
 
         if ($request['req']['technical_id'] != '') {
             $query->whereHas('technical', function($query) use($request) {
