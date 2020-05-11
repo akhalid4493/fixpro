@@ -105,6 +105,8 @@ function load_alert_notification()
 					.then((willDone) => {
 						if (willDone) {
 							updateSeen();
+						}else{
+							updateSeenWithoutRedirect();
 						}
 					});
         }
@@ -115,6 +117,16 @@ function load_alert_notification()
 function playSound(){
   var audio = new Audio('{{ url('uploads/media/doorbell-5.mp3') }}');
   audio.play();
+}
+
+function updateSeenWithoutRedirect()
+{
+	$.ajax({
+  	url:"{{ url(route('activities.update')) }}",
+      type: "GET",
+      success:function(res){
+      },
+  });
 }
 
 function updateSeen()
