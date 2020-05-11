@@ -18,9 +18,9 @@ use Auth;
 
 class UserController extends ApiController
 {
-	use SendsPasswordResetEmails;
+		use SendsPasswordResetEmails;
 
-	function __construct(UserRepository $user)
+		function __construct(UserRepository $user)
     {
         $this->userModel = $user;
     }
@@ -29,23 +29,23 @@ class UserController extends ApiController
      * Login user for the app and get {Json Web Token}.
      */
     public function login(LoginRequest $request)
-	{
-		$token = $this->userModel->techLogin($request);
+		{
+				$token = $this->userModel->techLogin($request);
 
-		if ($token)
-			return $this->responseMessages($this->tokenRespons($token),true,200);
+				if ($token)
+					return $this->responseMessages($this->tokenRespons($token),true,200);
 
-		return $this->responseMessages([],false,401,['Unauthenticated']);
-	}
+				return $this->responseMessages([],false,401,['Unauthenticated']);
+		}
 
-	/**
+		/**
      * Show profile of the user.
      */
-	public function profile()
-	{
-		$user = new UserResource(Auth::user());
-		return $this->responseMessages($user,true,200);
-	}
+		public function profile()
+		{
+			$user = new UserResource(Auth::user());
+			return $this->responseMessages($user,true,200);
+		}
 
 	/**
      * Update the user information.
@@ -81,13 +81,13 @@ class UserController extends ApiController
 	public function changePassword(ChangePassword $request)
 	{
 		$result = $this->userModel->changePassword($request);
-			
+
 		if ($result)
 			return $this->responseMessages(new UserResource(Auth::user()),true,200);
 
 		return $this->responseMessages([],false,405,[ 'The old password is incorrect']);
 	}
-	
+
 	/**
      * Logout and destroy the session of JWT.
      */
@@ -110,7 +110,7 @@ class UserController extends ApiController
         );
 
         if($request->expectsJson()){
-            
+
         	return $response = Password::RESET_LINK_SENT
             	? $this->responseMessages(['Reset Password Link Sent'],true,200)
             	: $this->responseMessages([],false,405,[ 'Reset Link Could Not Be Sent']);

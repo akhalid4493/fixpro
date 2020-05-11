@@ -99,11 +99,14 @@ function load_alert_notification()
             title: "طلب معاينة",
             text: "لديك طلب معاينة جديد",
             icon: "success",
-            button: "شاهد الطلب",
-          }).
-          then((value) => {
-            updateSeen();
-          });
+						buttons: true,
+						dangerMode: true,
+          })
+					.then((willDone) => {
+						if (willDone) {
+							updateSeen();
+						}
+					});
         }
       },
   });

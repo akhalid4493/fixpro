@@ -15,13 +15,13 @@ class UserRepository
     function __construct(User $user)
     {
         $this->model        = $user;
-    }    
+    }
 
     public function techLogin($data)
     {
         $token = JWTAuth::attempt([
                 'email'     => $data['email'],
-                'password'  => $data['password'], 
+                'password'  => $data['password'],
                 'active'    => 1
             ]);
 
@@ -30,9 +30,9 @@ class UserRepository
             if (auth()->user()->can('technical_team')) {
                 return $token;
             }
-            
+
         }
-            
+
 
         return false;
     }
@@ -41,7 +41,7 @@ class UserRepository
     {
         $token = JWTAuth::attempt([
                 'email'     => $data['email'],
-                'password'  => $data['password'], 
+                'password'  => $data['password'],
                 'active'    => 1
             ]);
 
@@ -55,7 +55,7 @@ class UserRepository
         $img = ImageTrait::copyImage('users/user.png','users/'.$request->email,'user.png');
 
         try {
-            
+
             $user = $this->model->create([
                     'name'          => $request['name'],
                     'email'         => $request['email'],
@@ -66,7 +66,7 @@ class UserRepository
                 ]);
 
             DB::commit();
-            
+
             return $user;
 
         }catch(\Exception $e){
@@ -80,7 +80,7 @@ class UserRepository
         DB::beginTransaction();
 
         try {
-            
+
             Auth::user()->update([
                     'name'          => $request['name'],
                     'email'         => $request['email'],
@@ -106,7 +106,7 @@ class UserRepository
         $img = ImageTrait::base64($request->avatar,'users/'.$user->email);
 
         try {
-            
+
             $user->update([
                 'image' => $img,
             ]);
