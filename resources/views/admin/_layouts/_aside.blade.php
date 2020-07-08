@@ -202,6 +202,15 @@
             </li>
             @endpermission
 
+            @permission('show_service_notifications')
+              <li class="nav-item">
+                  <a href="{{ url(route('service_notifications.index')) }}" class="nav-link nav-toggle">
+                      <i class="fa fa-bell"></i>
+                      <span class="title">اشعار اعلى الخدمات</span>
+                  </a>
+              </li>
+            @endpermission
+
             @permission('show_settings')
             <li class="nav-item">
                 <a href="{{ url(route('settings.index')) }}" class="nav-link nav-toggle">

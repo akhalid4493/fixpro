@@ -7,52 +7,52 @@ use ImageTrait;
 
 trait SettingTrait
 {
-
-    static public function updateSettings($requests)
+    public static function updateSettings($requests)
     {
-	    $settings = [];
+        $settings = [];
 
-	    foreach ($requests as $key => $value) {
-	        $settings[$key] = Setting::where('name' , $key)
-	        				  ->where('name','!=','logo')
-	        				  ->where('name','!=','favicon')
-	        				  ->update(['value'=>$value]);
-	    }
+        foreach ($requests as $key => $value) {
+            $settings[$key] = Setting::where('name', $key)
+                              ->where('name', '!=', 'logo')
+                              ->where('name', '!=', 'favicon')
+                              ->update(['value'=>$value]);
+        }
 
-    	$updateFavIcon = self::updateFavIcon($requests);
-    	$updateLogo = self::updateLogo($requests);
+        if (!empty($requests['logo'])) {
+            $updateFavIcon = self::updateFavIcon($requests);
+            $updateLogo    = self::updateLogo($requests);
+        }
 
         return back()->with(['msg'=>'The Setting Updated' , 'alert'=>'success']);
     }
 
-    static public function updateLogo($requests)
+    public static function updateLogo($requests)
     {
-    	if (!empty($requests['logo'])) {
-    		$oldLogo = settings('logo');
-    		$image = ImageTrait::uploadImage($requests['logo'],'settings',$oldLogo);
-    	}else{
-	    	$image = $requests['old_logo'];
-    	}
+        if (!empty($requests['logo'])) {
+            $oldLogo = settings('logo');
+            $image = ImageTrait::uploadImage($requests['logo'], 'settings', $oldLogo);
+        } else {
+            $image = $requests['old_logo'];
+        }
 
-		Setting::where('name' , 'logo')->update(['value' => $image]);
+        Setting::where('name', 'logo')->update(['value' => $image]);
     }
 
-    static public function updateFavIcon($requests)
+    public static function updateFavIcon($requests)
     {
-		if (!empty($requests['favicon'])) {
-    		$oldfavicon = settings('favicon');
-    		$image = ImageTrait::uploadImage($requests['favicon'],'settings',$oldfavicon);
-    	}else{
-	    	$image = $requests['old_favicon'];
-    	}
+        if (!empty($requests['favicon'])) {
+            $oldfavicon = settings('favicon');
+            $image = ImageTrait::uploadImage($requests['favicon'], 'settings', $oldfavicon);
+        } else {
+            $image = $requests['old_favicon'];
+        }
 
-		Setting::where('name' , 'favicon')->update(['value' => $image]);
+        Setting::where('name', 'favicon')->update(['value' => $image]);
     }
 
-    static public function getValue($name)
-	{
-		$setting = Setting::where('name',$name)->first();
+    public static function getValue($name)
+    {
+        $setting = Setting::where('name', $name)->first();
         return $setting ? $setting->value : '';
-	}
-
+    }
 }

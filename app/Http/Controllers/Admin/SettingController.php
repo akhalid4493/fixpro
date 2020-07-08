@@ -11,10 +11,14 @@ class SettingController extends AdminController
 {
 
     public function index()
-    {        
+    {
         return view('admin.settings.all');
     }
 
+    public function service_notifications()
+    {
+        return view('admin.notifications.service_notifications');
+    }
 
     public function dataTable(Request $request)
     {
@@ -30,33 +34,34 @@ class SettingController extends AdminController
 
     public function store(Request $request)
     {
-        $settings = Settings::updateSettings($request->except('_token'));
         
+        $settings = Settings::updateSettings($request->except('_token'));
+
         return $settings;
     }
 
 
     public function show($id)
     {
-        
+
     }
 
 
     public function edit($id)
     {
-        
+
     }
 
 
     public function update(Request $request, $id)
     {
-        
+
     }
 
 
     public function destroy($id)
     {
-        
+
     }
 
 }
