@@ -11,6 +11,7 @@ Route::group([ 'prefix' => LaravelLocalization::setLocale() ,'middleware' =>
     Route::prefix('dashboard')->middleware(['auth','permission:admin_dashboard'])->group(function () {
 
         Route::get('/' ,'Admin\AdminController@index')->name('admin');
+				Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
         foreach (File::allFiles(base_path('routes/adminRoutes')) as $file) {
             require_once($file->getPathname());
