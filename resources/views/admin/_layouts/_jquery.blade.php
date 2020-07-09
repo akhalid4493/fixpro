@@ -160,3 +160,4 @@ $(document).on('click', '.notifications', function(e) {
 </script>
 
 @yield('scripts')
+@yield('styles')

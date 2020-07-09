@@ -19,7 +19,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet light">
-                    
+
                     <div class="portlet-title tabbable-line">
                         <div class="caption caption-md">
                             <i class="icon-globe theme-font hide"></i>
@@ -28,13 +28,15 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="portlet-body form">
                         <form id="updateForm" method="POST" action="{{url(route('subscriptions.update',$subscription->id))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
-                            
                             @csrf
+
                             <input name="_method" type="hidden" value="PUT">
+
                             <div class="tabbable-bordered">
+
                                 <ul class="nav nav-tabs">
                                     <li class="active">
                                         <a href="#general" data-toggle="tab"> بيانات عامة </a>
@@ -43,8 +45,9 @@
                                         <a href="#invoices" data-toggle="tab"> الدفعات والفواتير </a>
                                     </li>
                                 </ul>
+
                                 <div class="tab-content">
-                                    
+
                                     {{-- GENERAL CONTENT --}}
                                     @include('admin.subscriptions.tabs.subscription')
 
@@ -52,14 +55,14 @@
 
                                     <div class="form-actions">
                                         <div id="result" style="display: none"></div>
-                                        
+
                                         <div class="progress-info" style="display: none">
                                             <div class="progress">
                                                 <span class="progress-bar progress-bar-warning"></span>
                                             </div>
                                             <div class="status" id="progress-status"></div>
                                         </div>
-                                        
+
                                         <div class="form-group">
                                             <button type="submit" id="submit" class="btn btn-lg blue">
                                             تعديل

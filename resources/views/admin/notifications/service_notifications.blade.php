@@ -41,7 +41,7 @@
 													محتوى الرسالة
 													<span class="required">*</span>
 												</label>
-												<textarea type="text" class="form-control emojioneArea" cols="30" rows="10" name="service_notifications">{{settings('service_notifications')}}</textarea>
+												<textarea type="text" class="form-control emojioneArea" cols="30" rows="10" name="service_notifications" style="direction: rtl;">{{settings('service_notifications')}}</textarea>
 											</div>
 										</div>
 									</div>
@@ -61,4 +61,30 @@
 		</div>
 	</div>
 </div>
+@stop
+
+@section('styles')
+
+	<style media="screen">
+	.emojionearea .emojionearea-button {
+		direction: rtl;
+		z-index: 5;
+		position: absolute;
+		left: 3px;
+		right: auto;
+		top: 3px;
+		width: 24px;
+		height: 24px;
+		opacity: .6;
+		cursor: pointer;
+		-moz-transition: opacity .3s ease-in-out;
+		-o-transition: opacity .3s ease-in-out;
+		-webkit-transition: opacity .3s ease-in-out;
+		transition: opacity .3s ease-in-out;
+	}
+
+	.emojionearea .emojionearea-editor {
+		text-align: right;
+	}
+	</style>
 @stop

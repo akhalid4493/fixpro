@@ -193,6 +193,15 @@
                 <h3 class="uppercase">اعدادات</h3>
             </li>
 
+            @permission('show_ads')
+              <li class="nav-item">
+                  <a href="{{ url(route('ads.index')) }}" class="nav-link nav-toggle">
+                      <i class="fa fa-bell"></i>
+                      <span class="title">الاعلانات</span>
+                  </a>
+              </li>
+            @endpermission
+
             @permission('show_notifications')
             <li class="nav-item">
                 <a href="{{ url(route('notification.index')) }}" class="nav-link nav-toggle">
