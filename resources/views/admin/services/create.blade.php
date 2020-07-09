@@ -17,15 +17,15 @@
 		<h1 class="page-title"></h1>
 		<div class="row">
 			<div class="col-md-12">
-                <div class="portlet light">
+				<div class="portlet light">
 					<div class="portlet-title tabbable-line">
-                        <div class="caption caption-md">
-                            <i class="icon-globe theme-font hide"></i>
-                            <span class="caption-subject font-blue-madison bold uppercase">
+						<div class="caption caption-md">
+							<i class="icon-globe theme-font hide"></i>
+							<span class="caption-subject font-blue-madison bold uppercase">
 								اضافة خدمة جديدة
-                            </span>
-                        </div>
-                    </div>
+							</span>
+						</div>
+					</div>
 					<div class="portlet-body form">
 						<form id="form" method="POST" action="{{url(route('services.store'))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
 
@@ -62,6 +62,22 @@
 												</div>
 											</div>
 
+
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													الاقسام
+													<span class="required">*</span>
+												</label>
+												<div class="col-md-9">
+													<select name="categories[]" id="single" class="form-control select2" multiple="">
+														@foreach ($categories as $category)
+														<option value="{{ $category['id'] }}">
+															{{ $category['name_ar'] }}
+														</option>
+														@endforeach
+													</select>
+												</div>
+											</div>
 
 											<div class="form-group">
 												<label class="control-label col-md-3">
@@ -109,7 +125,7 @@
 										<div class="form-group">
 											<div class="col-md-offset-3 col-md-9">
 												<button type="submit" id="submit" class="btn btn-lg blue">
-												اضافة
+													اضافة
 												</button>
 												<a href="{{url(route('services.index')) }}" class="btn btn-lg red">
 													الخلف
@@ -130,10 +146,10 @@
 
 @section('scripts')
 <script>
-	function disableMyText(){
-		if(document.getElementById("main_page").checked == true){
+	function disableMyText() {
+		if (document.getElementById("main_page").checked == true) {
 			document.getElementById("single").disabled = true;
-		}else{
+		} else {
 			document.getElementById("single").disabled = false;
 		}
 	}

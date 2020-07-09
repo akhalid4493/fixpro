@@ -62,6 +62,7 @@ class PreviewRepository
     public function getCategories()
     {
         $services = $this->categories
+                         ->with('services')
                          ->where('status',1)
                          ->where('is_service',1)
                          ->orderBy('id','DESC')

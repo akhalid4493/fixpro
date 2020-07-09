@@ -35,19 +35,21 @@ class ServiceRepository
         DB::beginTransaction();
 
         if ($request->hasFile('image'))
-            $img = ImageTrait::uploadImage($request->image,'services/'.ar_slug($request->name_en));
+            $img = ImageTrait::uploadImage($request->image,'services/'.str_slug($request->name_en));
         else
-            $img = ImageTrait::copyImage('default.png','services/'.ar_slug($request->name_en),'default.png');
+            $img = ImageTrait::copyImage('default.png','services/'.str_slug($request->name_en),'default.png');
 
         try {
 
             $service = $this->model->create([
-                    'name_ar'               => $request['name_ar'],
-                    'name_en'               => $request['name_en'],
-                    'slug'                  => ar_slug($request['name_en']),
-                    'status'                => $request['status'],
-                    'image'                 => $img,
-                ]);
+                'name_ar'               => $request['name_ar'],
+                'name_en'               => $request['name_en'],
+                'slug'                  => str_slug($request['name_en']),
+                'status'                => $request['status'],
+                'image'                 => $img,
+            ]);
+
+            $service->categories()->sync($request['categories']);
 
             DB::commit();
             return true;
@@ -65,7 +67,7 @@ class ServiceRepository
         $service = $this->findById($id);
 
         if ($request->hasFile('image'))
-            $img=ImageTrait::uploadImage($request->image,'services/'.ar_slug($request->name_en),$service->image);
+            $img=ImageTrait::uploadImage($request->image,'services/'.str_slug($request->name_en),$service->image);
         else
             $img  = $service->image;
 
@@ -74,10 +76,12 @@ class ServiceRepository
             $service->update([
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
-                'slug'                  => ar_slug($request['name_en']),
+                'slug'                  => str_slug($request['name_en']),
                 'status'                => $request['status'],
                 'image'                 => $img,
             ]);
+
+            $service->categories()->sync($request['categories']);
 
             DB::commit();
             return true;
@@ -119,7 +123,7 @@ class ServiceRepository
 
             $service = $this->findById($id);
 
-            ImageTrait::deleteDirectory('uploads/services/'.ar_slug($service->name_en));
+            ImageTrait::deleteDirectory('uploads/services/'.str_slug($service->name_en));
 
             $service->delete();
 

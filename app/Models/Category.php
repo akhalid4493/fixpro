@@ -21,6 +21,11 @@ class Category extends Model
         'is_service'
     ];
 
+    public function services()
+    {
+        return $this->belongsToMany('App\Models\Service', 'service_categories');
+    }
+
     public function products()
     {
         return $this->belongsToMany('App\Models\Product', 'product_categories');

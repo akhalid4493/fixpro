@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\TheApp\Repository\Admin\Categories\CategoryRepository;
 use App\TheApp\Repository\Admin\Services\ServiceRepository;
 use Illuminate\Http\Request;
 use Response;
@@ -10,8 +11,9 @@ use DB;
 class ServiceController extends AdminController
 {
 
-    function __construct(ServiceRepository $service)
+    function __construct(ServiceRepository $service ,CategoryRepository $category)
     {
+        $this->category     = $category;
         $this->serviceModel = $service;
     }
 
@@ -46,7 +48,8 @@ class ServiceController extends AdminController
 
     public function create()
     {
-        return view('admin.services.create');
+        $categories = $this->category->getAll();
+        return view('admin.services.create',compact('categories'));
     }
 
 
@@ -75,12 +78,13 @@ class ServiceController extends AdminController
 
     public function edit($id)
     {
+        $categories = $this->category->getAll();
         $service   = $this->serviceModel->findById($id);
 
         if (!$service)
             abort(404);
 
-        return view('admin.services.edit',compact('service'));
+        return view('admin.services.edit',compact('service','categories'));
     }
 
 

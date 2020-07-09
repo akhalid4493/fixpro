@@ -2,8 +2,8 @@
 
 namespace App\Http\Resources\Categories;
 
+use App\Http\Resources\Services\ServiceResource;
 use Illuminate\Http\Resources\Json\Resource;
-use App\Http\Resources\UserResource;
 
 class CategoryResource extends Resource
 {
@@ -19,6 +19,7 @@ class CategoryResource extends Resource
             'id'            => $this->id,
             'name'          => transText($this,'name'),
             'image'         => url($this->image),
+            'services'      => ServiceResource::collection($this->whenLoaded('services')),
         ];
     }
 }

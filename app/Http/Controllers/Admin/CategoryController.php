@@ -40,7 +40,7 @@ class CategoryController extends AdminController
 
         if($create)
             return Response()->json([true , 'تم الاضافة بنجاح' ]);
-        
+
         return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
@@ -49,7 +49,7 @@ class CategoryController extends AdminController
     public function show($id)
     {
         $category = $this->categoryModel->findById($id);
-        
+
         if (!$category)
             abort(404);
 

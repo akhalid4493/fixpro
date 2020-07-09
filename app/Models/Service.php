@@ -18,12 +18,18 @@ class Service extends Model
         'seo_description_ar',
         'seo_keywords_en',
         'seo_keywords_ar',
-        'position'
+        'position',
+        'category_id'
     ];
 
 
     public function servicesOfTechnical()
     {
         return $this->belongsToMany('App\Models\User', 'technical_services');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany('App\Models\Category', 'service_categories');
     }
 }

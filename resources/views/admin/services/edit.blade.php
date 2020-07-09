@@ -28,7 +28,7 @@
           </div>
           <div class="portlet-body form">
             <form id="updateForm" method="POST" action="{{url(route('services.update',$service->id))}}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
-              
+
               {{ csrf_field() }}
               <input name="_method" type="hidden" value="PUT">
               <div class="tabbable-bordered">
@@ -38,11 +38,11 @@
                   </li>
                 </ul>
                 <div class="tab-content">
-                  
+
                   {{-- GENERAL CONTENT --}}
                   <div class="tab-pane active" id="general">
                     <div class="form-body">
-                      
+
                       <div class="form-group">
                         <label class="control-label col-md-3">
                           عنوان خدمة ar
@@ -60,6 +60,23 @@
                         <div class="col-md-9">
                           <input type="text" name="name_en" class="form-control" value="{{ $service->name_en }}">
                         </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="control-label col-md-3">
+                              الاقسام
+                              <span class="required">*</span>
+                          </label>
+                          <div class="col-md-9">
+                              <select name="categories[]" id="single" class="form-control select2" multiple="">
+                                  @foreach ($categories as $category)
+                                  <option value="{{ $category['id'] }}" @if ($product->categories->contains($category->id))
+                                  selected
+                                  @endif>
+                                      {{ $category['name_ar'] }}
+                                      </option>
+                                      @endforeach
+                              </select>
+                          </div>
                       </div>
                       <div class="form-group">
                         <label class="control-label col-md-3">
@@ -101,17 +118,17 @@
                       </div>
                     </div>
                   </div>
-                  
+
                   <div class="form-actions">
                     <div id="result" style="display: none"></div>
-                    
+
                     <div class="progress-info" style="display: none">
                       <div class="progress">
                         <span class="progress-bar progress-bar-warning"></span>
                       </div>
                       <div class="status" id="progress-status"></div>
                     </div>
-                    
+
                     <div class="form-group">
                       <div class="col-md-offset-3 col-md-9">
                         <button type="submit" id="submit" class="btn btn-lg blue">
@@ -126,7 +143,6 @@
                 </div>
               </div>
             </form>
-            
           </div>
         </div>
       </div>
@@ -137,11 +153,11 @@
 @section('scripts')
 <script>
 function disableMyText(){
-if(document.getElementById("main_page").checked == true){
-document.getElementById("single").disabled = true;
-}else{
-document.getElementById("single").disabled = false;
-}
+    if(document.getElementById("main_page").checked == true){
+        document.getElementById("single").disabled = true;
+    }else{
+        document.getElementById("single").disabled = false;
+    }
 }
 </script>
 @stop
