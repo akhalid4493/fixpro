@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\TheApp\Libraries\SettingRepository;
 use App\TheApp\Requests\Admin\Settings\SettingRequest;
+use App\TheApp\Libraries\SettingRepository;
+use Illuminate\Http\Request;
 use Settings;
 
 class SettingController extends AdminController
@@ -34,12 +34,18 @@ class SettingController extends AdminController
 
     public function store(Request $request)
     {
-        
         $settings = Settings::updateSettings($request->except('_token'));
 
         return $settings;
     }
 
+    public function storeServiceNotification(Request $request)
+    {
+        
+        $settings = Settings::updateSettings($request->except('_token'));
+
+        return $settings;
+    }
 
     public function show($id)
     {

@@ -20,7 +20,7 @@
 			<div class="col-md-12">
 				<div class="profile-content">
 					<div class="portlet light">
-						<form method="POST" action="{{ url(route('settings.store')) }}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
+						<form method="POST" action="{{ route('service_notifications.store') }}" enctype="multipart/form-data" class="form-horizontal form-row-seperated">
 
 							@csrf
 

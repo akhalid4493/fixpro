@@ -14,4 +14,8 @@ Route::group(['prefix' => 'settings'], function () {
 		->name('settings.store')
 	  ->middleware(['permission:add_settings']);
 
+		Route::post('/'			,'Admin\SettingController@storeServiceNotification')
+		->name('service_notifications.store')
+	  ->middleware(['permission:show_service_notifications']);
+
 });
