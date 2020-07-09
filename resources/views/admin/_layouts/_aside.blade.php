@@ -13,9 +13,11 @@
                     <span class="selected"></span>
                 </a>
             </li>
+
             <li class="heading">
                 <h3 class="uppercase">الاعضاء و الصلاحيات</h3>
             </li>
+
             @permission('show_roles')
             <li class="nav-item">
                 <a href="{{ url(route('roles.index')) }}" class="nav-link nav-toggle">
@@ -73,6 +75,15 @@
             <li class="heading">
                 <h3 class="uppercase">المعاينة</h3>
             </li>
+            @permission('show_service_categories')
+            <li class="nav-item">
+                <a href="{{ url(route('service_categories.index')) }}" class="nav-link nav-toggle">
+                    <i class="icon-bar-chart"></i>
+                    <span class="title">اقسام الخدمات</span>
+                </a>
+            </li>
+            @endpermission
+
             @permission('show_services')
             <li class="nav-item">
                 <a href="{{ url(route('services.index')) }}" class="nav-link nav-toggle">

@@ -18,6 +18,7 @@ class Category extends Model
         'seo_description_ar',
         'seo_keywords_en',
         'seo_keywords_ar',
+        'is_service'
     ];
 
     public function products()

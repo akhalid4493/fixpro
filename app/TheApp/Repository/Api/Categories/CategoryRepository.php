@@ -19,9 +19,9 @@ class CategoryRepository
     public function getAll($request)
     {
         return $categories = $this->model
-               ->where('status',1)
-               ->orderBy('id','desc')
-               ->get();
+                                 ->where('status',1)
+                                 ->orderBy('id','desc')
+                                 ->get();
     }
 
     public function findById($id)

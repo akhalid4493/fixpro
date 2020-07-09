@@ -13,7 +13,7 @@ class CategoryRepository
     function __construct(Category $category)
     {
         $this->model        = $category;
-    }  
+    }
 
     public function getAll($order = 'id', $sort = 'desc')
     {
@@ -28,16 +28,17 @@ class CategoryRepository
     public function create($request)
     {
         DB::beginTransaction();
-        
+
         if ($request->hasFile('image'))
             $img = ImageTrait::uploadImage($request->image,'categories/'.ar_slug($request->name_en));
         else
             $img = ImageTrait::copyImage('default.png','categories/'.ar_slug($request->name_en),'default.png');
 
         try {
-            
+
             $category = $this->model->create([
                     'name_ar'               => $request['name_ar'],
+                    'is_service'            => $request['is_service'] ? 1 : 0,
                     'name_en'               => $request['name_en'],
                     'slug'                  => ar_slug($request['name_en']),
                     'status'                => $request['status'],
@@ -67,9 +68,10 @@ class CategoryRepository
             $img  = $category->image;
 
         try {
-            
+
             $category->update([
                 'name_ar'               => $request['name_ar'],
+                'is_service'            => $request['is_service'] ? 1 : 0,
                 'name_en'               => $request['name_en'],
                 'slug'                  => ar_slug($request['name_en']),
                 'status'                => $request['status'],
@@ -91,9 +93,9 @@ class CategoryRepository
     public function delete($id)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $category = $this->findById($id);
 
             ImageTrait::deleteDirectory('uploads/categories/'.ar_slug($category->name_en));
@@ -112,9 +114,9 @@ class CategoryRepository
     public function deleteAll($request)
     {
         DB::beginTransaction();
-        
+
         try {
-            
+
             $categories = $this->model->whereIn('id',$request['ids'])->get();
 
             foreach ($categories as $category) {
@@ -130,10 +132,10 @@ class CategoryRepository
             throw $e;
         }
     }
-    
+
     public function dataTable($request)
     {
-        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');    
+        $sort['col'] = $request->input('columns.' . $request->input('order.0.column') . '.data');
         $sort['dir'] = $request->input('order.0.dir');
         $search      = $request->input('search.value');
 
@@ -163,31 +165,37 @@ class CategoryRepository
                 $edit   = btn('edit'  ,'edit_categories'  ,url(route('categories.edit',$id)));
                 $delete = btn('delete','delete_categories',url(route('categories.show',$id)));
 
+
+
+                $edit2   = btn('edit'  ,'edit_service_categories'  ,url(route('service_categories.edit',$id)));
+                $delete2 = btn('delete','delete_service_categories',url(route('service_categories.show',$id)));
+
                 $obj['id']          = $id;
                 $obj['name_ar']     = $category->name_ar;
                 $obj['image']       = url($category->image);
                 $obj['status']      = Status($category->status);
                 $obj['created_at']  = date("d-m-Y", strtotime($category->created_at));
                 $obj['listBox']     = checkBoxDelete($id);
-                $obj['options']     = $edit . $delete;;
-                
+                $obj['options']     = $edit . $delete;
+                $obj['options2']     = $edit2 . $delete2;
+
                 $data[] = $obj;
             }
         }
 
         $output['data']  = $data;
-        
+
         return Response()->json($output);
     }
 
     public function filter($request,$search)
     {
         $query = $this->model->where(function($query) use($search) {
-                    $query->where('id'         , 'like' , '%'. $search .'%')
-                          ->orWhere('name_ar'  , 'like' , '%'. $search .'%')
-                          ->orWhere('name_en'  , 'like' , '%'. $search .'%');
-                });
-    
+            $query->where('id'         , 'like' , '%'. $search .'%')
+                  ->orWhere('name_ar'  , 'like' , '%'. $search .'%')
+                  ->orWhere('name_en'  , 'like' , '%'. $search .'%');
+        });
+
         if ($request['req']['from'] != '')
             $query->whereDate('created_at'  , '>=' , $request['req']['from']);
 
@@ -196,6 +204,9 @@ class CategoryRepository
 
         if ($request['req']['active'] != '')
             $query->where('status' , $request['req']['active']);
+
+        if ($request['is_service'] == 'true')
+            $query->where('is_service' , 1);
 
         return $query;
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\UserApp;
 use App\TheApp\Repository\Api\Previews\PreviewRepository as Preveiew;
 use App\Http\Resources\Previews\PreviewResource;
 use App\Http\Resources\Services\ServiceResource;
+use App\Http\Resources\Categories\CategoryResource;
 use App\Http\Controllers\Api\ApiController;
 use App\TheApp\CustomClass\PreviewCheck;
 use Illuminate\Http\Request;
@@ -16,11 +17,18 @@ class PreviewController extends ApiController
     {
         $this->previewModel  = $preview;
     }
-    
+
     public function checkDates(Request $request)
     {
         $dates = PreviewCheck::getPreviews($request['service_id'],$request['governorate_id']);
         return $this->responseMessages($dates,true,200);
+    }
+
+    public function categories()
+    {
+        $data = CategoryResource::collection($this->previewModel->getCategories());
+
+        return $this->responseMessages($data,true,200);
     }
 
     public function services()
@@ -46,7 +54,7 @@ class PreviewController extends ApiController
 
         return $this->responseMessages(PreviewResource::collection($previews),true,200);
     }
-    
+
     public function myPreview(Request $request,$id)
     {
         $order = $this->previewModel->previewById($id);

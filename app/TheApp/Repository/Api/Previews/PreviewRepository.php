@@ -11,6 +11,7 @@ use App\Models\PreviewDate;
 use App\Models\Address;
 use App\Models\Preview;
 use App\Models\Service;
+use App\Models\Category;
 use Notification;
 use ImageTrait;
 use SendNotifi;
@@ -30,10 +31,12 @@ class PreviewRepository
         PreviewGallery $gallery,
         PreviewAddress $preAddress,
         Address $address,
-        PreviewTechGallery $techGallery
+        PreviewTechGallery $techGallery,
+        Category $category
     )
     {
         $this->model        = $preview;
+        $this->categories   = $category;
         $this->modelDetails = $details;
         $this->modelService = $service;
         $this->modelGallery = $gallery;
@@ -52,6 +55,17 @@ class PreviewRepository
                ->where('status',1)
                ->orderBy('position','ASC')
                ->get();
+
+        return $services;
+    }
+
+    public function getCategories()
+    {
+        $services = $this->categories
+                         ->where('status',1)
+                         ->where('is_service',1)
+                         ->orderBy('id','DESC')
+                         ->get();
 
         return $services;
     }
