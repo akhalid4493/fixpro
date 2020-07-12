@@ -9,6 +9,7 @@ class Preview extends Model
     protected $fillable = [
         'note',
         'time',
+        'total',
         'user_id',
         'address_id',
         'preview_status_id',

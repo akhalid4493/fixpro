@@ -63,6 +63,15 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">
+                                                    السعر
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <div class="col-md-9">
+                                                    <input type="text" name="price" class="form-control" value="{{ $service->price }}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-md-3">
                                                     الاقسام
                                                     <span class="required">*</span>
                                                 </label>

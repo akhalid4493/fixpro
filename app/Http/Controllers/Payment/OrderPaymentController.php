@@ -42,7 +42,7 @@ class OrderPaymentController extends ApiController
 					'whitelabled'    	=> false,
 					'payment_gateway'	=> $payment,// knet / cc
 					'reference'				=> $order['id'],
-					'notifyURL'				=> url(route('api.orders.webhooks')),
+					'notifyURL'				=> $url['webhooks'],
 					'total_price'			=> $order['total'],
 				];
 
@@ -61,8 +61,19 @@ class OrderPaymentController extends ApiController
     public function paymentUrls($type)
     {
         if ($type == 'orders') {
-  					$url['success'] = url(route('api.orders.success'));
-          	$url['failed']  = url(route('api.orders.failed'));
+
+  					$url['success'] 	= url(route('api.orders.success'));
+          	$url['failed']  	= url(route('api.orders.failed'));
+						$url['webhooks']	= url(route('api.orders.webhooks'));
+
+        }
+
+				if ($type == 'previews') {
+
+  					$url['success'] 	= url(route('api.previews.success'));
+          	$url['failed']  	= url(route('api.previews.failed'));
+						$url['webhooks']	= url(route('api.previews.webhooks'));
+
         }
 
 				return $url;

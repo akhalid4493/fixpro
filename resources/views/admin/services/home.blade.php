@@ -92,6 +92,7 @@
 									<th width="2%">#</th>
 									<th>الصورة</th>
 									<th>العنوان بالعربي</th>
+									<th>السعر</th>
 									<th>الحالة</th>
 									<th>تاريخ الانشاء</th>
 									<th>العمليات</th>
@@ -155,8 +156,9 @@
 				return '<img src="'+data+'" width="50px"/>'
 	       	  },
 	    	},
-			{ "data": "name_ar" 	},
-			{ "data": "status" 		},
+			{ "data": "name_ar" 		},
+			{ "data": "price" 			},
+			{ "data": "status" 			},
 			{ "data": "created_at" 	},
             { "data": "options"   , "orderable": false  },
         ],

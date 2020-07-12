@@ -59,6 +59,12 @@ class PreviewRepository
         return $services;
     }
 
+    public function findById($id)
+    {
+      $preview = $this->model->find($id);
+      return $preview;
+    }
+
     public function getCategories()
     {
         $services = $this->categories
@@ -81,7 +87,8 @@ class PreviewRepository
                 'user_id'           => Auth::id(),
                 'note'              => $request['note'],
                 'time'              => $request['time'],
-                'preview_status_id' => 1,
+                'total'             => ($request['method'] == 'knet') ? $request['price'] : null,
+                'preview_status_id' => ($request['method'] == 'knet') ? 6 : 1,
             ]);
 
             if ($preview){
@@ -328,5 +335,20 @@ class PreviewRepository
         ])
         ->causedBy($preview->user)
         ->log('create');
+    }
+
+    public function updatPreview($request,$status)
+    {
+        $preview = $this->model->find($request['OrderID']);
+
+        if ($preview->preview_status_id != $status) {
+
+            $preview->update([
+                'preview_status_id' => $status,
+            ]);
+
+        }
+
+        return true;
     }
 }

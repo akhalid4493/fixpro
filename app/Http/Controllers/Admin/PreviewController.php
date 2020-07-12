@@ -16,8 +16,7 @@ use DB;
 
 class PreviewController extends AdminController
 {
-
-    function __construct(PreviewRepository $preview,UserRepository $user,ServiceRepository $service,ProvinceRepository $province,GovernorateRepository $governorate , Technical $technical)
+    public function __construct(PreviewRepository $preview, UserRepository $user, ServiceRepository $service, ProvinceRepository $province, GovernorateRepository $governorate, Technical $technical)
     {
         $this->technicalModel   = $technical;
         $this->governorateModel = $governorate;
@@ -34,7 +33,7 @@ class PreviewController extends AdminController
         $governorates  = $this->governorateModel->getAll();
         $provinces     = $this->provinceModel->getAll();
         $services      = $this->serviceModel->getAll();
-        return view('admin.previews.home',compact('services','provinces','governorates' , 'technicals'));
+        return view('admin.previews.home', compact('services', 'provinces', 'governorates', 'technicals'));
     }
 
     public function done()
@@ -43,7 +42,7 @@ class PreviewController extends AdminController
         $governorates  = $this->governorateModel->getAll();
         $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.done',compact('services','provinces','governorates' , 'technicals'));
+        return view('admin.previews.done', compact('services', 'provinces', 'governorates', 'technicals'));
     }
 
     public function cancelled()
@@ -52,7 +51,7 @@ class PreviewController extends AdminController
         $governorates  = $this->governorateModel->getAll();
         $provinces  = $this->provinceModel->getAll();
         $services  = $this->serviceModel->getAll();
-        return view('admin.previews.cancelled',compact('services','provinces','governorates' , 'technicals'));
+        return view('admin.previews.cancelled', compact('services', 'provinces', 'governorates', 'technicals'));
     }
 
     public function dataTable(Request $request)
@@ -62,20 +61,21 @@ class PreviewController extends AdminController
 
     public function create()
     {
-        $services  = $this->serviceModel->getAll();
-        $users  = $this->userModel->getAll();
-        return view('admin.previews.create',compact('users','services'));
+        $services   = $this->serviceModel->getAll();
+        $users      = $this->userModel->getAll();
+        
+        return view('admin.previews.create', compact('users', 'services'));
     }
 
     public function store(NewPreviewRequest $request)
     {
-            $create = $this->previewModel->create($request);
+        $create = $this->previewModel->create($request);
 
-            if($create)
-                return Response()->json([true , 'تم الاضافة بنجاح' ]);
+        if ($create) {
+            return Response()->json([true , 'تم الاضافة بنجاح' ]);
+        }
 
-            return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
-
+        return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
     }
 
 
@@ -86,10 +86,11 @@ class PreviewController extends AdminController
         $statuses   = $this->previewModel->getAllStatus();
         $users      = $this->userModel->TechnicalUsers();
 
-        if (!$preview)
+        if (!$preview) {
             abort(404);
+        }
 
-        return view('admin.previews.show' , compact('preview','statuses','users'));
+        return view('admin.previews.show', compact('preview', 'statuses', 'users'));
     }
 
 
@@ -97,24 +98,23 @@ class PreviewController extends AdminController
     {
         $preview   = $this->previewModel->findById($id);
 
-        if (!$preview)
+        if (!$preview) {
             abort(404);
+        }
 
-        return view('admin.previews.edit',compact('preview'));
+        return view('admin.previews.edit', compact('preview'));
     }
 
 
     public function update(Request $request, $id)
     {
         if ($request->ajax()) {
+            $update = $this->previewModel->update($request, $id);
 
-            $update = $this->previewModel->update($request , $id);
-
-            if($update){
+            if ($update) {
                 return Response()->json([true , 'تم التعديل بنجاح']);
             }
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
-
         }
     }
 
@@ -122,15 +122,13 @@ class PreviewController extends AdminController
     public function destroy($id)
     {
         try {
-
             $repose = $this->previewModel->delete($id);
 
-            if($repose){
+            if ($repose) {
                 return Response()->json([true, 'تم الحذف بنجاح']);
             }
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
-
-        }catch (\PDOException $e){
+        } catch (\PDOException $e) {
             return Response()->json([false, $e->errorInfo[2]]);
         }
     }
@@ -143,5 +141,4 @@ class PreviewController extends AdminController
 
         return view('admin.previews.parts.addresses')->with([ 'addresses' => $addresses ]);
     }
-
 }

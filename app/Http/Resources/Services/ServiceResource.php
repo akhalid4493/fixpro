@@ -18,6 +18,7 @@ class ServiceResource extends Resource
             'id'            => $this->id,
             'name'          => transText($this,'name'),
             'image'         => url($this->image),
+            'price'         => $this->price,
         ];
     }
 }

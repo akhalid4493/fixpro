@@ -11,6 +11,7 @@ class Order extends Model
         'transID',
         'service',
         'subtotal',
+        'off',
         'total',
         'method',
         'user_id',

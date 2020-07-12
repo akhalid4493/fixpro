@@ -19,7 +19,8 @@ class Service extends Model
         'seo_keywords_en',
         'seo_keywords_ar',
         'position',
-        'category_id'
+        'category_id',
+        'price'
     ];
 
 

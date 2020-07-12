@@ -66,12 +66,14 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
+                            <th class="invoice-title uppercase text-center"> سعر المعاينة </th>
                             <th class="invoice-title uppercase text-center"> موعد المعاينة المطلوب</th>
                             <th class="invoice-title uppercase text-center"> ملاحظات </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td class="text-center sbold"> {{ $order->preview->total }} </td>
                             <td class="text-center sbold"> {{ $order->preview->time }} </td>
                             <td class="text-center sbold"> {{ $order->preview->note }}</td>
                         </tr>

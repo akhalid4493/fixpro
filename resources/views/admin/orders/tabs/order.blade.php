@@ -225,6 +225,9 @@
                         <strong>المجموع :</strong> {{ Price($order->subtotal) }} KWD
                     </li>
                     <li>
+                        <strong>خصم خدمة المعاينة :</strong> {{ Price($order->off) }} KWD
+                    </li>
+                    <li>
                         <strong>الخدمة :</strong> {{ Price($order->service) }} KWD
                     </li>
                     <hr>

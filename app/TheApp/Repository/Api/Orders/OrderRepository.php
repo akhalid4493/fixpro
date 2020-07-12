@@ -5,6 +5,7 @@ use App\TheApp\Repository\Api\Transaction\TransactionRepository;
 use App\Http\Resources\Orders\OrderResource;
 use App\Models\OrderInstallation;
 use App\Models\OrderProduct;
+use App\Models\Preview;
 use App\Models\Order;
 use App\Models\Installation;
 use App\Models\Product;
@@ -18,11 +19,12 @@ class OrderRepository
 
     use SendNotifi;
 
-    function __construct(Order $order ,OrderProduct $product,OrderInstallation $installation)
+    function __construct(Order $order ,OrderProduct $product,OrderInstallation $installation,Preview $preview)
     {
-        $this->model            = $order;
-        $this->modelProduct     = $product;
-        $this->modelInstallation= $installation;
+        $this->preview            = $preview;
+        $this->model              = $order;
+        $this->modelProduct       = $product;
+        $this->modelInstallation  = $installation;
     }
 
 
@@ -161,6 +163,7 @@ class OrderRepository
 
     public function createOrder($request,$subtotal,$subtotal_profit)
     {
+        $preview = $this->preview->find($request['preview_id']);
         DB::beginTransaction();
 
         try {
@@ -169,9 +172,10 @@ class OrderRepository
 
             $order = $this->model->create([
                 'subtotal'          => $subtotal,
+                'off'               => $preview['total'],
                 'subtotal_profit'   => $subtotal_profit,
                 'service'           => $serviceFees,
-                'total'             => $subtotal + $serviceFees,
+                'total'             => ($subtotal - $preview['total']) + $serviceFees,
                 'total_profit'      => $subtotal_profit + $serviceFees,
                 'method'            => $request['method'],
                 'transID'           => $request['transID'],

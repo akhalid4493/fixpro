@@ -62,6 +62,16 @@
 												</div>
 											</div>
 
+											<div class="form-group">
+												<label class="control-label col-md-3">
+													سعر الخدمة
+													<span class="required">*</span>
+												</label>
+												<div class="col-md-9">
+													<input type="text" name="price" placeholder="3.000" class="form-control">
+												</div>
+											</div>
+
 
 											<div class="form-group">
 												<label class="control-label col-md-3">
@@ -147,11 +157,17 @@
 @section('scripts')
 <script>
 	function disableMyText() {
+
 		if (document.getElementById("main_page").checked == true) {
-			document.getElementById("single").disabled = true;
+
+				document.getElementById("single").disabled = true;
+
 		} else {
-			document.getElementById("single").disabled = false;
+
+				document.getElementById("single").disabled = false;
+
 		}
+
 	}
 </script>
 @stop

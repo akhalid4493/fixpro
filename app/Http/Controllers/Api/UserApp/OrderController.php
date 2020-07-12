@@ -40,21 +40,22 @@ class OrderController extends ApiController
     {
         $order = $this->orderModel->orderById($id);
 
-        $this->responseMessages(new OrderResource($order), true, 200);
 
-        $payment = $this->payment->send($order,'orders',$request['payment']);
+        $payment = $this->payment->send($order, 'orders', $request['payment']);
 
         return $this->responseMessages([
             'message' => 'The Payment Url',
             'data'    => $payment,
         ], true, 200);
+
+        // $this->responseMessages(new OrderResource($order), true, 200);
     }
 
     public function success(Request $request)
     {
-        $this->orderModel->updateOrder($request);
+        $this->orderModel->updateOrder($request,5);
 
-        $order = $this->orderModel->findById($request['OrderID'],5);
+        $order = $this->orderModel->findById($request['OrderID']);
 
         return $this->responseMessages(new OrderResource($order), true, 200);
     }
@@ -67,14 +68,14 @@ class OrderController extends ApiController
             $status = 5;
         }
 
-        $order = $this->order->updateOrder($request,$status);
+        $order = $this->order->updateOrder($request, $status);
     }
 
     public function failed(Request $request)
     {
-        $this->orderModel->updateOrder($request);
+        $this->orderModel->updateOrder($request,4);
 
-        $order = $this->orderModel->findById($request['OrderID'],4);
+        $order = $this->orderModel->findById($request['OrderID']);
 
         return $this->responseMessages([], false, 405, [ 'payment failed']);
     }

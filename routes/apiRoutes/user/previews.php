@@ -5,6 +5,9 @@ Route::group(['prefix' => 'previews'], function () {
 	Route::get('categories' 		,'Api\UserApp\PreviewController@categories');
 	Route::get('services' 			,'Api\UserApp\PreviewController@services');
 	Route::post('check-dates' 	,'Api\UserApp\PreviewController@checkDates');
+	Route::get('failed' 				,'Api\UserApp\PreviewController@failed')->name('api.previews.failed');
+	Route::get('success' 				,'Api\UserApp\PreviewController@success')->name('api.previews.success');
+	Route::post('webhooks' 			,'Api\UserApp\PreviewController@webhooks')->name('api.previews.webhooks');
 
 });
 

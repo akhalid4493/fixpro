@@ -20,6 +20,7 @@ class OrderResource extends Resource
          return [
             'id'            => $this->id,
             'subtotal'      => number_format($this->subtotal,3),
+            'off'           => $this->off ? number_format($this->off,3) : null,
             'service'       => number_format($this->service,3),
             'total'         => number_format($this->total,3),
             'payment_method'=> $this->method,

@@ -43,6 +43,7 @@ class ServiceRepository
 
             $service = $this->model->create([
                 'name_ar'               => $request['name_ar'],
+                'price'                 => $request['price'],
                 'name_en'               => $request['name_en'],
                 'slug'                  => str_slug($request['name_en']),
                 'status'                => $request['status'],
@@ -74,6 +75,7 @@ class ServiceRepository
         try {
 
             $service->update([
+                'price'                 => $request['price'],
                 'name_ar'               => $request['name_ar'],
                 'name_en'               => $request['name_en'],
                 'slug'                  => str_slug($request['name_en']),
@@ -191,6 +193,7 @@ class ServiceRepository
                 $delete = btn('delete','delete_services',url(route('services.show',$id)));
 
                 $obj['id']          = $id;
+                $obj['price']       = $service->price;
                 $obj['name_ar']     = $service->name_ar;
                 $obj['name_en']     = $service->name_en;
                 $obj['image']       = url($service->image);

@@ -19,7 +19,7 @@
             </ul>
         </div>
         <h1 class="page-title"></h1>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <div class="portlet light">
@@ -136,14 +136,14 @@
                                         </div>
                                         <div class="form-actions">
                                             <div id="result" style="display: none"></div>
-                                            
+
                                             <div class="progress-info" style="display: none">
                                                 <div class="progress">
                                                     <span class="progress-bar progress-bar-warning"></span>
                                                 </div>
                                                 <div class="status" id="progress-status"></div>
                                             </div>
-                                            
+
                                             <div class="form-group">
                                                 <div class="col-md-offset-2 col-md-9">
                                                     <button type="submit" id="submit" class="btn btn-lg blue">
