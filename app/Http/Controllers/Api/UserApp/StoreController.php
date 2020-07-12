@@ -20,9 +20,9 @@ class StoreController extends ApiController
         $this->orderModel    = $order;
 
         $this->middleware('apiAuth', [
-	    	'only' => [ 
-	    			'orderAction',  
-    				'myOrders', 
+	    	'only' => [
+	    			'orderAction',
+    				'myOrders',
     				'getOrder',
 	    		]
 		]);
@@ -49,9 +49,9 @@ class StoreController extends ApiController
 	/*
  	===============================================
   				ORDER METHODS
-    =============================================== 
+    ===============================================
     */
-   
+
     // Make New Order
 	public function orderAction(Request $request)
 	{
@@ -87,7 +87,7 @@ class StoreController extends ApiController
 
 		return $this->responseMessages([],false,405,[ 'there is no orders for this user']);
 	}
-	
+
 	public function getOrder(Request $request,$id)
 	{
 		$order = $this->orderModel->orderById($id);

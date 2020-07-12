@@ -46,6 +46,13 @@ class OrderRepository
         return $order;
     }
 
+    public function findById($id)
+    {
+        $order = $this->model->where('id',$id)->first();
+
+        return $order;
+    }
+
     public function orderAction($order,$request)
     {
         DB::beginTransaction();
@@ -156,12 +163,6 @@ class OrderRepository
     {
         DB::beginTransaction();
 
-        if ($request['method'] == 'Knet') {
-            $status = 4;
-        }else{
-            $status = 5;
-        }
-
         try {
 
             $serviceFees = $request['service'] == 'on' ? settings('service') : 0.000;
@@ -176,7 +177,7 @@ class OrderRepository
                 'transID'           => $request['transID'],
                 'preview_id'        => $request['preview_id'],
                 'user_id'           => $request['client_user_id'],
-                'order_status_id'   => $status,
+                'order_status_id'   => 1,
                 'technical_id'      => Auth::id(),
             ]);
 
@@ -288,4 +289,38 @@ class OrderRepository
             return $this->send($data,$userToken->device_token);
         }
     }
+
+    public function updateOrder($request,$status)
+    {
+        $order = $this->findById($request['OrderID']);
+
+        if ($order->order_status_id != $status) {
+
+            $order->update([
+              'order_status_id' => $status,
+            ]);
+
+            $this->sendNotifiToTechnical($order);
+        }
+
+        return true;
+    }
+
+    public function sendNotifiToTechnical($order)
+    {
+        $technicalToken = $order->technical->deviceToken;
+
+        if (!empty($technicalToken)) {
+
+            $data = [
+                'title' => 'تم تغير حالة الطلب',
+                'body'  => $order->orderStatus->name_en,
+                'type'  => 'orders',
+                'id'    => $order->id,
+            ];
+
+            return $this->send($data,$technicalToken->device_token);
+        }
+    }
+
 }

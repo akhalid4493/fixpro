@@ -17,14 +17,13 @@ use Auth;
 
 class StoreController extends ApiController
 {
-   	function __construct(
-	   	Product $product,
-	   	Installation $installation,
-	   	Order $order,
-	   	Payment $payment,
-	   	Category $category
-   	)
-    {
+    public function __construct(
+        Product $product,
+        Installation $installation,
+        Order $order,
+        Payment $payment,
+        Category $category
+    ) {
         $this->installationModel= $installation;
         $this->productModel  	= $product;
         $this->categoryModel 	= $category;
@@ -32,94 +31,89 @@ class StoreController extends ApiController
         $this->payment 		 	= $payment;
     }
 
-	// GetAll Categories
-	public function categories(Request $request)
-	{
-		return $data = CategoryResource::collection($this->categoryModel->getAllForTechnicalUser($request));
-	}
+    // GetAll Categories
+    public function categories(Request $request)
+    {
+        return $data = CategoryResource::collection($this->categoryModel->getAllForTechnicalUser($request));
+    }
 
-	// GetAll Products
-	public function products(Request $request)
-	{
-		return $data = ProductResource::collection($this->productModel->getAll($request));
-	}
+    // GetAll Products
+    public function products(Request $request)
+    {
+        return $data = ProductResource::collection($this->productModel->getAll($request));
+    }
 
-	// Get Product By Id
-	public function product($id)
-	{
-		$product = $this->productModel->findById($id);
+    // Get Product By Id
+    public function product($id)
+    {
+        $product = $this->productModel->findById($id);
 
-        if ($product != null)
-            return $this->responseMessages(new ProductResource($product),true,200);
+        if ($product != null) {
+            return $this->responseMessages(new ProductResource($product), true, 200);
+        }
 
-        return $this->responseMessages([],false,404,[ 'product not found']);
-	}
+        return $this->responseMessages([], false, 404, [ 'product not found']);
+    }
 
-	// GetAll Installations
-	public function installations(Request $request)
-	{
-		return $data = InstallationResource::collection($this->installationModel->getAll($request));
-	}
+    // GetAll Installations
+    public function installations(Request $request)
+    {
+        return $data = InstallationResource::collection($this->installationModel->getAll($request));
+    }
 
-	// Get Installation By Id
-	public function installation($id)
-	{
-		$product = $this->installationModel->findById($id);
+    // Get Installation By Id
+    public function installation($id)
+    {
+        $product = $this->installationModel->findById($id);
 
-        if ($product != null)
-            return $this->responseMessages(new InstallationResource($product),true,200);
+        if ($product != null) {
+            return $this->responseMessages(new InstallationResource($product), true, 200);
+        }
 
-        return $this->responseMessages([],false,404,[ 'installation not found']);
-	}
+        return $this->responseMessages([], false, 404, [ 'installation not found']);
+    }
 
-	/*
- 	===============================================
-  				ORDER METHODS
+    /*
+    ===============================================
+                ORDER METHODS
     ===============================================
     */
 
-	public function myOrders(Request $request)
-	{
-		$orders = $this->orderModel->technicalOrders($request);
+    public function myOrders(Request $request)
+    {
+        $orders = $this->orderModel->technicalOrders($request);
 
-		return $this->responseMessages(OrderResource::collection($orders),true,200);
-	}
+        return $this->responseMessages(OrderResource::collection($orders), true, 200);
+    }
 
-	public function getOrder(Request $request,$id)
-	{
-		$order = $this->orderModel->technicalOrderById($id);
+    public function getOrder(Request $request, $id)
+    {
+        $order = $this->orderModel->technicalOrderById($id);
 
-		if ($order)
-			return $this->responseMessages(new OrderResource($order),true,200);
+        if ($order) {
+            return $this->responseMessages(new OrderResource($order), true, 200);
+        }
 
-		return $this->responseMessages([],false,405,['no order with this id']);
-	}
+        return $this->responseMessages([], false, 405, ['no order with this id']);
+    }
 
     // Make New Order
-	public function createOrder(Request $request)
-	{
-		if ($request['method'] == 'Knet') {
+    public function createOrder(Request $request)
+    {
+        $order = $this->orderModel->addNewOrder($request);
 
-		 	$newOrder = $this->orderModel->addNewOrder($request);
+        if ($request['method'] != 'cash'){
 
-		 	if ($newOrder){
-	            $payment = $this->payment->send($newOrder,$request);
+            return $this->responseMessages(new OrderResource($order), true, 200);
 
-				return response()->json([
-		            'message' => 'The Payment Url',
-		            'data'    => $payment['paymentURL'],
-		        ],200);
-		 	}
+            // $payment = $this->payment->send($order,'orders',$request['payment']);
 
-			return $this->responseMessages([],false,405,['please try again']);
+            // return response()->json([
+            //     'message' => 'The Payment Url',
+            //     'data'    => $payment,
+            // ], 200);
+        }
 
-		}else{
-		 	$newOrder = $this->orderModel->addNewOrder($request);
-
-		 	if ($newOrder)
-	            return $this->responseMessages(new OrderResource($newOrder),true,200);
-
-			return $this->responseMessages([],false,405,['please try again']);
-		}
-	}
+        return $this->responseMessages([], false, 405, ['please try again']);
+    }
 }
