@@ -23,8 +23,6 @@ class AdsRepository
                ->where('end_at','>=',date('Y-m-d'))
                ->where('start_at','<=',date('Y-m-d'))
                ->orderBy('id','desc')
-               ->inRandomOrder()
-               ->take(1)
                ->get();
     }
 }
