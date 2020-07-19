@@ -14,16 +14,32 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['prefix' => 'v1','middleware' => ['localization','api'] ],function(){
-	
-	foreach (File::allFiles(base_path('routes/apiRoutes/user')) as $file) {
+
+	foreach (File::allFiles(base_path('routes/apiRoutes/v1/user')) as $file) {
+        require_once($file->getPathname());
+    }
+
+});
+
+Route::group(['prefix' => 'v2','middleware' => ['localization','api'] ],function(){
+
+	foreach (File::allFiles(base_path('routes/apiRoutes/v2/user')) as $file) {
         require_once($file->getPathname());
     }
 
 });
 
 Route::group(['prefix' => 'v1/technical','middleware' => ['localization','api'] ],function(){
-	
-	foreach (File::allFiles(base_path('routes/apiRoutes/technical')) as $file) {
+
+	foreach (File::allFiles(base_path('routes/apiRoutes/v1/technical')) as $file) {
+        require_once($file->getPathname());
+    }
+
+});
+
+Route::group(['prefix' => 'v2/technical','middleware' => ['localization','api'] ],function(){
+
+	foreach (File::allFiles(base_path('routes/apiRoutes/v2/technical')) as $file) {
         require_once($file->getPathname());
     }
 

@@ -40,7 +40,7 @@ class AddressController extends AdminController
 
             if($create)
                 return Response()->json([true , 'تم الاضافة بنجاح' ]);
-            
+
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
@@ -49,7 +49,7 @@ class AddressController extends AdminController
     public function show($id)
     {
         $address = $this->addressModel->findById($id);
-        
+
         if (!$address)
             abort(404);
 

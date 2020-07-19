@@ -51,7 +51,7 @@ class UserController extends AdminController
 
             if($create)
                 return Response()->json([true , 'تم الاضافة بنجاح' ]);
-            
+
             return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
         }
@@ -63,7 +63,7 @@ class UserController extends AdminController
         $governorates = $this->governorateModel->getAll();
 
         $user = $this->userModel->findById($id);
-        
+
         if (!$user)
             abort(404);
 

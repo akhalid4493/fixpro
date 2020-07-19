@@ -43,7 +43,7 @@ class InstallationController extends AdminController
 
         if($create)
             return Response()->json([true , 'تم الاضافة بنجاح' ]);
-        
+
         return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
@@ -52,7 +52,7 @@ class InstallationController extends AdminController
     public function show($id)
     {
         $installation = $this->installationModel->findById($id);
-        
+
         if (!$installation)
             abort(404);
 

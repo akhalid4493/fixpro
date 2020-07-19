@@ -33,7 +33,7 @@ class GovernorateController extends AdminController
 
         if($create)
             return Response()->json([true , 'تم الاضافة بنجاح' ]);
-        
+
         return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
@@ -52,7 +52,7 @@ class GovernorateController extends AdminController
     public function edit($id)
     {
         $governorate  = $this->governorateModel->findById($id);
-        
+
         if (!$governorate)
             return abort(404);
 

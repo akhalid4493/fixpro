@@ -41,7 +41,7 @@ class InvoiceController extends AdminController
 
         if($create)
             return Response()->json([true , 'تم الاضافة بنجاح' ]);
-        
+
         return Response()->json([false  , 'حدث خطا ، حاول مره اخرى']);
 
     }
